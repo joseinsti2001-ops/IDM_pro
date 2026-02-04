@@ -1,3 +1,11 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ID-MIL | Inteligencia Militar</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
 <body>
     <div id="app">
         <div id="pantalla-inicio" class="panel-inicio">
@@ -30,10 +38,13 @@
             <div class="contenedor-imagen">
                 <img id="imagen-vehiculo" src="" alt="Identifique el vehículo">
             </div>
-            <div id="opciones" class="grid-opciones">
-                </div>
+            <div id="descripcion-pista" class="descripcion-pista"></div>
+            <div id="opciones" class="grid-opciones"></div>
             <div id="feedback" class="feedback"></div>
             <button id="btn-siguiente" class="action-btn hidden" onclick="siguientePregunta()">SIGUIENTE</button>
+            <button class="btn-salir" onclick="location.reload()">SALIR AL MENÚ</button>
         </div>
     </div>
+    <script src="js/main.js"></script>
 </body>
+</html>
