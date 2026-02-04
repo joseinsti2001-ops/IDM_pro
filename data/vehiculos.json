@@ -53,7 +53,7 @@
     "nombre": "PT-91",
     "descripcion": "Lanza-fumígenos 2+4. Ruedas margarita. 3 placas de blindaje adicionales.",
     "opciones": ["T-72M1", "PT-91", "T-72B3", "M-84"],
-    "imagen": "assets/PT-91.jpg"
+    "imagen": "assets/PT-91.JPG"
   },
   {
     "id": "t90a",
@@ -293,7 +293,7 @@
     "nombre": "2S35 Koalitsaya",
     "descripcion": "Frenos recuperación ocultos. Tren de rodaje de T-90.",
     "opciones": ["2S19 MSTA", "2S35 Koalitsaya", "2S3 Akatsiya", "PzH 2000"],
-    "imagen": "assets/2S35-KOALITSAYA.webp"
+    "imagen": "assets/2S35-KOALYTSAYA.webp"
   },
   {
     "id": "2s1",
@@ -333,7 +333,7 @@
     "nombre": "M109",
     "descripcion": "Freno boca sencillo. Periscopio jefe. Frente torre circular.",
     "opciones": ["PzH 2000", "M109", "AS-90", "K9 Thunder"],
-    "imagen": "assets/M109.webp"
+    "imagen": "assets/M-109.webp"
   },
   {
     "id": "caesar",
@@ -349,7 +349,7 @@
     "nombre": "Panzeraubitz 2000",
     "descripcion": "Luces sobre el glacis. Base cañón sólida. Muy largo.",
     "opciones": ["M109", "Panzeraubitz 2000", "AS-90", "Krabs"],
-    "imagen": "assets/PANZERAUBITZE-2000.webn"
+    "imagen": "assets/PANZERAUBITZE-2000.jpg"
   },
   {
     "id": "archer",
@@ -381,7 +381,7 @@
     "nombre": "BM-30 Smerch",
     "descripcion": "Tubos muy largos. Camión 8x8. Cabina solo en un lado.",
     "opciones": ["BM-21 Grad", "BM-30 Smerch", "Uragan", "Tornado-S"],
-    "imagen": "assets/BM-30-SMERCH.webp"
+    "imagen": "assets/BM30-SMERCH.webp"
   },
   {
     "id": "grad",
@@ -461,7 +461,7 @@
     "nombre": "Mi-8/17 Hip",
     "descripcion": "Cabina invernadero. Gran volumen de carga. 2 motores arriba.",
     "opciones": ["Mi-14", "Mi-8/17 Hip", "Puma", "Super Frelon"],
-    "imagen": "assets/MI-8-17-HIP.png"
+    "imagen": "assets/MI-8-17-HIP.jpg"
   },
   {
     "id": "mi24",
