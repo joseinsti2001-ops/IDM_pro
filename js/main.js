@@ -130,12 +130,12 @@ function validar(elegido, boton, nombreCorrecto) {
                 // En examen, pasar siempre a la siguiente pregunta
                 siguiente();
             } else if(sModo === 'desafio') {
-                // En desafío, si falla, terminar la ronda
+                // En desafío, SI FALLA, terminar la ronda AHORA
                 if(elegido !== correcto) {
                     document.getElementById('msg').innerText = "FALLO CRÍTICO.";
                     // Esperar un poco más para ver el mensaje y luego terminar
                     setTimeout(() => {
-                        siguiente(); // Esto terminará la ronda si es el fallo o si llega al final
+                        mostrarResultados(); // Interrumpir directamente la prueba
                     }, 1000); // 1 segundo de pausa antes de ir a estadísticas si falla
                 } else {
                     // Si acertó en desafío, pasar a la siguiente pregunta
