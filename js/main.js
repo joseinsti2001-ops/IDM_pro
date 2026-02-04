@@ -5,20 +5,13 @@ let startTime = null; // Variable para almacenar el tiempo de inicio de la ronda
 let aciertosContador = 0; // Contador para aciertos
 let fallosContador = 0; // Contador para fallos
 
-
 // --- Manejo de la portada ---
-const PORTADA_VISTA_KEY = 'idmil_portada_vista';
-
-function yaVioPortada() {
-    return localStorage.getItem(PORTADA_VISTA_KEY) === 'true';
-}
-
-function marcarPortadaComoVista() {
-    localStorage.setItem(PORTADA_VISTA_KEY, 'true');
-}
+// REMOVIDO: const PORTADA_VISTA_KEY = 'idmil_portada_vista';
+// REMOVIDO: function yaVioPortada()
+// REMOVIDO: function marcarPortadaComoVista()
 
 function entrarAlSistema() {
-    marcarPortadaComoVista();
+    // REMOVIDO: marcarPortadaComoVista();
     document.getElementById('pantalla-portada').classList.remove('activo');
     document.getElementById('pantalla-menu').classList.add('activo');
 }
@@ -235,7 +228,7 @@ function mostrarResultados() {
     resumenDiv.className = 'resumen-partada';
 
     const tituloPartida = document.createElement('h3');
-    tituloPartida.textContent = `Partida Finalizada`;
+    tituloPartada.textContent = `Partida Finalizada`;
     resumenDiv.appendChild(tituloPartida);
 
     const detalleCategoria = document.createElement('p');
@@ -326,11 +319,7 @@ function volverAlMenu() {
     }
 
     // --- Decidir qué pantalla mostrar al cargar ---
-    if (yaVioPortada()) {
-        // Si ya se ha visto, ocultar la portada y mostrar el menú
-        document.getElementById('pantalla-portada').classList.remove('activo');
-        document.getElementById('pantalla-menu').classList.add('activo');
-    }
-    // Si NO se ha visto, la portada ya está activa por defecto en el HTML.
-    // No se hace nada, se queda como está.
+    // Siempre mostrar la portada al inicio
+    // No se hace nada, la portada ya está activa por defecto en el HTML.
+    console.log("DEBUG: Script cargado, mostrando portada por defecto.");
 })();
