@@ -15,7 +15,7 @@ body { background: var(--bg); color: var(--white); font-family: system-ui, sans-
 .subtitulo { font-size: 0.9rem; opacity: 0.7; margin-bottom: 40px; }
 .autor-portada { margin-top: 40px; font-size: 1rem; font-weight: bold; opacity: 0.8; }
 
-/* Selección */
+/* Selección *//* Selección */
 .logo-mini { text-align: center; color: var(--blue); letter-spacing: 4px; font-size: 2rem; margin-bottom: 20px; }
 .tag { font-size: 0.7rem; color: var(--blue); font-weight: bold; margin-bottom: 10px; text-transform: uppercase; }
 .grid-sel { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
