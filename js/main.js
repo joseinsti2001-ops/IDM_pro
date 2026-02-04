@@ -1,84 +1,103 @@
 let arsenal = [], test = [], idx = 0, pts = 0;
-let selCat = '', selModo = '';
+let sCat = '', sModo = '';
 
 (async function() {
-    const r = await fetch(`data/vehiculos.json?v=${Date.now()}`);
-    arsenal = await r.json();
+    try {
+        const r = await fetch(`data/vehiculos.json?v=${Date.now()}`);
+        arsenal = await r.json();
+    } catch (e) { console.error("Error DB"); }
 })();
 
-function elegirCat(c, btn) {
-    selCat = c;
+// Función para la Portada
+function entrarAlSistema() {
+    document.getElementById('pantalla-portada').classList.remove('activo');
+    document.getElementById('pantalla-menu').classList.add('activo');
+}
+
+function seleccionarCat(c, btn) {
+    sCat = c;
     document.querySelectorAll('.cat').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    validar();
+    chequearReady();
 }
 
-function elegirModo(m, btn) {
-    selModo = m;
+function seleccionarModo(m, btn) {
+    sModo = m;
     document.querySelectorAll('.modo').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    validar();
+    chequearReady();
 }
 
-function validar() {
-    if(selCat && selModo) document.getElementById('btn-start').classList.remove('inactivo');
+function chequearReady() {
+    if(sCat && sModo) document.getElementById('btn-run').classList.remove('inactivo');
 }
 
-function comenzar() {
-    test = selCat === 'todos' ? [...arsenal] : arsenal.filter(v => v.tipo === selCat);
+function iniciar() {
+    test = sCat === 'todos' ? [...arsenal] : arsenal.filter(v => v.tipo === sCat);
     test.sort(() => Math.random() - 0.5);
     idx = 0; pts = 0;
-    document.getElementById('info-modo').innerText = selModo.toUpperCase();
     document.getElementById('pantalla-menu').classList.remove('activo');
     document.getElementById('pantalla-juego').classList.add('activo');
-    render();
+    dibujar();
 }
 
-function render() {
+function dibujar() {
     const v = test[idx];
-    document.getElementById('info-obj').innerText = `${idx + 1}/${test.length}`;
-    document.getElementById('info-pts').innerText = `PTS: ${pts}`;
-    document.getElementById('img-target').src = v.imagen;
-    document.getElementById('pista-txt').innerText = selModo === 'entrenamiento' ? v.descripcion : "---";
-    document.getElementById('feedback').innerText = "";
+    document.getElementById('progreso').innerText = `OBJETIVO: ${idx + 1}/${test.length}`;
+    document.getElementById('puntos').innerText = `ACIERTOS: ${pts}`;
+    document.getElementById('img-obj').src = v.imagen;
+    document.getElementById('pista-zona').innerText = sModo === 'entrenamiento' ? v.descripcion : "INFORMACIÓN CLASIFICADA";
+    document.getElementById('msg').innerText = "";
     document.getElementById('btn-next').classList.add('oculto');
 
-    const box = document.getElementById('opciones-box');
-    box.innerHTML = '';
-    v.opciones.forEach(opt => {
+    const zona = document.getElementById('opciones-zona');
+    zona.innerHTML = '';
+    v.opciones.forEach(o => {
         const b = document.createElement('button');
-        b.className = 'btn-ans';
-        b.innerText = opt;
-        b.onclick = () => chequear(opt, b);
-        box.appendChild(b);
+        b.className = 'btn-r';
+        b.innerText = o;
+        b.onclick = () => validar(o, b);
+        zona.appendChild(b);
     });
 }
 
-function chequear(esc, btn) {
-    const ok = test[idx].nombre;
-    const btns = document.querySelectorAll('.btn-ans');
-    btns.forEach(b => b.disabled = true);
+function abrirZoom() {
+    const modal = document.getElementById('modal-zoom');
+    document.getElementById('img-zoom').src = test[idx].imagen;
+    modal.style.display = 'flex';
+}
 
-    if(esc === ok) {
+function cerrarZoom() {
+    document.getElementById('modal-zoom').style.display = 'none';
+}
+
+function validar(elegido, boton) {
+    const correcto = test[idx].nombre;
+    const botones = document.querySelectorAll('.btn-r');
+    botones.forEach(b => b.disabled = true);
+
+    if(elegido === correcto) {
         pts++;
-        if(selModo !== 'examen') btn.classList.add('correct');
+        if(sModo !== 'examen') boton.classList.add('ok');
     } else {
-        if(selModo !== 'examen') btn.classList.add('wrong');
-        if(selModo === 'desafio') { alert("FALLO. Fin de misión."); location.reload(); return; }
+        if(sModo !== 'examen') boton.classList.add('ko');
+        if(sModo === 'desafio') { alert("FALLO CRÍTICO. Operación abortada."); location.reload(); return; }
     }
 
-    if(selModo === 'examen') setTimeout(siguiente, 500);
-    else {
-        if(esc !== ok) document.getElementById('feedback').innerText = `ES UN ${ok}`;
+    if(sModo === 'examen') {
+        document.getElementById('msg').innerText = "REGISTRADO";
+        setTimeout(siguiente, 500);
+    } else {
+        if(elegido !== correcto) document.getElementById('msg').innerText = `IDENTIFICADO COMO: ${correcto}`;
         document.getElementById('btn-next').classList.remove('oculto');
     }
 }
 
 function siguiente() {
     idx++;
-    if(idx < test.length) render();
+    if(idx < test.length) dibujar();
     else {
-        alert(`Misión terminada. Aciertos: ${pts}/${test.length}`);
+        alert(`FIN DEL ENTRENAMIENTO\nAciertos: ${pts}/${test.length}`);
         location.reload();
     }
 }
