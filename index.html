@@ -2,48 +2,52 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ID-MIL | Inteligencia Militar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>ID-MIL</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div id="app">
-        <div id="pantalla-inicio" class="panel-inicio">
-            <img src="assets/emblema_legion.png" alt="Emblema La Legión" class="emblema-portada">
-            <h1>ID-MIL</h1>
-            <h3>RECONOCIMIENTO E INTELIGENCIA</h3>
-            <div class="divisor"></div>
-            <p class="autor">TTE. JOSE REVERT TORMO</p>
-            <button onclick="comenzarApp()" class="action-btn">ENTRAR AL SISTEMA</button>
-        </div>
+        <section id="pantalla-inicio" class="full-screen">
+            <div class="portada-content">
+                <img src="assets/emblema_legion.png" alt="Emblema" class="emblema">
+                <h1 class="titulo-app">ID-MIL</h1>
+                <p class="subtitulo">RECONOCIMIENTO TÁCTICO</p>
+                <div class="autor-box">
+                    <span>AUTOR:</span>
+                    <strong>TTE. JOSE REVERT TORMO</strong>
+                </div>
+                <button onclick="irASeleccion()" class="btn-flash">ENTRAR</button>
+            </div>
+        </section>
 
-        <div id="menu-seleccion" class="hidden">
-            <h2 class="titulo-seccion">SELECCIONAR CATEGORÍA</h2>
-            <div class="grid-categorias">
-                <button class="cat-btn" onclick="seleccionarCategoria('blindado')">BLINDADOS</button>
-                <button class="cat-btn" onclick="seleccionarCategoria('artilleria')">ARTILLERÍA</button>
-                <button class="cat-btn" onclick="seleccionarCategoria('aereo')">AÉREO</button>
-                <button class="cat-btn" onclick="seleccionarCategoria('drone')">DRONES</button>
-                <button class="cat-btn highlight" onclick="seleccionarCategoria('todos')">TODO EL ARSENAL</button>
+        <section id="menu-seleccion" class="full-screen hidden">
+            <h2 class="header-tit">IDENTIFICACIÓN</h2>
+            <div class="selector-grid">
+                <button class="btn-sel" onclick="seleccionar('blindado')">BLINDADOS</button>
+                <button class="btn-sel" onclick="seleccionar('artilleria')">ARTILLERÍA</button>
+                <button class="btn-sel" onclick="seleccionar('aereo')">AÉREO</button>
+                <button class="btn-sel" onclick="seleccionar('drone')">DRONES</button>
+                <button class="btn-sel total" onclick="seleccionar('todos')">TODO EL ARSENAL</button>
             </div>
-            <div id="info-seleccion" class="info-texto">Seleccione una categoría para empezar</div>
-            <button id="btn-jugar" class="action-btn hidden" onclick="iniciarJuego()">INICIAR ENTRENAMIENTO</button>
-        </div>
+            <p id="status-msg" class="status-msg">SELECCIONE CATEGORÍA</p>
+            <button id="btn-confirmar" class="btn-flash hidden" onclick="iniciarMision()">INICIAR</button>
+        </section>
 
-        <div id="pantalla-juego" class="hidden">
-            <div class="header-juego">
-                <span id="contador">Vehículo: 0 / 0</span>
-                <span id="puntuacion">Aciertos: 0</span>
+        <section id="pantalla-juego" class="full-screen hidden">
+            <div class="hud-top">
+                <div id="txt-progreso">OBJ: 0/0</div>
+                <div id="txt-puntos">EFIC: 0%</div>
             </div>
-            <div class="contenedor-imagen">
-                <img id="imagen-vehiculo" src="" alt="Identifique el vehículo">
+            <div class="visor-tactico">
+                <img id="img-objetivo" src="" alt="Objetivo">
+                <div class="reticula"></div>
             </div>
-            <div id="descripcion-pista" class="descripcion-pista"></div>
-            <div id="opciones" class="grid-opciones"></div>
-            <div id="feedback" class="feedback"></div>
-            <button id="btn-siguiente" class="action-btn hidden" onclick="siguientePregunta()">SIGUIENTE</button>
-            <button class="btn-salir" onclick="location.reload()">SALIR AL MENÚ</button>
-        </div>
+            <div id="pista-text" class="pista-movil"></div>
+            <div id="grid-opciones" class="opciones-movil"></div>
+            <div id="feedback-txt" class="feedback"></div>
+            <button id="btn-next" class="btn-flash hidden" onclick="proximoObjetivo()">CONTINUAR</button>
+        </section>
     </div>
     <script src="js/main.js"></script>
 </body>
