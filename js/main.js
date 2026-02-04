@@ -148,3 +148,11 @@ function endGame(completed) {
     document.querySelector('#result-screen h2').innerText = msg;
     document.getElementById('final-score').innerText = `Puntuación: ${score} / ${sessionPool.length}`;
 }
+
+if (selected === correct) {
+    // Acierto
+    if (navigator.vibrate) navigator.vibrate(50); // Vibración corta
+} else {
+    // Fallo
+    if (navigator.vibrate) navigator.vibrate([100, 50, 100]); // Vibración de error
+}
