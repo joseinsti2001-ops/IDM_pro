@@ -2,73 +2,49 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>ID-MIL | Ops</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ID-MIL | Entrenamiento</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div id="app-container">
-        <section id="pantalla-inicio" class="modulo activo">
-            <div class="portada">
-                <img src="assets/emblema_legion.png" alt="Emblema" class="logo-portada">
-                <h1 class="titulo-v">ID-MIL</h1>
-                <p class="tagline">RECONOCIMIENTO TÁCTICO</p>
-                <div class="autor-box">
-                    <span class="label">RESPONSABLE:</span>
-                    <span class="nombre">TTE. JOSE REVERT TORMO</span>
-                </div>
-                <button onclick="navegar('pantalla-inicio', 'pantalla-config')" class="btn-militar">ENTRAR</button>
-            </div>
-        </section>
-
-        <section id="pantalla-config" class="modulo">
-            <h2 class="header-tit">CENTRO DE MANDO</h2>
+    <div id="app">
+        <section id="pantalla-menu" class="modulo activo">
+            <h1 class="titulo">ID-MIL</h1>
+            <div class="divisor"></div>
             
-            <div class="grupo-config">
-                <p class="seccion-tit">1. ARSENAL</p>
-                <div class="grid-config">
-                    <button class="btn-sel cat" onclick="selectCat('blindado', this)">BLINDADOS</button>
-                    <button class="btn-sel cat" onclick="selectCat('artilleria', this)">ARTILLERÍA</button>
-                    <button class="btn-sel cat" onclick="selectCat('aereo', this)">AÉREO</button>
-                    <button class="btn-sel cat" onclick="selectCat('drone', this)">DRONES</button>
-                    <button class="btn-sel cat full" onclick="selectCat('todos', this)">TODO EL ARSENAL</button>
-                </div>
+            <p class="label">ARSENAL</p>
+            <div class="grid-seleccion">
+                <button class="btn-sel cat" onclick="elegirCat('blindado', this)">BLINDADOS</button>
+                <button class="btn-sel cat" onclick="elegirCat('artilleria', this)">ARTILLERÍA</button>
+                <button class="btn-sel cat" onclick="elegirCat('aereo', this)">AÉREO</button>
+                <button class="btn-sel cat" onclick="elegirCat('drone', this)">DRONES</button>
+                <button class="btn-sel cat full" onclick="elegirCat('todos', this)">TODO EL ARSENAL</button>
             </div>
 
-            <div class="grupo-config">
-                <p class="seccion-tit">2. MODO DE MISIÓN</p>
-                <div class="stack-config">
-                    <button class="btn-sel modo" onclick="selectModo('entrenamiento', this)">
-                        <strong>ENTRENAMIENTO</strong>
-                        <span>Pistas y corrección activa</span>
-                    </button>
-                    <button class="btn-sel modo" onclick="selectModo('examen', this)">
-                        <strong>EXAMEN</strong>
-                        <span>Sin pistas | Evaluación final</span>
-                    </button>
-                    <button class="btn-sel modo" onclick="selectModo('desafio', this)">
-                        <strong>DESAFÍO</strong>
-                        <span>Muerte súbita</span>
-                    </button>
-                </div>
+            <p class="label">MODO DE MISIÓN</p>
+            <div class="stack-seleccion">
+                <button class="btn-sel modo" onclick="elegirModo('entrenamiento', this)">ENTRENAMIENTO</button>
+                <button class="btn-sel modo" onclick="elegirModo('examen', this)">EXAMEN</button>
+                <button class="btn-sel modo" onclick="elegirModo('desafio', this)">DESAFÍO</button>
             </div>
 
-            <button id="btn-ready" class="btn-militar inactivo" onclick="iniciarMision()">INICIAR OPERACIÓN</button>
+            <button id="btn-start" class="btn-primario inactivo" onclick="comenzar()">INICIAR OPERACIÓN</button>
+            <p class="firma">TTE. JOSE REVERT TORMO</p>
         </section>
 
         <section id="pantalla-juego" class="modulo">
             <div class="hud">
-                <span id="txt-progreso">OBJ: 0/0</span>
-                <span id="txt-modo" class="badge">--</span>
-                <span id="txt-puntos">PTS: 0</span>
+                <span id="info-obj">0/0</span>
+                <span id="info-modo">--</span>
+                <span id="info-pts">PTS: 0</span>
             </div>
-            <div class="visor">
-                <img id="img-obj" src="" alt="Objetivo">
+            <div class="marco">
+                <img id="img-target" src="" alt="Objetivo">
             </div>
-            <div id="pista-zona" class="pista"></div>
-            <div id="opciones-grid" class="grid-respuestas"></div>
-            <div id="feedback-zona" class="feedback"></div>
-            <button id="btn-next" class="btn-militar oculto" onclick="siguiente()">CONTINUAR</button>
+            <div id="pista-txt" class="pista"></div>
+            <div id="opciones-box" class="grid-respuestas"></div>
+            <div id="feedback" class="feedback"></div>
+            <button id="btn-next" class="btn-primario oculto" onclick="siguiente()">SIGUIENTE</button>
         </section>
     </div>
     <script src="js/main.js"></script>
