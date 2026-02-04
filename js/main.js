@@ -2,7 +2,10 @@ let arsenal = [], test = [], idx = 0, pts = 0;
 let sCat = '', sModo = '';
 let stats = {}; // Objeto para almacenar las estadísticas de la sesión actual
 let startTime = null; // Variable para almacenar el tiempo de inicio de la ronda
-let resultados = []; // Array para almacenar los iconos de acierto/fallo
+// REMOVIDO: let resultados = []; // Array para almacenar los iconos de acierto/fallo
+let aciertosContador = 0; // Contador para aciertos
+let fallosContador = 0; // Contador para fallos
+
 
 // --- Manejo de la portada ---
 const PORTADA_VISTA_KEY = 'idmil_portada_vista';
@@ -44,7 +47,9 @@ function iniciar() {
     test.sort(() => Math.random() - 0.5);
     idx = 0;
     pts = 0;
-    resultados = []; // Inicializar el array de resultados al iniciar
+    // REMOVIDO: resultados = []; // Inicializar el array de resultados al iniciar
+    aciertosContador = 0; // Reiniciar contadores
+    fallosContador = 0;
     startTime = new Date().getTime();
     document.getElementById('pantalla-menu').classList.remove('activo');
     document.getElementById('pantalla-juego').classList.add('activo');
@@ -66,7 +71,7 @@ function dibujar() {
     document.getElementById('progreso').innerText = `OBJETIVO: ${idx + 1}/${test.length}`;
     // Inicializamos el HUD de puntos como vacío, se llenará con iconos
     document.getElementById('puntos').innerHTML = 'RESPUESTAS: ';
-    // Actualizar HUD con iconos ya existentes (antes de dibujar pregunta actual)
+    // Actualizar HUD con contadores
     actualizarHUD();
     document.getElementById('img-obj').src = v.imagen;
     document.getElementById('img-obj').onerror = function() { this.src = 'assets/placeholder.png'; };
@@ -104,20 +109,17 @@ function validar(elegido, boton, nombreCorrecto) {
     const botones = document.querySelectorAll('.btn-r');
     botones.forEach(b => b.disabled = true); // Deshabilitar botones inmediatamente
 
-    // Determinar si fue acierto o fallo
-    let resultadoIcono = '';
+    // Determinar si fue acierto o fallo e incrementar contador
     if(elegido === correcto) {
         pts++;
+        aciertosContador++; // Incrementar contador de aciertos
         boton.classList.add('ok');
-        resultadoIcono = '✅'; // Acierto
     } else {
+        fallosContador++; // Incrementar contador de fallos
         boton.classList.add('ko');
-        resultadoIcono = '❌'; // Fallo
     }
 
-    // Añadir el resultado al array
-    resultados.push(resultadoIcono);
-    // Actualizar la UI del HUD con los iconos
+    // Actualizar la UI del HUD con los contadores
     actualizarHUD();
 
     if(elegido === correcto) {
@@ -156,20 +158,12 @@ function validar(elegido, boton, nombreCorrecto) {
     }
 }
 
-// Nueva función para actualizar el HUD con iconos
+// Nueva función para actualizar el HUD con contadores resumidos
 function actualizarHUD() {
     const puntosElement = document.getElementById('puntos');
-    // Agregar el texto inicial
-    puntosElement.innerHTML = 'RESPUESTAS: ';
-    // Agregar cada icono del array de resultados
-    resultados.forEach(icono => {
-        const span = document.createElement('span');
-        span.className = 'icono-punto'; // Clase para estilizar
-        span.textContent = icono;
-        puntosElement.appendChild(span);
-    });
+    // Construir el texto con los contadores
+    puntosElement.innerHTML = `RESPUESTAS: ✅ ${aciertosContador} ❌ ${fallosContador}`;
 }
-
 
 function siguiente() {
     idx++;
@@ -194,7 +188,7 @@ function mostrarResultados() {
     const modoActual = sModo;
     const categoriaActual = sCat;
     const total = test.length;
-    const aciertos = pts;
+    const aciertos = pts; // Usamos 'pts' que también se incrementa
     const fallos = total - aciertos;
     const fecha = new Date().toLocaleString();
 
@@ -262,4 +256,62 @@ function mostrarResultados() {
 
     const porcentajeSpan = document.createElement('p');
     porcentajeSpan.className = 'porcentaje';
-    const porcentaje = total > 0 ? ((aciertos / total) * 10
+    const porcentaje = total > 0 ? ((aciertos / total) * 100).toFixed(2) : 0;
+    porcentajeSpan.textContent = `Rendimiento: ${porcentaje}%`;
+    resumenDiv.appendChild(porcentajeSpan);
+
+    statsContent.appendChild(resumenDiv);
+
+    // Mostrar historial de estadísticas anteriores para esta combinación (de la sesión actual)
+    const historialTitulo = document.createElement('h3');
+    historialTitulo.textContent = 'Historial (Esta Sesión):';
+    statsContent.appendChild(historialTitulo);
+
+    const historialLista = document.createElement('ul');
+    stats[modoActual][categoriaActual].forEach((partida, index) => {
+        const item = document.createElement('li');
+        item.className = 'historial-item';
+        const porcentajeHistorial = ((partida.aciertos / partida.total) * 100).toFixed(2);
+        item.textContent = `${partida.fecha}: ${partida.aciertos}/${partida.total} (${porcentajeHistorial}%), F: ${partida.fallos}, T: ${partida.tiempo}s`;
+        historialLista.appendChild(item);
+    });
+    statsContent.appendChild(historialLista);
+}
+
+
+function interrumpirPrueba() {
+    if (confirm("¿Estás seguro de que deseas interrumpir la prueba actual?")) {
+        mostrarResultados();
+    }
+}
+
+function volverAlMenu() {
+    document.getElementById('pantalla-stats').classList.remove('activo');
+    document.getElementById('pantalla-menu').classList.add('activo');
+    // Opcional: Reiniciar estado del juego si se vuelve al menú
+    // idx = 0; pts = 0; test = []; startTime = null; aciertosContador = 0; fallosContador = 0;
+}
+
+// --- INICIALIZACIÓN ---
+(async function() {
+    try {
+        const r = await fetch(`data/vehiculos.json?v=${Date.now()}`);
+        arsenal = await r.json();
+        // Cargar estadísticas guardadas (si existen) desde localStorage al inicio
+        const savedStats = localStorage.getItem('idmil_stats');
+        if (savedStats) {
+            stats = JSON.parse(savedStats);
+        }
+    } catch (e) {
+        console.error("Error al cargar la base de datos de vehículos:", e);
+         // Opcional: Mostrar un mensaje de error en la UI
+         alert("Error al cargar los datos del juego. Por favor, recarga la página.");
+    }
+
+    // --- Decidir qué pantalla mostrar al cargar ---
+    if (yaVioPortada()) {
+        document.getElementById('pantalla-portada').classList.remove('activo');
+        document.getElementById('pantalla-menu').classList.add('activo');
+    }
+    // Si no ha visto la portada, la pantalla 'activo' por defecto ya es la portada
+})();
