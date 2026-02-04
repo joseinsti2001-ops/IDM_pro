@@ -2,7 +2,6 @@ let arsenal = [], test = [], idx = 0, pts = 0;
 let sCat = '', sModo = '';
 let stats = {}; // Objeto para almacenar las estadísticas de la sesión actual
 let startTime = null; // Variable para almacenar el tiempo de inicio de la ronda
-// REMOVIDO: let resultados = []; // Array para almacenar los iconos de acierto/fallo
 let aciertosContador = 0; // Contador para aciertos
 let fallosContador = 0; // Contador para fallos
 
@@ -47,7 +46,6 @@ function iniciar() {
     test.sort(() => Math.random() - 0.5);
     idx = 0;
     pts = 0;
-    // REMOVIDO: resultados = []; // Inicializar el array de resultados al iniciar
     aciertosContador = 0; // Reiniciar contadores
     fallosContador = 0;
     startTime = new Date().getTime();
@@ -69,8 +67,6 @@ function shuffle(array) {
 function dibujar() {
     const v = test[idx];
     document.getElementById('progreso').innerText = `OBJETIVO: ${idx + 1}/${test.length}`;
-    // Inicializamos el HUD de puntos como vacío, se llenará con iconos
-    document.getElementById('puntos').innerHTML = 'RESPUESTAS: ';
     // Actualizar HUD con contadores
     actualizarHUD();
     document.getElementById('img-obj').src = v.imagen;
@@ -113,21 +109,21 @@ function validar(elegido, boton, nombreCorrecto) {
     if(elegido === correcto) {
         pts++;
         aciertosContador++; // Incrementar contador de aciertos
-        boton.classList.add('ok');
     } else {
         fallosContador++; // Incrementar contador de fallos
-        boton.classList.add('ko');
     }
 
     // Actualizar la UI del HUD con los contadores
     actualizarHUD();
 
     if(elegido === correcto) {
+        boton.classList.add('ok');
         // En examen y desafío, se marca el botón pero no el texto adicional
         if(sModo !== 'entrenamiento'){
             // El estilo 'ok' ya se añadió arriba
         }
     } else {
+        boton.classList.add('ko');
         // Mostrar el nombre correcto en entrenamiento
         if(sModo === 'entrenamiento') {
             document.getElementById('msg').innerText = `IDENTIFICADO COMO: ${correcto}`;
@@ -138,9 +134,6 @@ function validar(elegido, boton, nombreCorrecto) {
              // Mostrar botón de continuar (opcional, puede quitarse si se va directo)
              document.getElementById('btn-next').classList.remove('oculto');
              // *** TERMINAR LA RONDA INMEDIATAMENTE ***
-             // Llamamos a mostrarResultados directamente o simulamos que es la última pregunta
-             // Para evitar duplicar lógica, simplemente incrementamos idx para que idx >= test.length
-             // Y luego llamamos a siguiente(), que se encargará de mostrarResultados
              idx = test.length; // Forzamos el fin de la ronda
              siguiente(); // Llama a siguiente que ahora detectará el fin
              return; // Salir de validar para evitar más ejecución
@@ -215,7 +208,7 @@ function mostrarResultados() {
     statsContent.appendChild(tituloStats);
 
     const resumenDiv = document.createElement('div');
-    resumenDiv.className = 'resumen-partida';
+    resumenDiv.className = 'resumen-partada';
 
     const tituloPartida = document.createElement('h3');
     tituloPartida.textContent = `Partida Finalizada`;
@@ -310,8 +303,10 @@ function volverAlMenu() {
 
     // --- Decidir qué pantalla mostrar al cargar ---
     if (yaVioPortada()) {
+        // Si ya se ha visto, ocultar la portada y mostrar el menú
         document.getElementById('pantalla-portada').classList.remove('activo');
         document.getElementById('pantalla-menu').classList.add('activo');
     }
-    // Si no ha visto la portada, la pantalla 'activo' por defecto ya es la portada
+    // Si NO se ha visto, la portada ya está activa por defecto en el HTML.
+    // No se hace nada, se queda como está.
 })();
