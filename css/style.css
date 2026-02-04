@@ -1,84 +1,69 @@
 :root {
-    --primary: #3b82f6;
-    --success: #22c55e;
-    --danger: #ef4444;
+    --blue: #3b82f6;
     --dark: #0f172a;
-    --panel: #1e293b;
+    --card: #1e293b;
+    --text: #ffffff;
 }
 
-* { 
-    box-sizing: border-box; 
-    -webkit-tap-highlight-color: transparent;
-    user-select: none;
-}
+* { box-sizing: border-box; font-family: sans-serif; }
 
 body {
     margin: 0;
-    padding: 0;
     background: var(--dark);
-    color: white;
-    font-family: 'Courier New', monospace;
-    height: 100vh;
-    overflow: hidden; /* Evita el scroll en el móvil */
+    color: var(--text);
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
 }
 
-.full-screen {
-    height: 100vh;
-    display: flex;
+#app { width: 100%; max-width: 450px; position: relative; }
+
+.panel {
+    display: none;
     flex-direction: column;
     padding: 20px;
-    justify-content: center;
+    text-align: center;
+    min-height: 100vh;
 }
+
+.panel.active { display: flex; }
 
 .hidden { display: none !important; }
 
-/* Portada */
-.emblema { width: 40vw; max-width: 150px; margin: 0 auto 20px; }
-.titulo-app { font-size: 3rem; margin: 0; text-align: center; color: var(--primary); letter-spacing: 5px; }
-.subtitulo { text-align: center; font-size: 0.8rem; opacity: 0.7; margin-bottom: 30px; }
-.autor-box { text-align: center; margin-bottom: 40px; border: 1px solid #334155; padding: 10px; }
-.autor-box span { display: block; font-size: 0.6rem; color: var(--primary); }
+/* Estilos de elementos */
+.emblema { width: 120px; margin: 20px auto; display: block; }
 
-/* Botones Móvil */
-.btn-flash {
-    background: var(--primary);
+h1 { color: var(--blue); letter-spacing: 4px; margin: 10px 0; }
+
+.divisor { height: 2px; background: var(--blue); width: 50%; margin: 20px auto; }
+
+.autor { font-weight: bold; margin-bottom: 30px; opacity: 0.8; }
+
+.btn-main {
+    background: var(--blue);
     color: white;
     border: none;
-    padding: 20px;
-    font-size: 1.2rem;
+    padding: 18px;
+    font-size: 1.1rem;
     font-weight: bold;
     border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+    cursor: pointer;
+    width: 100%;
 }
 
-.selector-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.btn-sel { 
-    padding: 25px 10px; background: var(--panel); border: 1px solid #334155; 
-    color: white; border-radius: 8px; font-weight: bold;
-}
-.btn-sel.selected { border-color: var(--primary); background: #2d3e5a; }
-.total { grid-column: span 2; background: #2d3e5a; }
+/* Grid de Selección */
+.grid-sel { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0; }
+.btn-opt { padding: 20px 10px; background: var(--card); border: 1px solid #334155; color: white; border-radius: 6px; font-weight: bold; }
+.btn-opt.selected { border-color: var(--blue); background: #2d3e5a; }
+.full { grid-column: span 2; }
 
-/* Visor de Juego */
-.hud-top { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--primary); margin-bottom: 10px; }
-.visor-tactico { 
-    height: 35vh; background: #000; position: relative; 
-    border-radius: 8px; border: 1px solid #334155; overflow: hidden;
-}
+/* Juego */
+.hud { display: flex; justify-content: space-between; padding: 10px; color: var(--blue); font-weight: bold; }
+.visor { background: #000; border-radius: 8px; overflow: hidden; height: 250px; border: 1px solid var(--blue); }
 #img-objetivo { width: 100%; height: 100%; object-fit: contain; }
-.reticula { 
-    position: absolute; top:0; left:0; width: 100%; height: 100%; 
-    background: radial-gradient(circle, transparent 30%, rgba(0,0,0,0.4) 100%);
-    pointer-events: none;
-}
-
-.pista-movil { font-size: 0.8rem; margin: 15px 0; padding: 10px; background: rgba(255,255,255,0.05); border-left: 3px solid var(--primary); }
-.opciones-movil { display: grid; gap: 8px; }
-.opcion-btn { 
-    padding: 15px; background: var(--panel); border: 1px solid #334155; 
-    color: white; border-radius: 5px; text-align: left;
-}
-.correcto { background: var(--success) !important; border-color: white; }
-.incorrecto { background: var(--danger) !important; }
-
-.feedback { text-align: center; font-weight: bold; margin-top: 10px; min-height: 1.2em; }
+.pista { margin: 15px 0; font-style: italic; font-size: 0.9rem; color: #94a3b8; }
+.grid-ans { display: grid; gap: 8px; }
+.ans-btn { padding: 15px; background: var(--card); border: 1px solid #334155; color: white; border-radius: 5px; text-align: left; }
+.correct { background: #166534 !important; }
+.wrong { background: #991b1b !important; }
+.feedback { margin-top: 10px; font-weight: bold; height: 20px; }
