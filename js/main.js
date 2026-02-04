@@ -1,105 +1,87 @@
-let vehiculos = [];
-let preguntas = [];
-let preguntaActual = 0;
-let aciertos = 0;
-let categoriaActual = '';
+let db = [];
+let testSet = [];
+let curIdx = 0;
+let score = 0;
 
-// Iniciar aplicación
-function comenzarApp() {
+// Precarga al iniciar
+window.onload = async () => {
+    try {
+        const r = await fetch(`data/vehiculos.json?v=${Date.now()}`);
+        db = await r.json();
+    } catch (e) {
+        console.error("Error cargando datos");
+    }
+};
+
+function irASeleccion() {
     document.getElementById('pantalla-inicio').classList.add('hidden');
     document.getElementById('menu-seleccion').classList.remove('hidden');
-    cargarDatos();
 }
 
-async function cargarDatos() {
-    try {
-        const respuesta = await fetch('data/vehiculos.json');
-        vehiculos = await respuesta.json();
-    } catch (error) {
-        console.error("Error al cargar el JSON:", error);
-    }
-}
-
-function seleccionarCategoria(cat) {
-    categoriaActual = cat;
-    document.querySelectorAll('.cat-btn').forEach(btn => {
-        btn.classList.remove('selected');
-        if(btn.innerText.toLowerCase().includes(cat.substring(0,5))) btn.classList.add('selected');
+function seleccionar(tipo) {
+    testSet = tipo === 'todos' ? [...db] : db.filter(v => v.tipo === tipo);
+    document.querySelectorAll('.btn-sel').forEach(b => {
+        b.classList.remove('selected');
+        if(b.innerText.toLowerCase().includes(tipo.substring(0,4))) b.classList.add('selected');
     });
-    document.getElementById('info-seleccion').innerText = `LISTO PARA OPERAR: ${cat.toUpperCase()}`;
-    document.getElementById('btn-jugar').classList.remove('hidden');
+    document.getElementById('status-msg').innerText = `${testSet.length} OBJETIVOS LISTOS`;
+    document.getElementById('btn-confirmar').classList.remove('hidden');
 }
 
-function iniciarJuego() {
-    // Filtrar preguntas
-    if (categoriaActual === 'todos') {
-        preguntas = [...vehiculos];
-    } else {
-        preguntas = vehiculos.filter(v => v.tipo === categoriaActual);
-    }
-
-    // Mezclar orden
-    preguntas.sort(() => Math.random() - 0.5);
-    
-    preguntaActual = 0;
-    aciertos = 0;
-    
+function iniciarMision() {
+    testSet.sort(() => Math.random() - 0.5);
+    curIdx = 0;
+    score = 0;
     document.getElementById('menu-seleccion').classList.add('hidden');
     document.getElementById('pantalla-juego').classList.remove('hidden');
-    mostrarPregunta();
+    renderQuestion();
 }
 
-function mostrarPregunta() {
-    const v = preguntas[preguntaActual];
-    document.getElementById('contador').innerText = `Vehículo: ${preguntaActual + 1} / ${preguntas.length}`;
-    document.getElementById('puntuacion').innerText = `Aciertos: ${aciertos}`;
-    document.getElementById('imagen-vehiculo').src = v.imagen;
-    document.getElementById('descripcion-pista').innerText = v.descripcion;
-    document.getElementById('feedback').innerText = '';
-    document.getElementById('btn-siguiente').classList.add('hidden');
+function renderQuestion() {
+    const item = testSet[curIdx];
+    document.getElementById('txt-progreso').innerText = `OBJ: ${curIdx + 1}/${testSet.length}`;
+    document.getElementById('txt-puntos').innerText = `EFIC: ${Math.round((score/(curIdx||1))*100)}%`;
+    document.getElementById('img-objetivo').src = item.imagen;
+    document.getElementById('pista-text').innerText = item.descripcion;
+    document.getElementById('btn-next').classList.add('hidden');
+    document.getElementById('feedback-txt').innerText = "";
 
-    const contenedorOpciones = document.getElementById('opciones');
-    contenedorOpciones.innerHTML = '';
-
-    v.opciones.forEach(opcion => {
-        const btn = document.createElement('button');
-        btn.className = 'opcion-btn';
-        btn.innerText = opcion;
-        btn.onclick = () => verificarRespuesta(opcion, btn);
-        contenedorOpciones.appendChild(btn);
+    const box = document.getElementById('grid-opciones');
+    box.innerHTML = '';
+    
+    item.opciones.forEach(opt => {
+        const b = document.createElement('button');
+        b.className = 'opcion-btn';
+        b.innerText = opt;
+        b.onclick = () => check(opt, b);
+        box.appendChild(b);
     });
 }
 
-function verificarRespuesta(respuesta, boton) {
-    const correcta = preguntas[preguntaActual].nombre;
-    const botones = document.querySelectorAll('.opcion-btn');
-    
-    botones.forEach(b => b.disabled = true);
+function check(pick, el) {
+    const correct = testSet[curIdx].nombre;
+    const btns = document.querySelectorAll('.opcion-btn');
+    btns.forEach(b => b.disabled = true);
 
-    if (respuesta === correcta) {
-        boton.classList.add('correcto');
-        aciertos++;
-        document.getElementById('feedback').innerText = "¡CORRECTO!";
-        document.getElementById('feedback').style.color = "var(--green)";
+    if(pick === correct) {
+        el.classList.add('correcto');
+        score++;
+        document.getElementById('feedback-txt').innerText = "IDENTIFICADO";
+        document.getElementById('feedback-txt').style.color = "var(--success)";
     } else {
-        boton.classList.add('incorrecto');
-        document.getElementById('feedback').innerText = `ERROR. ES UN: ${correcta}`;
-        document.getElementById('feedback').style.color = "var(--red)";
-        
-        // Marcar la correcta para aprender
-        botones.forEach(b => {
-            if(b.innerText === correcta) b.classList.add('correcto');
-        });
+        el.classList.add('incorrecto');
+        document.getElementById('feedback-txt').innerText = `ERROR: ${correct}`;
+        document.getElementById('feedback-txt').style.color = "var(--danger)";
+        btns.forEach(b => { if(b.innerText === correct) b.classList.add('correcto'); });
     }
-    document.getElementById('btn-siguiente').classList.remove('hidden');
+    document.getElementById('btn-next').classList.remove('hidden');
 }
 
-function siguientePregunta() {
-    preguntaActual++;
-    if (preguntaActual < preguntas.length) {
-        mostrarPregunta();
-    } else {
-        alert(`Entrenamiento finalizado. Aciertos: ${aciertos} de ${preguntas.length}`);
+function proximoObjetivo() {
+    curIdx++;
+    if(curIdx < testSet.length) renderQuestion();
+    else {
+        alert(`INFORME FINAL:\nEfectividad: ${Math.round((score/testSet.length)*100)}%\nAciertos: ${score}/${testSet.length}`);
         location.reload();
     }
 }
