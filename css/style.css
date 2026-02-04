@@ -1,69 +1,36 @@
-:root {
-    --blue: #3b82f6;
-    --dark: #0f172a;
-    --card: #1e293b;
-    --text: #ffffff;
-}
+:root { --azul: #3b82f6; --fondo: #020617; --panel: #1e293b; --texto: #f8fafc; }
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+body { margin: 0; background: var(--fondo); color: var(--texto); font-family: sans-serif; display: flex; justify-content: center; }
+#app-container { width: 100%; max-width: 500px; padding: 20px; background: #0f172a; min-height: 100vh; }
+.modulo { display: none; flex-direction: column; }
+.modulo.activo { display: flex; }
+.oculto { display: none !important; }
 
-* { box-sizing: border-box; font-family: sans-serif; }
+/* Portada */
+.portada { text-align: center; padding: 20px 0; }
+.logo-portada { width: 150px; margin-bottom: 15px; }
+.titulo-principal { font-size: 3.5rem; margin: 0; color: var(--azul); letter-spacing: 2px; }
+.bloque-autor { border: 1px solid #334155; padding: 15px; margin: 30px 0; border-radius: 8px; }
+.etiqueta { display: block; font-size: 0.7rem; color: var(--azul); }
+.nombre-autor { font-weight: bold; font-size: 1.1rem; }
 
-body {
-    margin: 0;
-    background: var(--dark);
-    color: var(--text);
-    display: flex;
-    justify-content: center;
-    min-height: 100vh;
-}
-
-#app { width: 100%; max-width: 450px; position: relative; }
-
-.panel {
-    display: none;
-    flex-direction: column;
-    padding: 20px;
-    text-align: center;
-    min-height: 100vh;
-}
-
-.panel.active { display: flex; }
-
-.hidden { display: none !important; }
-
-/* Estilos de elementos */
-.emblema { width: 120px; margin: 20px auto; display: block; }
-
-h1 { color: var(--blue); letter-spacing: 4px; margin: 10px 0; }
-
-.divisor { height: 2px; background: var(--blue); width: 50%; margin: 20px auto; }
-
-.autor { font-weight: bold; margin-bottom: 30px; opacity: 0.8; }
-
-.btn-main {
-    background: var(--blue);
-    color: white;
-    border: none;
-    padding: 18px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    border-radius: 8px;
-    cursor: pointer;
-    width: 100%;
-}
-
-/* Grid de Selección */
-.grid-sel { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0; }
-.btn-opt { padding: 20px 10px; background: var(--card); border: 1px solid #334155; color: white; border-radius: 6px; font-weight: bold; }
-.btn-opt.selected { border-color: var(--blue); background: #2d3e5a; }
-.full { grid-column: span 2; }
+/* Botones */
+.boton-militar { width: 100%; padding: 20px; background: var(--azul); color: white; border: none; border-radius: 8px; font-weight: bold; font-size: 1.1rem; cursor: pointer; }
+.grid-opciones, .grid-modos { display: grid; gap: 12px; margin-bottom: 20px; }
+.grid-opciones { grid-template-columns: 1fr 1fr; }
+.btn-cat, .btn-modo { background: var(--panel); border: 2px solid #334155; color: white; border-radius: 8px; cursor: pointer; padding: 20px 10px; font-weight: bold; }
+.btn-modo { display: flex; flex-direction: column; text-align: left; padding: 15px; }
+.btn-modo span { font-size: 0.8rem; opacity: 0.6; font-weight: normal; margin-top: 4px; }
+.resaltado { grid-column: span 2; }
 
 /* Juego */
-.hud { display: flex; justify-content: space-between; padding: 10px; color: var(--blue); font-weight: bold; }
-.visor { background: #000; border-radius: 8px; overflow: hidden; height: 250px; border: 1px solid var(--blue); }
-#img-objetivo { width: 100%; height: 100%; object-fit: contain; }
-.pista { margin: 15px 0; font-style: italic; font-size: 0.9rem; color: #94a3b8; }
-.grid-ans { display: grid; gap: 8px; }
-.ans-btn { padding: 15px; background: var(--card); border: 1px solid #334155; color: white; border-radius: 5px; text-align: left; }
-.correct { background: #166534 !important; }
-.wrong { background: #991b1b !important; }
-.feedback { margin-top: 10px; font-weight: bold; height: 20px; }
+.barra-estado { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--azul); font-weight: bold; margin-bottom: 10px; }
+.contenedor-foto { background: #000; border: 1px solid #334155; border-radius: 8px; height: 280px; display: flex; align-items: center; overflow: hidden; }
+#img-obj { width: 100%; height: 100%; object-fit: contain; }
+.descripcion-pista { padding: 15px 0; font-size: 0.9rem; color: #94a3b8; text-align: center; font-style: italic; min-height: 60px; }
+.grid-respuestas { display: grid; gap: 10px; }
+.btn-res { padding: 16px; background: var(--panel); border: 1px solid #334155; color: white; border-radius: 8px; text-align: left; cursor: pointer; }
+.bien { background: #16a34a !important; }
+.mal { background: #dc2626 !important; }
+.zona-feedback { text-align: center; font-weight: bold; margin: 15px 0; min-height: 24px; }
+.boton-abortar { background: none; border: none; color: #475569; width: 100%; margin-top: 20px; cursor: pointer; text-decoration: underline; }
