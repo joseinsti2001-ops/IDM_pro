@@ -1,51 +1,39 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PROIDENTIFICA | Instrucción Militar</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
 <body>
     <div id="app">
-        <section id="menu-screen" class="screen">
-            <h1>SISTEMA DE IDENTIFICACIÓN</h1>
-            <div class="config-block">
-                <h3>1. OBJETIVOS</h3>
-                <div class="grid-3">
-                    <button class="cat-btn" data-cat="blindado">🛡️ BLINDADOS</button>
-                    <button class="cat-btn" data-cat="drone">🛸 DRONES</button>
-                    <button class="cat-btn" data-cat="artilleria">💥 ARTILLERÍA</button>
-                    <button class="cat-btn" data-cat="aereo">✈️ AÉREOS</button>
-                </div>
-            </div>
-            <div class="config-block">
-                <h3>2. MODO</h3>
-                <div class="grid-3">
-                    <button class="mode-btn" data-mode="entrenamiento">ENTRENAMIENTO</button>
-                    <button class="mode-btn" data-mode="examen">EXAMEN</button>
-                    <button class="mode-btn" data-mode="supervivencia">SUPERVIVENCIA</button>
-                </div>
-            </div>
-            <button id="start-btn" class="action-btn">INICIAR OPERACIÓN</button>
-        </section>
-
-        <section id="game-screen" class="screen hidden">
-            <div id="quiz-container"></div>
-            <div class="marcador-basico">
-                Aciertos: <span id="puntos-si">0</span> | Fallos: <span id="puntos-no">0</span>
-            </div>
-        </section>
-
-        <section id="result-screen" class="screen hidden">
-            <h2>INFORME DE MISIÓN</h2>
-            <div id="final-score" class="score-display">0 / 0</div>
-            <button onclick="location.reload()" class="action-btn">REINTENTAR</button>
-        </section> <div id="zoom-modal" class="hidden" onclick="this.classList.add('hidden')">
-            <span class="close-zoom">&times;</span>
-            <img id="img-zoomed" src="" alt="Zoom">
+        <div id="pantalla-inicio" class="panel-inicio">
+            <img src="assets/emblema_legion.png" alt="Emblema La Legión" class="emblema-portada">
+            <h1>ID-MIL</h1>
+            <h3>RECONOCIMIENTO E INTELIGENCIA</h3>
+            <div class="divisor"></div>
+            <p class="autor">TTE. JOSE REVERT TORMO</p>
+            <button onclick="comenzarApp()" class="action-btn">ENTRAR AL SISTEMA</button>
         </div>
 
-    </div> <script src="js/main.js"></script>
+        <div id="menu-seleccion" class="hidden">
+            <h2 class="titulo-seccion">SELECCIONAR CATEGORÍA</h2>
+            <div class="grid-categorias">
+                <button class="cat-btn" onclick="seleccionarCategoria('blindado')">BLINDADOS</button>
+                <button class="cat-btn" onclick="seleccionarCategoria('artilleria')">ARTILLERÍA</button>
+                <button class="cat-btn" onclick="seleccionarCategoria('aereo')">AÉREO</button>
+                <button class="cat-btn" onclick="seleccionarCategoria('drone')">DRONES</button>
+                <button class="cat-btn highlight" onclick="seleccionarCategoria('todos')">TODO EL ARSENAL</button>
+            </div>
+            <div id="info-seleccion" class="info-texto">Seleccione una categoría para empezar</div>
+            <button id="btn-jugar" class="action-btn hidden" onclick="iniciarJuego()">INICIAR ENTRENAMIENTO</button>
+        </div>
+
+        <div id="pantalla-juego" class="hidden">
+            <div class="header-juego">
+                <span id="contador">Vehículo: 0 / 0</span>
+                <span id="puntuacion">Aciertos: 0</span>
+            </div>
+            <div class="contenedor-imagen">
+                <img id="imagen-vehiculo" src="" alt="Identifique el vehículo">
+            </div>
+            <div id="opciones" class="grid-opciones">
+                </div>
+            <div id="feedback" class="feedback"></div>
+            <button id="btn-siguiente" class="action-btn hidden" onclick="siguientePregunta()">SIGUIENTE</button>
+        </div>
+    </div>
 </body>
-</html>
