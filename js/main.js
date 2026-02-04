@@ -1,144 +1,105 @@
-document.addEventListener('DOMContentLoaded', () => {
-    let db = [];
-    let sessionPool = [];
-    let currentIndex = 0;
-    let score = 0;
-    let fallos = 0;
-    let config = { categorias: [], modo: null };
+let vehiculos = [];
+let preguntas = [];
+let preguntaActual = 0;
+let aciertos = 0;
+let categoriaActual = '';
 
-    // 1. CARGAR DATOS
-    fetch('data/vehiculos.json')
-        .then(response => response.json())
-        .then(data => {
-            db = data;
-            console.log("Base de datos lista");
-        })
-        .catch(err => console.error("Error al cargar JSON:", err));
+// Iniciar aplicación
+function comenzarApp() {
+    document.getElementById('pantalla-inicio').classList.add('hidden');
+    document.getElementById('menu-seleccion').classList.remove('hidden');
+    cargarDatos();
+}
 
-    // 2. CONFIGURACIÓN DEL MENÚ
+async function cargarDatos() {
+    try {
+        const respuesta = await fetch('data/vehiculos.json');
+        vehiculos = await respuesta.json();
+    } catch (error) {
+        console.error("Error al cargar el JSON:", error);
+    }
+}
+
+function seleccionarCategoria(cat) {
+    categoriaActual = cat;
     document.querySelectorAll('.cat-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            btn.classList.toggle('selected');
-            const cat = btn.dataset.cat;
-            if (config.categorias.includes(cat)) {
-                config.categorias = config.categorias.filter(c => c !== cat);
-            } else {
-                config.categorias.push(cat);
-            }
+        btn.classList.remove('selected');
+        if(btn.innerText.toLowerCase().includes(cat.substring(0,5))) btn.classList.add('selected');
+    });
+    document.getElementById('info-seleccion').innerText = `LISTO PARA OPERAR: ${cat.toUpperCase()}`;
+    document.getElementById('btn-jugar').classList.remove('hidden');
+}
+
+function iniciarJuego() {
+    // Filtrar preguntas
+    if (categoriaActual === 'todos') {
+        preguntas = [...vehiculos];
+    } else {
+        preguntas = vehiculos.filter(v => v.tipo === categoriaActual);
+    }
+
+    // Mezclar orden
+    preguntas.sort(() => Math.random() - 0.5);
+    
+    preguntaActual = 0;
+    aciertos = 0;
+    
+    document.getElementById('menu-seleccion').classList.add('hidden');
+    document.getElementById('pantalla-juego').classList.remove('hidden');
+    mostrarPregunta();
+}
+
+function mostrarPregunta() {
+    const v = preguntas[preguntaActual];
+    document.getElementById('contador').innerText = `Vehículo: ${preguntaActual + 1} / ${preguntas.length}`;
+    document.getElementById('puntuacion').innerText = `Aciertos: ${aciertos}`;
+    document.getElementById('imagen-vehiculo').src = v.imagen;
+    document.getElementById('descripcion-pista').innerText = v.descripcion;
+    document.getElementById('feedback').innerText = '';
+    document.getElementById('btn-siguiente').classList.add('hidden');
+
+    const contenedorOpciones = document.getElementById('opciones');
+    contenedorOpciones.innerHTML = '';
+
+    v.opciones.forEach(opcion => {
+        const btn = document.createElement('button');
+        btn.className = 'opcion-btn';
+        btn.innerText = opcion;
+        btn.onclick = () => verificarRespuesta(opcion, btn);
+        contenedorOpciones.appendChild(btn);
+    });
+}
+
+function verificarRespuesta(respuesta, boton) {
+    const correcta = preguntas[preguntaActual].nombre;
+    const botones = document.querySelectorAll('.opcion-btn');
+    
+    botones.forEach(b => b.disabled = true);
+
+    if (respuesta === correcta) {
+        boton.classList.add('correcto');
+        aciertos++;
+        document.getElementById('feedback').innerText = "¡CORRECTO!";
+        document.getElementById('feedback').style.color = "var(--green)";
+    } else {
+        boton.classList.add('incorrecto');
+        document.getElementById('feedback').innerText = `ERROR. ES UN: ${correcta}`;
+        document.getElementById('feedback').style.color = "var(--red)";
+        
+        // Marcar la correcta para aprender
+        botones.forEach(b => {
+            if(b.innerText === correcta) b.classList.add('correcto');
         });
-    });
-
-    document.querySelectorAll('.mode-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('selected'));
-            btn.classList.add('selected');
-            config.modo = btn.dataset.mode;
-        });
-    });
-
-    document.getElementById('start-btn').addEventListener('click', () => {
-        if (config.categorias.length === 0 || !config.modo) {
-            alert("⚠️ Selecciona categorías y modo.");
-            return;
-        }
-        startGame();
-    });
-
-    // 3. LÓGICA DE JUEGO
-    function startGame() {
-        sessionPool = db.filter(item => config.categorias.includes(item.tipo));
-        if (sessionPool.length === 0) {
-            alert("No hay datos en esta categoría.");
-            return;
-        }
-
-        sessionPool.sort(() => Math.random() - 0.5);
-        if (config.modo === 'examen') sessionPool = sessionPool.slice(0, 20);
-
-        currentIndex = 0;
-        score = 0;
-        fallos = 0;
-
-        document.getElementById('puntos-si').innerText = "0";
-        document.getElementById('puntos-no').innerText = "0";
-
-        document.getElementById('menu-screen').classList.add('hidden');
-        document.getElementById('game-screen').classList.remove('hidden');
-        renderQuestion();
     }
+    document.getElementById('btn-siguiente').classList.remove('hidden');
+}
 
-    function renderQuestion() {
-        const data = sessionPool[currentIndex];
-        const container = document.getElementById('quiz-container');
-        const shuffledOptions = [...data.opciones].sort(() => Math.random() - 0.5);
-
-        container.innerHTML = `
-            <div style="display:flex; justify-content:space-between; margin-bottom:10px; color:#94a3b8; font-size:0.8rem;">
-                <span>OBJETIVO: ${currentIndex + 1} / ${sessionPool.length}</span>
-                <span>MODO: ${config.modo.toUpperCase()}</span>
-            </div>
-            
-            <img src="${data.imagen}" class="img-quiz" 
-                 onclick="openZoom(this.src)" 
-                 onerror="this.src='https://placehold.co/600x400?text=IMAGEN+NO+ENCONTRADA'">
-            
-            <div class="desc">"${data.descripcion}"</div>
-            <div class="options-grid">
-                ${shuffledOptions.map(opt => `
-                    <button class="opt-btn" onclick="checkAnswer('${opt}', this)">${opt}</button>
-                `).join('')}
-            </div>
-        `;
+function siguientePregunta() {
+    preguntaActual++;
+    if (preguntaActual < preguntas.length) {
+        mostrarPregunta();
+    } else {
+        alert(`Entrenamiento finalizado. Aciertos: ${aciertos} de ${preguntas.length}`);
+        location.reload();
     }
-
-    // Función para manejar la respuesta
-    window.checkAnswer = (selected, btnElement) => {
-        const correct = sessionPool[currentIndex].nombre;
-        const allButtons = document.querySelectorAll('.opt-btn');
-        allButtons.forEach(btn => btn.disabled = true);
-
-        const esCorrecto = (selected === correct);
-
-        if (esCorrecto) {
-            btnElement.classList.add('correct');
-            score++;
-            document.getElementById('puntos-si').innerText = score;
-        } else {
-            btnElement.classList.add('incorrect');
-            fallos++;
-            document.getElementById('puntos-no').innerText = fallos;
-            allButtons.forEach(btn => {
-                if (btn.innerText === correct) btn.classList.add('correct');
-            });
-        }
-
-        setTimeout(() => {
-            if (config.modo === 'supervivencia' && !esCorrecto) {
-                endGame(false);
-                return;
-            }
-            currentIndex++;
-            if (currentIndex < sessionPool.length) {
-                renderQuestion();
-            } else {
-                endGame(true);
-            }
-        }, 1200);
-    };
-
-    // Función para el Zoom (Global)
-    window.openZoom = (src) => {
-        const modal = document.getElementById('zoom-modal');
-        const zoomedImg = document.getElementById('img-zoomed');
-        zoomedImg.src = src;
-        modal.classList.remove('hidden');
-    };
-
-    function endGame(completed) {
-        document.getElementById('game-screen').classList.add('hidden');
-        document.getElementById('result-screen').classList.remove('hidden');
-        const msg = completed ? "MISIÓN COMPLETADA" : "MISIÓN FALLIDA (KIA)";
-        document.querySelector('#result-screen h2').innerText = msg;
-        document.getElementById('final-score').innerText = `Puntuación: ${score} / ${sessionPool.length}`;
-    }
-});
+}
