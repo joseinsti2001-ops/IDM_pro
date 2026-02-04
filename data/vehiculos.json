@@ -1,0 +1,762 @@
+[
+  {
+    "id": "t55",
+    "tipo": "blindado",
+    "nombre": "T-55",
+    "descripcion": "Evacuador de gases al principio del cañón. Tren Christie.",
+    "opciones": ["T-54", "T-55", "T-62", "Type 59"],
+    "imagen": "assets/T-55.jpg"
+  },
+  {
+    "id": "t62",
+    "tipo": "blindado",
+    "nombre": "T-62",
+    "descripcion": "Evacuador de gases a mitad del cañón. Torre redondeada. Tren Christie.",
+    "opciones": ["T-55", "T-62", "T-64", "IT-1"],
+    "imagen": "assets/T-62.png"
+  },
+  {
+    "id": "t64bv",
+    "tipo": "blindado",
+    "nombre": "T-64BV",
+    "descripcion": "Recubierto de cubitos ERA. Faro al lado contrario. Cara torre con forma de esquina. Ruedas de tapacubos.",
+    "opciones": ["T-64BV", "T-72AV", "T-80BV", "T-64B"],
+    "imagen": "assets/T-64BV.jpg"
+  },
+  {
+    "id": "t80u",
+    "tipo": "blindado",
+    "nombre": "T-80U/UD",
+    "descripcion": "Ruedas lisas. Tres periscopios. Snorkel. Kontakt-5 en forma de paraguas.",
+    "opciones": ["T-80U/UD", "T-80BVM", "T-90A", "T-72B3"],
+    "imagen": "assets/T-80U-UD.jpg"
+  },
+  {
+    "id": "t80bvm",
+    "tipo": "blindado",
+    "nombre": "T-80BVM",
+    "descripcion": "Tres periscopios. Blindaje torre en forma de platillo volante (ERA Relikt). Ruedas lisas.",
+    "opciones": ["T-80BVM", "T-80U", "T-72B3", "T-90M"],
+    "imagen": "assets/T-80BVM.jpg"
+  },
+  {
+    "id": "t72b3",
+    "tipo": "blindado",
+    "nombre": "T-72B3",
+    "descripcion": "Faldones ligeros. Ruedas margarita. Gran cantidad de lanza-fumígenos.",
+    "opciones": ["T-72B", "T-72B3", "T-90A", "T-72AV"],
+    "imagen": "assets/T-72B3.png"
+  },
+  {
+    "id": "pt91",
+    "tipo": "blindado",
+    "nombre": "PT-91",
+    "descripcion": "Lanza-fumígenos 2+4. Ruedas margarita. 3 placas de blindaje adicionales.",
+    "opciones": ["T-72M1", "PT-91", "T-72B3", "M-84"],
+    "imagen": "assets/PT-91.jpg"
+  },
+  {
+    "id": "t90a",
+    "tipo": "blindado",
+    "nombre": "T-90A",
+    "descripcion": "Ojos del T-90 (Shtora). Blindaje de torre matizado. Escape lado izquierdo.",
+    "opciones": ["T-90A", "T-90S", "T-80U", "T-72B3"],
+    "imagen": "assets/T90-A.jpg"
+  },
+  {
+    "id": "t90m",
+    "tipo": "blindado",
+    "nombre": "T-90M",
+    "descripcion": "ERA Relikt plana. Rejilla trasera. Faldones muy gruesos. Torre recta sin platillo.",
+    "opciones": ["T-90A", "T-90M", "T-14 Armata", "T-80BVM"],
+    "imagen": "assets/T-90M.jpg"
+  },
+  {
+    "id": "m60",
+    "tipo": "blindado",
+    "nombre": "M-60",
+    "descripcion": "Pómulos característicos. Glacis superior plano. Preinstalación del periscopio.",
+    "opciones": ["M48 Patton", "M-60", "M1 Abrams", "Magach 6"],
+    "imagen": "assets/M-60.jpg"
+  },
+  {
+    "id": "m1a1",
+    "tipo": "blindado",
+    "nombre": "M1A1 ABRAMS",
+    "descripcion": "Periscopio frente al cargador. Lanzas en forma de colmena. Conductor en el centro.",
+    "opciones": ["M1 Abrams", "M1A1 ABRAMS", "M1A2 ABRAMS", "Leopard 2A4"],
+    "imagen": "assets/M1A1-ABRAMS.jpg"
+  },
+  {
+    "id": "m1a2",
+    "tipo": "blindado",
+    "nombre": "M1A2 ABRAMS",
+    "descripcion": "Cesta que rodea la torre. Periscopio CITV frente al cargador. Faldones ligeros.",
+    "opciones": ["M1A1 ABRAMS", "M1A2 ABRAMS", "M1A2 SEP V3", "Leclerc"],
+    "imagen": "assets/M1A2-ABRAMS.jpg"
+  },
+  {
+    "id": "m1a2sep",
+    "tipo": "blindado",
+    "nombre": "M1A2 SEP V3",
+    "descripcion": "Arma remota (CROWS). Elementos de puntería avanzados. Periscopio forma de cubo de basura.",
+    "opciones": ["M1A2 ABRAMS", "M1A2 SEP V3", "M1A1 FEP", "K2 Black Panther"],
+    "imagen": "assets/M1A2-SEP-V3.jpg"
+  },
+  {
+    "id": "leclerc",
+    "tipo": "blindado",
+    "nombre": "AMX-56 Leclerc",
+    "descripcion": "Caja de puntería característica. Extintores externos. Periscopio del jefe.",
+    "opciones": ["AMX-30", "Leclerc", "Leopard 2", "Ariete"],
+    "imagen": "assets/AMX-56-LECLERC.png"
+  },
+  {
+    "id": "challenger2",
+    "tipo": "blindado",
+    "nombre": "Challenger 2",
+    "descripcion": "Lanza fumígenos en ramo. Radiador característico. MG 3 exterior.",
+    "opciones": ["Challenger 1", "Challenger 2", "Chieftain", "Vickers Mk7"],
+    "imagen": "assets/CHALLENGER-2.jpg"
+  },
+  {
+    "id": "ariete",
+    "tipo": "blindado",
+    "nombre": "C1 Ariete",
+    "descripcion": "Torre inclinada. Escape a ambos lados. Mantelete anguloso. Faros redondos alemanes.",
+    "opciones": ["Leopard 2A4", "C1 Ariete", "Leopard 1", "Centauro"],
+    "imagen": "assets/C1-ARIETE.jpg"
+  },
+  {
+    "id": "leopard1",
+    "tipo": "blindado",
+    "nombre": "Leopard 1",
+    "descripcion": "Torre plana. Periscopio del jefe prominente. Elementos de puntería laterales.",
+    "opciones": ["AMX-30", "Leopard 1", "M60 Patton", "OF-40"],
+    "imagen": "assets/LEOPARD-1.jpg"
+  },
+  {
+    "id": "leopard2a4",
+    "tipo": "blindado",
+    "nombre": "Leopard 2A4",
+    "descripcion": "Torre vertical (cuadrada). Elementos de puntería en hueco torre. Faros redondos.",
+    "opciones": ["Leopard 2A5", "Leopard 2A4", "Leopard 1", "PzH 2000"],
+    "imagen": "assets/LEOPARD-2A4.jpg"
+  },
+  {
+    "id": "leopard2a6",
+    "tipo": "blindado",
+    "nombre": "Leopard 2A6",
+    "descripcion": "Torre en cuña. Cañón L55 más largo. Cámara conductor. Faros cuadrados.",
+    "opciones": ["Leopard 2A5", "Leopard 2A6", "Leopard 2A7", "Strv 122"],
+    "imagen": "assets/LEOPARD-2A6.AVIF"
+  },
+  {
+    "id": "bmd1",
+    "tipo": "blindado",
+    "nombre": "BMD-1",
+    "descripcion": "Cañón 73mm corto. 5 ruedas. Barcaza forma de barco. Torre adelantada.",
+    "opciones": ["BMD-2", "BMP-1", "BMD-1", "BTR-D"],
+    "imagen": "assets/BMD-1.jpg"
+  },
+  {
+    "id": "bmd2",
+    "tipo": "blindado",
+    "nombre": "BMD-2",
+    "descripcion": "Cañón 30mm fino y largo. 5 ruedas. Barcaza forma de barco.",
+    "opciones": ["BMD-1", "BMD-2", "BMP-2", "BMD-3"],
+    "imagen": "assets/BMD-2.jpg"
+  },
+  {
+    "id": "bmd4",
+    "tipo": "blindado",
+    "nombre": "BMD-4",
+    "descripcion": "Cañones de 100mm y 30mm acoplados. 5 ruedas. 3+3 lanza-artificios.",
+    "opciones": ["BMD-3", "BMP-3", "BMD-4", "BTR-MDM"],
+    "imagen": "assets/BMD-4.jpg"
+  },
+  {
+    "id": "bmp1",
+    "tipo": "blindado",
+    "nombre": "BMP-1",
+    "descripcion": "Faldón circular. 2 escotillas traseras. Cañón 73mm corto. 6 ruedas.",
+    "opciones": ["BMP-2", "BMP-1", "BMD-1", "PBV 501"],
+    "imagen": "assets/BMP-1.jpg"
+  },
+  {
+    "id": "bmp2",
+    "tipo": "blindado",
+    "nombre": "BMP-2",
+    "descripcion": "Faldón ligero circular. Cañón 30mm. 6 ruedas de rodaje.",
+    "opciones": ["BMP-1", "BMP-3", "BMP-2", "BMD-2"],
+    "imagen": "assets/BMP-2.png"
+  },
+  {
+    "id": "bmp3",
+    "tipo": "blindado",
+    "nombre": "BMP-3",
+    "descripcion": "Doble cañón (100+30). Faros muy juntos. 6 Ruedas lisas dobles.",
+    "opciones": ["BMD-4", "BMP-3", "BTR-90", "ZBD-04"],
+    "imagen": "assets/BMP-3.jpg"
+  },
+  {
+    "id": "bmpt",
+    "tipo": "blindado",
+    "nombre": "BMP-T",
+    "descripcion": "Terminator. Cañón doble 30mm forma de 'porra'. Chasis de tanque.",
+    "opciones": ["BMP-3", "BMP-T", "BTR-82A", "T-15 Armata"],
+    "imagen": "assets/BMP-T.jpeg"
+  },
+  {
+    "id": "brdm2",
+    "tipo": "blindado",
+    "nombre": "BRDM-2",
+    "descripcion": "Anfibio. Rampa de vadeo. Pequeña torre. 4 ruedas.",
+    "opciones": ["BRDM-1", "BTR-60", "BRDM-2", "ASLAV"],
+    "imagen": "assets/BRDM-2.jpg"
+  },
+  {
+    "id": "bradley",
+    "tipo": "blindado",
+    "nombre": "M2/M3 Bradley",
+    "descripcion": "Escalón en el conductor. Lanzador TOW lateral en torre.",
+    "opciones": ["Marder", "M2/M3 Bradley", "Warrior", "ASCOD"],
+    "imagen": "assets/M2-M3-BRADLEY.jpg"
+  },
+  {
+    "id": "stryker",
+    "tipo": "blindado",
+    "nombre": "M1126 Stryker",
+    "descripcion": "8 Ruedas. Separación 3ª y 4ª rueda. Ametralladora 12,7mm remota.",
+    "opciones": ["LAV-25", "M1126 Stryker", "Piranha", "BTR-80"],
+    "imagen": "assets/M1126-STRYKER.jpg"
+  },
+  {
+    "id": "mtlb",
+    "tipo": "blindado",
+    "nombre": "MTLB",
+    "descripcion": "Torre 'Cara de rana'. Perfil bajo y alargado. Tren Christie.",
+    "opciones": ["MTLB", "GT-MU", "BMP-1", "BTR-50"],
+    "imagen": "assets/MTLB.jpg"
+  },
+  {
+    "id": "m113",
+    "tipo": "blindado",
+    "nombre": "M-113",
+    "descripcion": "Forma de caja de aluminio. Puerta trasera rampa. Tren Christie.",
+    "opciones": ["AAV-7", "M-113", "FV432", "YPR-765"],
+    "imagen": "assets/M-113.jpg"
+  },
+  {
+    "id": "hmmwv",
+    "tipo": "blindado",
+    "nombre": "HMMWV",
+    "descripcion": "Humvee. Parrilla característica de siete ranuras verticales.",
+    "opciones": ["VAMTAC", "HMMWV", "Sherpa", "Iveco LMV"],
+    "imagen": "assets/HMMWV.jpg"
+  },
+  {
+    "id": "vab",
+    "tipo": "blindado",
+    "nombre": "VAB",
+    "descripcion": "Puerta pequeña sobre la rueda delantera. 4x4 o 6x6 francés.",
+    "opciones": ["Fuchs", "VAB", "VBL", "BTR-60"],
+    "imagen": "assets/VAB.jpg"
+  },
+  {
+    "id": "vbl",
+    "tipo": "blindado",
+    "nombre": "VBL",
+    "descripcion": "4x4 muy pequeño. Radiador lateral. Falta de parrilla frontal.",
+    "opciones": ["Fennek", "VBL", "VAB", "Dingo"],
+    "imagen": "assets/VBL.jpg"
+  },
+  {
+    "id": "boxer",
+    "tipo": "blindado",
+    "nombre": "GTK Boxer",
+    "descripcion": "Modular. Mucho ERA. Afuste con escudo. Muy alto.",
+    "opciones": ["Patria AMV", "GTK Boxer", "VBCI", "Eitan"],
+    "imagen": "assets/GTK-BOXER.webp"
+  },
+  {
+    "id": "2s19",
+    "tipo": "artilleria",
+    "nombre": "2S19 MSTA",
+    "descripcion": "Chasis T-80, motor T-72. Torre central enorme. Frenos recuperación.",
+    "opciones": ["2S3 Akatsiya", "2S19 MSTA", "2S35 Koalitsiya", "AS-90"],
+    "imagen": "assets/2S19-MSTA.jpg"
+  },
+  {
+    "id": "2s35",
+    "tipo": "artilleria",
+    "nombre": "2S35 Koalitsaya",
+    "descripcion": "Frenos recuperación ocultos. Tren de rodaje de T-90.",
+    "opciones": ["2S19 MSTA", "2S35 Koalitsaya", "2S3 Akatsiya", "PzH 2000"],
+    "imagen": "assets/2S35-KOALITSAYA.webp"
+  },
+  {
+    "id": "2s1",
+    "tipo": "artilleria",
+    "nombre": "2S1 Gvozdika",
+    "descripcion": "Torre chafada. Chasis anfibio forma barco. Tren Christie.",
+    "opciones": ["2S3 Akatsiya", "2S1 Gvozdika", "M109", "Abkhaz-3"],
+    "imagen": "assets/2S1-GVOZDIKA.jpg"
+  },
+  {
+    "id": "2s3",
+    "tipo": "artilleria",
+    "nombre": "2S3 Akatsiya",
+    "descripcion": "Tren Vickers (ruedas pequeñas). 2 recuperadores retroceso externos.",
+    "opciones": ["2S1 Gvozdika", "2S3 Akatsiya", "2S19 MSTA", "M109"],
+    "imagen": "assets/2S3-AKATSIYA.jpg"
+  },
+  {
+    "id": "2s7m",
+    "tipo": "artilleria",
+    "nombre": "27M Malka",
+    "descripcion": "203mm enorme. Tripulación descubierta. Chasis T-80 alargado.",
+    "opciones": ["2S4 Tyulpan", "27M Malka", "M110", "2S5 Giatsint"],
+    "imagen": "assets/27M-MALKA.jpg"
+  },
+  {
+    "id": "tunguska",
+    "tipo": "artilleria",
+    "nombre": "Tunguska",
+    "descripcion": "Antiaéreo. 2 cañones 30mm + 8 misiles. Radares redondos.",
+    "opciones": ["Shilka", "Tunguska", "Pantsir-S1", "Gepard"],
+    "imagen": "assets/TUNGUSKA.jpg"
+  },
+  {
+    "id": "m109",
+    "tipo": "artilleria",
+    "nombre": "M109",
+    "descripcion": "Freno boca sencillo. Periscopio jefe. Frente torre circular.",
+    "opciones": ["PzH 2000", "M109", "AS-90", "K9 Thunder"],
+    "imagen": "assets/M109.webp"
+  },
+  {
+    "id": "caesar",
+    "tipo": "artilleria",
+    "nombre": "Caesar",
+    "descripcion": "ATP sobre camión. Sistema carga Cureña. Sin torre cerrada.",
+    "opciones": ["Archer", "Caesar", "Zuzana", "ATMOS"],
+    "imagen": "assets/CAESAR.jpg"
+  },
+  {
+    "id": "pzh2000",
+    "tipo": "artilleria",
+    "nombre": "Panzeraubitz 2000",
+    "descripcion": "Luces sobre el glacis. Base cañón sólida. Muy largo.",
+    "opciones": ["M109", "Panzeraubitz 2000", "AS-90", "Krabs"],
+    "imagen": "assets/PANZERAUBITZE-2000.webn"
+  },
+  {
+    "id": "archer",
+    "tipo": "artilleria",
+    "nombre": "Archer FH77BW L52",
+    "descripcion": "Totalmente automático. Camión articulado 3 ejes. Gran volumen trasero.",
+    "opciones": ["Caesar", "Archer FH77BW L52", "Dana", "Nora B-52"],
+    "imagen": "assets/ARCHER.jpg"
+  },
+  {
+    "id": "m777",
+    "tipo": "artilleria",
+    "nombre": "M777",
+    "descripcion": "Obús remolcado ultraligero. 2 ejes bajo la pieza.",
+    "opciones": ["M198", "M777", "FH-70", "L118 Light Gun"],
+    "imagen": "assets/M777.jpg"
+  },
+  {
+    "id": "himars",
+    "tipo": "artilleria",
+    "nombre": "HIMARS",
+    "descripcion": "Lanzador 6 cohetes. Camión 6x6 cabina hexagonal blindada.",
+    "opciones": ["M270 MLRS", "HIMARS", "FMTV", "ASTROS II"],
+    "imagen": "assets/HIMARS.jpg"
+  },
+  {
+    "id": "smerch",
+    "tipo": "artilleria",
+    "nombre": "BM-30 Smerch",
+    "descripcion": "Tubos muy largos. Camión 8x8. Cabina solo en un lado.",
+    "opciones": ["BM-21 Grad", "BM-30 Smerch", "Uragan", "Tornado-S"],
+    "imagen": "assets/BM-30-SMERCH.webp"
+  },
+  {
+    "id": "grad",
+    "tipo": "artilleria",
+    "nombre": "BM-21 Grad",
+    "descripcion": "40 tubos en caja. Camión con morro (Ural). Clásico soviético.",
+    "opciones": ["BM-30 Smerch", "BM-21 Grad", "RM-70", "Uragan"],
+    "imagen": "assets/BM-21-GRAD.jpg"
+  },
+  {
+    "id": "tos1",
+    "tipo": "artilleria",
+    "nombre": "TOS-1",
+    "descripcion": "Lanzacohetes termobárico. Sándwich helado sobre chasis T-72.",
+    "opciones": ["TOS-1", "TOS-2", "BM-21", "Uragan"],
+    "imagen": "assets/TOS-1.jpg"
+  },
+  {
+    "id": "m270",
+    "tipo": "artilleria",
+    "nombre": "M270 MLRS",
+    "descripcion": "Orugas. 12 cohetes (6+6). Cabina blindada con rejillas.",
+    "opciones": ["HIMARS", "M270 MLRS", "MARS II", "K239 Chunmoo"],
+    "imagen": "assets/M270-MLRS.jpg"
+  },
+  {
+    "id": "m163",
+    "tipo": "artilleria",
+    "nombre": "M163 VADS",
+    "descripcion": "Chasis M113. Cañón Gatling Vulcan 20mm. Radar pequeño.",
+    "opciones": ["M42 Duster", "M163 VADS", "Sidam 25", "Machbet"],
+    "imagen": "assets/M163-VADS.jpg"
+  },
+  {
+    "id": "hawk",
+    "tipo": "artilleria",
+    "nombre": "Hawk",
+    "descripcion": "Remolque 2 ruedas. 3 misiles puntiagudos en 1+2.",
+    "opciones": ["SA-3 Goa", "Hawk", "Patriot", "S-125"],
+    "imagen": "assets/HAWK.jpeg"
+  },
+  {
+    "id": "patriot",
+    "tipo": "artilleria",
+    "nombre": "Patriot",
+    "descripcion": "Cajas rectangulares inclinadas. Camión MAN u Oshkosh.",
+    "opciones": ["S-300", "Patriot", "THAAD", "NASAMS"],
+    "imagen": "assets/PATRIOT.jpg"
+  },
+  {
+    "id": "buk",
+    "tipo": "artilleria",
+    "nombre": "9K37 Buk",
+    "descripcion": "Lanzador orugas. 4 misiles con 'aletas' centrales. Cúpula radar.",
+    "opciones": ["9K37 Buk", "Kub (SA-6)", "S-300V", "Tor-M1"],
+    "imagen": "assets/9K37-BUK.jpg"
+  },
+  {
+    "id": "s400",
+    "tipo": "artilleria",
+    "nombre": "S-400",
+    "descripcion": "4 tubos verticales enormes sobre camión 8x8 BAZ.",
+    "opciones": ["S-300", "S-400", "S-500", "Iskander"],
+    "imagen": "assets/S-400.jpg"
+  },
+  {
+    "id": "ka52",
+    "tipo": "aereo",
+    "nombre": "Ka-52 Alligator",
+    "descripcion": "Rotores coaxiales (2 hélices). Sin rotor cola. Tren retráctil.",
+    "opciones": ["Ka-50 Black Shark", "Ka-52 Alligator", "Mi-28 Havoc", "Apache"],
+    "imagen": "assets/KA-52-ALLIGATOR.jpg"
+  },
+  {
+    "id": "mi8",
+    "tipo": "aereo",
+    "nombre": "Mi-8/17 Hip",
+    "descripcion": "Cabina invernadero. Gran volumen de carga. 2 motores arriba.",
+    "opciones": ["Mi-14", "Mi-8/17 Hip", "Puma", "Super Frelon"],
+    "imagen": "assets/MI-8-17-HIP.png"
+  },
+  {
+    "id": "mi24",
+    "tipo": "aereo",
+    "nombre": "Mi-24/35 Hind",
+    "descripcion": "Cabinas burbuja separadas. Alas cortas armadas. Muy grande.",
+    "opciones": ["Mi-24/35 Hind", "Mi-28 Havoc", "AH-1 Cobra", "Ka-52"],
+    "imagen": "assets/MI-24-35-HIND.jpg"
+  },
+  {
+    "id": "mi26",
+    "tipo": "aereo",
+    "nombre": "Mi-26 Halo",
+    "descripcion": "Helicóptero más grande del mundo. 8 palas rotor. Triciclo.",
+    "opciones": ["CH-53 Stallion", "Mi-26 Halo", "CH-47 Chinook", "Mi-6 Hook"],
+    "imagen": "assets/MI-26-HALO.jpg"
+  },
+  {
+    "id": "mi28",
+    "tipo": "aereo",
+    "nombre": "Mi-28 Havoc",
+    "descripcion": "Radar de bola sobre el rotor. Cabina escalonada blindada.",
+    "opciones": ["Apache", "Mi-28 Havoc", "Ka-52", "Mi-24"],
+    "imagen": "assets/MI-28-HAVOC.jpg"
+  },
+  {
+    "id": "puma",
+    "tipo": "aereo",
+    "nombre": "AS-332 Puma",
+    "descripcion": "4 aspas. Tren retráctil. Bulbo en cola. Estabilizador izquierdo.",
+    "opciones": ["Cougar", "AS-332 Puma", "NH-90", "Black Hawk"],
+    "imagen": "assets/AS-332-PUMA.jpg"
+  },
+  {
+    "id": "nh90",
+    "tipo": "aereo",
+    "nombre": "NH-90 Caiman",
+    "descripcion": "Muy anguloso y moderno. 2 parabrisas. Rampa trasera.",
+    "opciones": ["Puma", "NH-90 Caiman", "AW149", "Black Hawk"],
+    "imagen": "assets/NH-90-CAIMAN.jpg"
+  },
+  {
+    "id": "tiger",
+    "tipo": "aereo",
+    "nombre": "EC 665 Tiger",
+    "descripcion": "Estrecho. Cañón 30mm morro. Tren fijo lateral. Cola vertical.",
+    "opciones": ["Apache", "EC 665 Tiger", "Mangusta", "Cobra"],
+    "imagen": "assets/EC-665-TIGER.jpg"
+  },
+  {
+    "id": "apache",
+    "tipo": "aereo",
+    "nombre": "AH-64 Apache",
+    "descripcion": "Motores cuadrados laterales. Ópticas morro. Tren bajo cabina.",
+    "opciones": ["AH-64 Apache", "Mi-28", "Tiger", "Havoc"],
+    "imagen": "assets/AH-64-APACHE.jpg"
+  },
+  {
+    "id": "chinook",
+    "tipo": "aereo",
+    "nombre": "CH-47 Chinook",
+    "descripcion": "Dos rotores verticales (tándem). Forma de autobús.",
+    "opciones": ["CH-46 Sea Knight", "CH-47 Chinook", "Yak-24", "V-22"],
+    "imagen": "assets/CH-47-CHINOOK.jpg"
+  },
+  {
+    "id": "blackhawk",
+    "tipo": "aereo",
+    "nombre": "UH-60 Black Hawk",
+    "descripcion": "Perfil bajo. Tren cola fijo. 3 parabrisas. Estabilizador horizontal.",
+    "opciones": ["UH-60 Black Hawk", "NH-90", "Puma", "UH-1 Huey"],
+    "imagen": "assets/UH-60-BLACK-HAWK.jpg"
+  },
+  {
+    "id": "viper",
+    "tipo": "aereo",
+    "nombre": "AH-1Z Viper",
+    "descripcion": "Cobra moderno. 4 palas. Fuselaje muy fino. Patines.",
+    "opciones": ["AH-1W SuperCobra", "AH-1Z Viper", "Apache", "Tiger"],
+    "imagen": "assets/AH-1Z-VIPER.jpg"
+  },
+  {
+    "id": "stallion",
+    "tipo": "aereo",
+    "nombre": "CH-53D Super Stallion",
+    "descripcion": "Enorme. 7 palas rotor. Sonda repostaje lateral. 2/3 motores.",
+    "opciones": ["Mi-26", "CH-53D Super Stallion", "CH-47", "Sea Stallion"],
+    "imagen": "assets/CH-53D-SUPER-STALLION.jpg"
+  },
+  {
+    "id": "osprey",
+    "tipo": "aereo",
+    "nombre": "V-22 Osprey",
+    "descripcion": "Convertiplano. Motores basculantes en extremos alas.",
+    "opciones": ["V-22 Osprey", "AW609", "Valor", "Chinook"],
+    "imagen": "assets/V-22-OSPREY.jpg"
+  },
+  {
+    "id": "su25",
+    "tipo": "aereo",
+    "nombre": "Su-25 Frogfoot",
+    "descripcion": "Alas rectas. Motores laterales bajo ala. Nariz achatada.",
+    "opciones": ["A-10 Thunderbolt", "Su-25 Frogfoot", "Su-24", "Alpha Jet"],
+    "imagen": "assets/SU-25-FROGFOOT.jpg"
+  },
+  {
+    "id": "su57",
+    "tipo": "aereo",
+    "nombre": "Su-57 Felon",
+    "descripcion": "Furtivo ruso. Perfil plano. Motores muy separados.",
+    "opciones": ["F-22 Raptor", "Su-57 Felon", "J-20", "Su-35"],
+    "imagen": "assets/SU-57-FELON.jpg"
+  },
+  {
+    "id": "mig31",
+    "tipo": "aereo",
+    "nombre": "MiG-31 Foxhound",
+    "descripcion": "Motores rectangulares enormes. 2 derivas cola. Muy veloz.",
+    "opciones": ["MiG-25", "MiG-31 Foxhound", "Su-27", "F-15"],
+    "imagen": "assets/MIG-31-FOXHOUND.jpg"
+  },
+  {
+    "id": "tu22m",
+    "tipo": "aereo",
+    "nombre": "Tu-22M3",
+    "descripcion": "Ala geometría variable. Motores a los lados deriva cola.",
+    "opciones": ["B-1 Lancer", "Tu-22M3", "Tu-160", "Tu-95"],
+    "imagen": "assets/TU-22M3.webp"
+  },
+  {
+    "id": "f35",
+    "tipo": "aereo",
+    "nombre": "F-35 Lightning",
+    "descripcion": "Un motor. Derivas inclinadas. Revestimiento RAM.",
+    "opciones": ["F-22", "F-35 Lightning", "F-16", "Harrier"],
+    "imagen": "assets/F-35-LIGHTNING.jpg"
+  },
+  {
+    "id": "f15",
+    "tipo": "aereo",
+    "nombre": "F-15 Eagle",
+    "descripcion": "Doble cola recta. Tomas aire cuadradas. Alas gran superficie.",
+    "opciones": ["F-14 Tomcat", "F-15 Eagle", "Su-27 Flanker", "MiG-25"],
+    "imagen": "assets/F-15-EAGLE.jpg"
+  },
+  {
+    "id": "f22",
+    "tipo": "aereo",
+    "nombre": "F-22 Raptor",
+    "descripcion": "Furtivo. Derivas muy inclinadas. Toberas planas.",
+    "opciones": ["F-35", "F-22 Raptor", "Su-57", "F-15"],
+    "imagen": "assets/F-22-RAPTOR.jpg"
+  },
+  {
+    "id": "f16",
+    "tipo": "aereo",
+    "nombre": "F-16 Fighting Falcon",
+    "descripcion": "Un motor. Una deriva. Toma aire bajo cabina. Burbuja.",
+    "opciones": ["F-15", "F-16 Fighting Falcon", "JAS 39 Gripen", "F-20"],
+    "imagen": "assets/F-16-FIGHTING-FALCON.jpg"
+  },
+  {
+    "id": "eurofighter",
+    "tipo": "aereo",
+    "nombre": "Eurofighter",
+    "descripcion": "Ala delta + Canards (aletas delanteras). Toma aire cuadrada.",
+    "opciones": ["Rafale", "Eurofighter", "Gripen", "Mirage 2000"],
+    "imagen": "assets/EUROFIGHTER.jpg"
+  },
+  {
+    "id": "harrier",
+    "tipo": "aereo",
+    "nombre": "AV-8 Harrier",
+    "descripcion": "Ala alta caída. Grandes tomas aire. Toberas orientables.",
+    "opciones": ["F-35B", "AV-8 Harrier", "Yak-38", "Sea Harrier"],
+    "imagen": "assets/AV-8-HARRIER.jpg"
+  },
+  {
+    "id": "hercules",
+    "tipo": "aereo",
+    "nombre": "C-130 Hercules",
+    "descripcion": "4 turbohélices. Ala alta. Morro redondeado invernadero.",
+    "opciones": ["A400M", "C-130 Hercules", "C-27J Spartan", "An-12"],
+    "imagen": "assets/C-130-HERCULES.jpg"
+  },
+  {
+    "id": "f117",
+    "tipo": "aereo",
+    "nombre": "F-117 Nighthawk",
+    "descripcion": "Facetado (ángulos rectos). Negro. Cola en V.",
+    "opciones": ["B-2 Spirit", "F-117 Nighthawk", "A-12", "F-22"],
+    "imagen": "assets/F-117-NIGHTHAWK.jpg"
+  },
+  {
+    "id": "b2",
+    "tipo": "aereo",
+    "nombre": "B-2 Spirit",
+    "descripcion": "Ala volante. Sin colas. Borde salida sierra.",
+    "opciones": ["F-117", "B-2 Spirit", "B-21 Raider", "XB-70"],
+    "imagen": "assets/B-2-SPIRIT.jpg"
+  },
+  {
+    "id": "a400m",
+    "tipo": "aereo",
+    "nombre": "A400M Atlas",
+    "descripcion": "4 hélices cimitarra. Cola en T. Tren carenado grande.",
+    "opciones": ["C-130", "A400M Atlas", "C-17", "An-70"],
+    "imagen": "assets/A400M-ATLAS.jpg"
+  },
+  {
+    "id": "p3",
+    "tipo": "aereo",
+    "nombre": "P-3 Orion",
+    "descripcion": "MAD boom (pincho cola). 4 hélices. Patrulla marítima.",
+    "opciones": ["P-8 Poseidon", "P-3 Orion", "L-188 Electra", "CP-140"],
+    "imagen": "assets/P-3-ORION.jpg"
+  },
+  {
+    "id": "e3",
+    "tipo": "aereo",
+    "nombre": "E-3 Sentry",
+    "descripcion": "AWACS. Gran radar rotativo (paella) sobre fuselaje 707.",
+    "opciones": ["E-2 Hawkeye", "E-3 Sentry", "A-50 Mainstay", "E-7 Wedgetail"],
+    "imagen": "assets/E-3-SENTRY.jpg"
+  },
+  {
+    "id": "orlan10",
+    "tipo": "drone",
+    "nombre": "ORLAN 10",
+    "descripcion": "Avioneta pequeña. Una hélice morro. Ala alta recta.",
+    "opciones": ["Forpost", "ORLAN 10", "Pchela", "Skyeye"],
+    "imagen": "assets/ORLAN-10.jpg"
+  },
+  {
+    "id": "altius",
+    "tipo": "drone",
+    "nombre": "ALTIUS-U",
+    "descripcion": "Joroba morro. Doble hélice trasera. Cola en V invertida.",
+    "opciones": ["Global Hawk", "ALTIUS-U", "Hermes 900", "Orion-E"],
+    "imagen": "assets/ALTIUS-U.jpg"
+  },
+  {
+    "id": "switchblade",
+    "tipo": "drone",
+    "nombre": "SWITCHBLADE",
+    "descripcion": "Kamikaze. Alas plegables en X. Lanzado por tubo.",
+    "opciones": ["Lancet", "SWITCHBLADE", "Warmate", "Phoenix Ghost"],
+    "imagen": "assets/SWITCHBLADE.jpg"
+  },
+  {
+    "id": "predator",
+    "tipo": "drone",
+    "nombre": "MQ-1 PREDATOR",
+    "descripcion": "Cola V invertida. Hélice trasera. Morro abultado.",
+    "opciones": ["Reaper", "MQ-1 PREDATOR", "Gray Eagle", "Heron"],
+    "imagen": "assets/MQ-1-PREDATOR.jpg"
+  },
+  {
+    "id": "reaper",
+    "tipo": "drone",
+    "nombre": "MQ-9 REAPER",
+    "descripcion": "Cola en Y (V hacia arriba). Más grande que Predator. Turbohélice.",
+    "opciones": ["MQ-1 PREDATOR", "MQ-9 REAPER", "Mohajer-6", "Hermes 900"],
+    "imagen": "assets/MQ-9-REAPER.jpg"
+  },
+  {
+    "id": "globalhawk",
+    "tipo": "drone",
+    "nombre": "RQ-4 GLOBAL HAWK",
+    "descripcion": "Motor reacción arriba. Alas larguísimas. Sin ventanas.",
+    "opciones": ["Triton", "RQ-4 GLOBAL HAWK", "RQ-170", "Phantom Eye"],
+    "imagen": "assets/RQ-4-GLOBAL-HAWK.jpg"
+  },
+  {
+    "id": "bayraktar",
+    "tipo": "drone",
+    "nombre": "BAYRAKTAR TB2",
+    "descripcion": "Cola triangular invertida. Doble larguero cola. Motor trasero.",
+    "opciones": ["Anka", "BAYRAKTAR TB2", "CH-4", "Wing Loong"],
+    "imagen": "assets/BAYRAKTAR-TB2.jpg"
+  },
+  {
+    "id": "shahed136",
+    "tipo": "drone",
+    "nombre": "SHAHED 136",
+    "descripcion": "Ala delta kamikaze. Pequeñas derivas puntas alas.",
+    "opciones": ["Geran-2", "SHAHED 136", "Harpy", "Lancet"],
+    "imagen": "assets/SHAHED-136.jpg"
+  },
+  {
+    "id": "lancet",
+    "tipo": "drone",
+    "nombre": "ZALA LANCET",
+    "descripcion": "Kamikaze. Dos juegos alas en X (cruz). Cuerpo fino.",
+    "opciones": ["Switchblade", "ZALA LANCET", "Kub-BLA", "Hero-120"],
+    "imagen": "assets/ZALA-LANCET.jpg"
+  }
+]
