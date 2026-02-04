@@ -43,7 +43,7 @@ body { background: var(--bg); color: var(--white); font-family: system-ui, sans-
 .mensaje { text-align: center; font-weight: bold; margin: 10px 0; min-height: 20px; color: var(--blue); }
 
 /* Contenedor de botones de juego */
-.botones-juego { display: flex; gap: 10px; flex-direction: column; }
+.botones-juego { display: flex; gap: 10px; flex-direction: column; margin-top: 10px; /* Eleva ligeramente el contenedor */ }
 .btn-interrumpir { background: var(--gray); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 0.9rem; }
 #btn-next { margin-top: 0; }
 
