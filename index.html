@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ID-MIL | Operaciones</title>
+    <title>ID-MIL | Centro de Mando</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -12,53 +12,59 @@
             <div class="portada">
                 <img src="assets/emblema_legion.png" alt="Emblema" class="logo-portada">
                 <h1 class="titulo-principal">ID-MIL</h1>
-                <p class="subtitulo-principal">SISTEMA DE INTELIGENCIA VISUAL</p>
+                <p class="subtitulo-principal">SISTEMA DE IDENTIFICACIÓN VISUAL</p>
                 <div class="bloque-autor">
                     <span class="etiqueta">RESPONSABLE:</span>
                     <span class="nombre-autor">TTE. JOSE REVERT TORMO</span>
                 </div>
-                <button onclick="navegar('pantalla-inicio', 'menu-categorias')" class="boton-militar">INICIAR SESIÓN</button>
+                <button onclick="navegar('pantalla-inicio', 'pantalla-config')" class="boton-militar">ACCEDER AL PANEL</button>
             </div>
         </section>
 
-        <section id="menu-categorias" class="modulo">
-            <h2 class="cabecera">SELECCIONAR ARSENAL</h2>
-            <div class="grid-opciones">
-                <button class="btn-cat" onclick="setCat('blindado')">BLINDADOS</button>
-                <button class="btn-cat" onclick="setCat('artilleria')">ARTILLERÍA</button>
-                <button class="btn-cat" onclick="setCat('aereo')">AÉREO</button>
-                <button class="btn-cat" onclick="setCat('drone')">DRONES</button>
-                <button class="btn-cat resaltado" onclick="setCat('todos')">TODO EL ARSENAL</button>
+        <section id="pantalla-config" class="modulo">
+            <h2 class="cabecera">CONFIGURACIÓN DE MISIÓN</h2>
+            
+            <div class="seccion-config">
+                <p class="label-seccion">1. SELECCIONAR ARSENAL</p>
+                <div class="grid-opciones">
+                    <button class="btn-sel cat" onclick="setCat('blindado', this)">BLINDADOS</button>
+                    <button class="btn-sel cat" onclick="setCat('artilleria', this)">ARTILLERÍA</button>
+                    <button class="btn-sel cat" onclick="setCat('aereo', this)">AÉREO</button>
+                    <button class="btn-sel cat" onclick="setCat('drone', this)">DRONES</button>
+                    <button class="btn-sel cat resaltado" onclick="setCat('todos', this)">TODO EL ARSENAL</button>
+                </div>
             </div>
-        </section>
 
-        <section id="menu-modos" class="modulo">
-            <h2 class="cabecera">MODO DE MISIÓN</h2>
-            <div class="grid-modos">
-                <button class="btn-modo" onclick="setModo('entrenamiento')">
-                    <strong>ENTRENAMIENTO</strong>
-                    <span>Con pistas y corrección</span>
-                </button>
-                <button class="btn-modo" onclick="setModo('examen')">
-                    <strong>EXAMEN</strong>
-                    <span>Sin pistas. Evaluación final</span>
-                </button>
-                <button class="btn-modo" onclick="setModo('desafio')">
-                    <strong>DESAFÍO</strong>
-                    <span>Muerte súbita. Un fallo es el fin</span>
-                </button>
+            <div class="seccion-config">
+                <p class="label-seccion">2. MODO DE OPERACIÓN</p>
+                <div class="lista-modos">
+                    <button class="btn-sel modo" onclick="setModo('entrenamiento', this)">
+                        <strong>ENTRENAMIENTO</strong>
+                        <span>Pistas y corrección activa</span>
+                    </button>
+                    <button class="btn-sel modo" onclick="setModo('examen', this)">
+                        <strong>EXAMEN</strong>
+                        <span>Evaluación ciega sin pistas</span>
+                    </button>
+                    <button class="btn-sel modo" onclick="setModo('desafio', this)">
+                        <strong>DESAFÍO</strong>
+                        <span>Muerte súbita (1 fallo = fin)</span>
+                    </button>
+                </div>
             </div>
+
+            <button id="btn-ready" class="boton-militar inactivo" onclick="comenzarMision()">INICIAR OPERACIÓN</button>
             <button class="boton-abortar" onclick="location.reload()">VOLVER</button>
         </section>
 
         <section id="pantalla-juego" class="modulo">
             <div class="barra-estado">
                 <span id="label-progreso">OBJ: 0/0</span>
-                <span id="label-modo">MODO: --</span>
-                <span id="label-puntos">EFIC: 0%</span>
+                <span id="label-modo-display" class="badge-modo">--</span>
+                <span id="label-puntos">PUNTOS: 0</span>
             </div>
             <div class="contenedor-foto">
-                <img id="img-obj" src="" alt="Cargando...">
+                <img id="img-obj" src="" alt="Objetivo">
             </div>
             <div id="pista-zona" class="descripcion-pista"></div>
             <div id="opciones-grid" class="grid-respuestas"></div>
