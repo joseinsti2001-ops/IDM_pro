@@ -1,46 +1,46 @@
 let db = [];
-let testSet = [];
-let curIdx = 0;
-let score = 0;
+let quiz = [];
+let current = 0;
+let points = 0;
 
-// Precarga al iniciar
-window.onload = async () => {
+// Cargar datos al entrar
+async function load() {
     try {
         const r = await fetch(`data/vehiculos.json?v=${Date.now()}`);
         db = await r.json();
-    } catch (e) {
-        console.error("Error cargando datos");
-    }
-};
+    } catch (e) { console.error("Error cargando JSON"); }
+}
+load();
 
-function irASeleccion() {
-    document.getElementById('pantalla-inicio').classList.add('hidden');
-    document.getElementById('menu-seleccion').classList.remove('hidden');
+function navegar(sale, entra) {
+    document.getElementById(sale).classList.remove('active');
+    document.getElementById(entra).classList.add('active');
 }
 
 function seleccionar(tipo) {
-    testSet = tipo === 'todos' ? [...db] : db.filter(v => v.tipo === tipo);
-    document.querySelectorAll('.btn-sel').forEach(b => {
+    quiz = tipo === 'todos' ? [...db] : db.filter(v => v.tipo === tipo);
+    
+    document.querySelectorAll('.btn-opt').forEach(b => {
         b.classList.remove('selected');
-        if(b.innerText.toLowerCase().includes(tipo.substring(0,4))) b.classList.add('selected');
+        if(b.innerText.toLowerCase().includes(tipo.substring(0,3))) b.classList.add('selected');
     });
-    document.getElementById('status-msg').innerText = `${testSet.length} OBJETIVOS LISTOS`;
+
+    document.getElementById('status-msg').innerText = `${quiz.length} objetivos cargados.`;
     document.getElementById('btn-confirmar').classList.remove('hidden');
 }
 
 function iniciarMision() {
-    testSet.sort(() => Math.random() - 0.5);
-    curIdx = 0;
-    score = 0;
-    document.getElementById('menu-seleccion').classList.add('hidden');
-    document.getElementById('pantalla-juego').classList.remove('hidden');
-    renderQuestion();
+    quiz.sort(() => Math.random() - 0.5);
+    current = 0;
+    points = 0;
+    navegar('menu-seleccion', 'pantalla-juego');
+    render();
 }
 
-function renderQuestion() {
-    const item = testSet[curIdx];
-    document.getElementById('txt-progreso').innerText = `OBJ: ${curIdx + 1}/${testSet.length}`;
-    document.getElementById('txt-puntos').innerText = `EFIC: ${Math.round((score/(curIdx||1))*100)}%`;
+function render() {
+    const item = quiz[current];
+    document.getElementById('txt-progreso').innerText = `OBJ: ${current + 1}/${quiz.length}`;
+    document.getElementById('txt-puntos').innerText = `EFIC: ${Math.round((points/(current||1))*100)}%`;
     document.getElementById('img-objetivo').src = item.imagen;
     document.getElementById('pista-text').innerText = item.descripcion;
     document.getElementById('btn-next').classList.add('hidden');
@@ -51,37 +51,35 @@ function renderQuestion() {
     
     item.opciones.forEach(opt => {
         const b = document.createElement('button');
-        b.className = 'opcion-btn';
+        b.className = 'ans-btn';
         b.innerText = opt;
-        b.onclick = () => check(opt, b);
+        b.onclick = () => verificar(opt, b);
         box.appendChild(b);
     });
 }
 
-function check(pick, el) {
-    const correct = testSet[curIdx].nombre;
-    const btns = document.querySelectorAll('.opcion-btn');
+function verificar(pick, el) {
+    const correct = quiz[current].nombre;
+    const btns = document.querySelectorAll('.ans-btn');
     btns.forEach(b => b.disabled = true);
 
     if(pick === correct) {
-        el.classList.add('correcto');
-        score++;
-        document.getElementById('feedback-txt').innerText = "IDENTIFICADO";
-        document.getElementById('feedback-txt').style.color = "var(--success)";
+        el.classList.add('correct');
+        points++;
+        document.getElementById('feedback-txt').innerText = "CORRECTO";
     } else {
-        el.classList.add('incorrecto');
-        document.getElementById('feedback-txt').innerText = `ERROR: ${correct}`;
-        document.getElementById('feedback-txt').style.color = "var(--danger)";
-        btns.forEach(b => { if(b.innerText === correct) b.classList.add('correcto'); });
+        el.classList.add('wrong');
+        document.getElementById('feedback-txt').innerText = `ES UN ${correct}`;
+        btns.forEach(b => { if(b.innerText === correct) b.classList.add('correct'); });
     }
     document.getElementById('btn-next').classList.remove('hidden');
 }
 
 function proximoObjetivo() {
-    curIdx++;
-    if(curIdx < testSet.length) renderQuestion();
+    current++;
+    if(current < quiz.length) render();
     else {
-        alert(`INFORME FINAL:\nEfectividad: ${Math.round((score/testSet.length)*100)}%\nAciertos: ${score}/${testSet.length}`);
+        alert(`Entrenamiento finalizado. Aciertos: ${points}/${quiz.length}`);
         location.reload();
     }
 }
