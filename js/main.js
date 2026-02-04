@@ -59,6 +59,9 @@ document.addEventListener('DOMContentLoaded', () => {
         score = 0;
         fallos = 0;
 
+        document.getElementById('puntos-si').innerText = "0";
+        document.getElementById('puntos-no').innerText = "0";
+
         document.getElementById('menu-screen').classList.add('hidden');
         document.getElementById('game-screen').classList.remove('hidden');
         renderQuestion();
@@ -74,7 +77,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 <span>OBJETIVO: ${currentIndex + 1} / ${sessionPool.length}</span>
                 <span>MODO: ${config.modo.toUpperCase()}</span>
             </div>
-            <img src="${data.imagen}" class="img-quiz" onerror="this.src='https://placehold.co/600x400?text=IMAGEN+NO+ENCONTRADA'">
+            
+            <img src="${data.imagen}" class="img-quiz" 
+                 onclick="openZoom(this.src)" 
+                 onerror="this.src='https://placehold.co/600x400?text=IMAGEN+NO+ENCONTRADA'">
+            
             <div class="desc">"${data.descripcion}"</div>
             <div class="options-grid">
                 ${shuffledOptions.map(opt => `
@@ -84,6 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     }
 
+    // Función para manejar la respuesta
     window.checkAnswer = (selected, btnElement) => {
         const correct = sessionPool[currentIndex].nombre;
         const allButtons = document.querySelectorAll('.opt-btn');
@@ -116,6 +124,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 endGame(true);
             }
         }, 1200);
+    };
+
+    // Función para el Zoom (Global)
+    window.openZoom = (src) => {
+        const modal = document.getElementById('zoom-modal');
+        const zoomedImg = document.getElementById('img-zoomed');
+        zoomedImg.src = src;
+        modal.classList.remove('hidden');
     };
 
     function endGame(completed) {
