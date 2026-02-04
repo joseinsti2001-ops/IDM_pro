@@ -2,6 +2,7 @@ let arsenal = [], test = [], idx = 0, pts = 0;
 let sCat = '', sModo = '';
 let stats = {}; // Objeto para almacenar las estadísticas de la sesión actual
 let startTime = null; // Variable para almacenar el tiempo de inicio de la ronda
+let resultados = []; // Array para almacenar los iconos de acierto/fallo
 
 // --- Manejo de la portada ---
 const PORTADA_VISTA_KEY = 'idmil_portada_vista';
@@ -43,19 +44,29 @@ function iniciar() {
     test.sort(() => Math.random() - 0.5);
     idx = 0;
     pts = 0;
-    // Reiniciar tiempo al iniciar una nueva ronda
+    resultados = []; // Inicializar el array de resultados al iniciar
     startTime = new Date().getTime();
     document.getElementById('pantalla-menu').classList.remove('activo');
     document.getElementById('pantalla-juego').classList.add('activo');
     dibujar();
 }
 
+// Función auxiliar para mezclar un array (Fisher-Yates Shuffle)
+function shuffle(array) {
+    const newArray = [...array]; // Copia el array original
+    for (let i = newArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+    }
+    return newArray;
+}
+
 function dibujar() {
     const v = test[idx];
     document.getElementById('progreso').innerText = `OBJETIVO: ${idx + 1}/${test.length}`;
-    document.getElementById('puntos').innerText = `ACIERTOS: ${pts}`;
+    // Inicializamos el HUD de puntos como vacío, se llenará con iconos
+    document.getElementById('puntos').innerHTML = 'RESPUESTAS: ';
     document.getElementById('img-obj').src = v.imagen;
-    // Opcional: Manejo de error de imagen
     document.getElementById('img-obj').onerror = function() { this.src = 'assets/placeholder.png'; };
     document.getElementById('pista-zona').innerText = sModo === 'entrenamiento' ? v.descripcion : "INFORMACIÓN CLASIFICADA";
     document.getElementById('msg').innerText = "";
@@ -63,11 +74,14 @@ function dibujar() {
 
     const zona = document.getElementById('opciones-zona');
     zona.innerHTML = '';
-    v.opciones.forEach(o => {
+
+    const opcionesMezcladas = shuffle([...v.opciones]);
+
+    opcionesMezcladas.forEach(o => {
         const b = document.createElement('button');
         b.className = 'btn-r';
-        b.innerHTML = `<span class="opcion-text">${o}</span>`; // Contenedor para el texto
-        b.onclick = () => validar(o, b);
+        b.innerHTML = `<span class="opcion-text">${o}</span>`;
+        b.onclick = () => validar(o, b, v.nombre);
         zona.appendChild(b);
     });
 }
@@ -75,7 +89,6 @@ function dibujar() {
 function abrirZoom() {
     const modal = document.getElementById('modal-zoom');
     document.getElementById('img-zoom').src = test[idx].imagen;
-    // Opcional: Manejo de error de imagen en zoom
     document.getElementById('img-zoom').onerror = function() { this.src = 'assets/placeholder.png'; };
     modal.style.display = 'flex';
 }
@@ -84,36 +97,39 @@ function cerrarZoom() {
     document.getElementById('modal-zoom').style.display = 'none';
 }
 
-function validar(elegido, boton) {
-    const correcto = test[idx].nombre;
+function validar(elegido, boton, nombreCorrecto) {
+    const correcto = nombreCorrecto;
     const botones = document.querySelectorAll('.btn-r');
-    botones.forEach(b => b.disabled = true); // Deshabilitar todos los botones
+    botones.forEach(b => b.disabled = true);
 
-    // Añadir icono de acierto o fallo
+    // Determinar si fue acierto o fallo
+    let resultadoIcono = '';
     if(elegido === correcto) {
-        pts++;
+        pts++; // Mantenemos la lógica de puntos si se necesita para estadísticas
         boton.classList.add('ok');
-        boton.innerHTML += ' <span class="icono-respuesta">✅</span>'; // Añadir tick
+        resultadoIcono = '✅'; // Acierto
     } else {
         boton.classList.add('ko');
-        boton.innerHTML += ' <span class="icono-respuesta">❌</span>'; // Añadir cruz
+        resultadoIcono = '❌'; // Fallo
     }
 
+    // Añadir el resultado al array
+    resultados.push(resultadoIcono);
+    // Actualizar la UI del HUD con los iconos
+    actualizarHUD();
+
     if(elegido === correcto) {
-        // En examen y desafío, se muestra el tick pero no el texto
         if(sModo !== 'entrenamiento'){
-            // El tick ya se añadió arriba
+            // El estilo 'ok' ya se añadió
         }
     } else {
-        // Mostrar el nombre correcto en entrenamiento
         if(sModo === 'entrenamiento') {
             document.getElementById('msg').innerText = `IDENTIFICADO COMO: ${correcto}`;
         }
-        // En desafío, preparar para terminar
         if(sModo === 'desafio') {
              document.getElementById('msg').innerText = "FALLO CRÍTICO.";
              document.getElementById('btn-next').classList.remove('oculto');
-             return; // Salimos para no ejecutar el resto del bloque else
+             return;
         }
     }
 
@@ -121,25 +137,37 @@ function validar(elegido, boton) {
         document.getElementById('msg').innerText = "REGISTRADO";
         setTimeout(siguiente, 500);
     } else {
-        // En entrenamiento, mostrar el botón de siguiente
-        if(sModo !== 'desafio'){ // No mostrar si ya estamos en el paso de desafío
+        if(sModo !== 'desafio'){
             document.getElementById('btn-next').classList.remove('oculto');
         }
     }
 }
+
+// Nueva función para actualizar el HUD con iconos
+function actualizarHUD() {
+    const puntosElement = document.getElementById('puntos');
+    // Agregar el texto inicial
+    puntosElement.innerHTML = 'RESPUESTAS: ';
+    // Agregar cada icono del array de resultados
+    resultados.forEach(icono => {
+        const span = document.createElement('span');
+        span.className = 'icono-punto'; // Clase para estilizar
+        span.textContent = icono;
+        puntosElement.appendChild(span);
+    });
+}
+
 
 function siguiente() {
     idx++;
     if(idx < test.length) {
         dibujar();
     } else {
-        // El juego ha terminado, ya sea por éxito o fallo en desafío
         mostrarResultados();
     }
 }
 
 function mostrarResultados() {
-    // Calcular tiempo transcurrido
     const endTime = new Date().getTime();
     const elapsedTimeMs = endTime - startTime;
     const elapsedTimeSec = (elapsedTimeMs / 1000).toFixed(2);
@@ -147,7 +175,6 @@ function mostrarResultados() {
     document.getElementById('pantalla-juego').classList.remove('activo');
     document.getElementById('pantalla-stats').classList.add('activo');
 
-    // Guardar estadísticas del juego actual en la sesión
     const modoActual = sModo;
     const categoriaActual = sCat;
     const total = test.length;
@@ -169,7 +196,6 @@ function mostrarResultados() {
         fecha: fecha
     });
 
-    // Mostrar estadísticas en pantalla
     const statsContent = document.getElementById('stats-content');
     statsContent.innerHTML = '';
 
@@ -177,16 +203,54 @@ function mostrarResultados() {
     tituloStats.textContent = `RESULTADOS DE LA PARTIDA`;
     statsContent.appendChild(tituloStats);
 
-    const resultadoActual = document.createElement('p');
-    resultadoActual.textContent = `Categoría: ${categoriaActual.toUpperCase()}, Modo: ${modoActual.toUpperCase()}`;
-    statsContent.appendChild(resultadoActual);
+    const resumenDiv = document.createElement('div');
+    resumenDiv.className = 'resumen-partida';
 
-    const detalle = document.createElement('p');
-    detalle.textContent = `Aciertos: ${aciertos} / ${total} (${total > 0 ? ((aciertos / total) * 100).toFixed(2) : 0}%), ` +
-                          `Fallos: ${fallos}, Tiempo: ${elapsedTimeSec}s`;
-    statsContent.appendChild(detalle);
+    const tituloPartida = document.createElement('h3');
+    tituloPartida.textContent = `Partida Finalizada`;
+    resumenDiv.appendChild(tituloPartida);
 
-    // Mostrar historial de estadísticas anteriores para esta combinación (de la sesión actual)
+    const detalleCategoria = document.createElement('p');
+    detalleCategoria.textContent = `Categoría: ${categoriaActual.toUpperCase()}`;
+    resumenDiv.appendChild(detalleCategoria);
+
+    const detalleModo = document.createElement('p');
+    detalleModo.textContent = `Modo: ${modoActual.toUpperCase()}`;
+    resumenDiv.appendChild(detalleModo);
+
+    const detalleResultados = document.createElement('div');
+    detalleResultados.className = 'resultados-detalle';
+
+    const aciertosSpan = document.createElement('span');
+    aciertosSpan.className = 'stat-item aciertos';
+    aciertosSpan.textContent = `Aciertos: ${aciertos}`;
+    detalleResultados.appendChild(aciertosSpan);
+
+    const fallosSpan = document.createElement('span');
+    fallosSpan.className = 'stat-item fallos';
+    fallosSpan.textContent = `Fallos: ${fallos}`;
+    detalleResultados.appendChild(fallosSpan);
+
+    const totalSpan = document.createElement('span');
+    totalSpan.className = 'stat-item total';
+    totalSpan.textContent = `Total: ${total}`;
+    detalleResultados.appendChild(totalSpan);
+
+    const tiempoSpan = document.createElement('span');
+    tiempoSpan.className = 'stat-item tiempo';
+    tiempoSpan.textContent = `Tiempo: ${elapsedTimeSec}s`;
+    detalleResultados.appendChild(tiempoSpan);
+
+    resumenDiv.appendChild(detalleResultados);
+
+    const porcentajeSpan = document.createElement('p');
+    porcentajeSpan.className = 'porcentaje';
+    const porcentaje = total > 0 ? ((aciertos / total) * 100).toFixed(2) : 0;
+    porcentajeSpan.textContent = `Rendimiento: ${porcentaje}%`;
+    resumenDiv.appendChild(porcentajeSpan);
+
+    statsContent.appendChild(resumenDiv);
+
     const historialTitulo = document.createElement('h3');
     historialTitulo.textContent = 'Historial (Esta Sesión):';
     statsContent.appendChild(historialTitulo);
@@ -194,24 +258,25 @@ function mostrarResultados() {
     const historialLista = document.createElement('ul');
     stats[modoActual][categoriaActual].forEach((partida, index) => {
         const item = document.createElement('li');
-        item.textContent = `${partida.fecha}: ${partida.aciertos}/${partida.total} (${((partida.aciertos / partida.total) * 100).toFixed(2)}%), ` +
-                           `F: ${partida.fallos}, T: ${partida.tiempo}s`;
+        item.className = 'historial-item';
+        const porcentajeHistorial = ((partida.aciertos / partida.total) * 100).toFixed(2);
+        item.textContent = `${partida.fecha}: ${partida.aciertos}/${partida.total} (${porcentajeHistorial}%), F: ${partida.fallos}, T: ${partida.tiempo}s`;
         historialLista.appendChild(item);
     });
     statsContent.appendChild(historialLista);
 }
 
+
 function interrumpirPrueba() {
     if (confirm("¿Estás seguro de que deseas interrumpir la prueba actual?")) {
-        mostrarResultados(); // Ir directamente a estadísticas
+        mostrarResultados();
     }
 }
 
 function volverAlMenu() {
     document.getElementById('pantalla-stats').classList.remove('activo');
     document.getElementById('pantalla-menu').classList.add('activo');
-    // Opcional: Reiniciar estado del juego si se vuelve al menú
-    // idx = 0; pts = 0; test = []; startTime = null;
+    // No reiniciamos estado aquí si se vuelve al menú
 }
 
 // --- INICIALIZACIÓN ---
@@ -219,21 +284,17 @@ function volverAlMenu() {
     try {
         const r = await fetch(`data/vehiculos.json?v=${Date.now()}`);
         arsenal = await r.json();
-        // Cargar estadísticas guardadas (si existen) desde localStorage al inicio
         const savedStats = localStorage.getItem('idmil_stats');
         if (savedStats) {
             stats = JSON.parse(savedStats);
         }
     } catch (e) {
         console.error("Error al cargar la base de datos de vehículos:", e);
-         // Opcional: Mostrar un mensaje de error en la UI
          alert("Error al cargar los datos del juego. Por favor, recarga la página.");
     }
 
-    // --- Decidir qué pantalla mostrar al cargar ---
     if (yaVioPortada()) {
         document.getElementById('pantalla-portada').classList.remove('activo');
         document.getElementById('pantalla-menu').classList.add('activo');
     }
-    // Si no ha visto la portada, la pantalla 'activo' por defecto ya es la portada
 })();
