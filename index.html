@@ -3,49 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ID-MIL | Entrenamiento</title>
+    <title>ID-MIL | Ops</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div id="app">
-        <section id="pantalla-menu" class="modulo activo">
-            <h1 class="titulo">ID-MIL</h1>
-            <div class="divisor"></div>
+        <section id="pantalla-portada" class="modulo activo">
+            <div class="portada-content">
+                <img src="assets/emblema_legion.png" alt="Emblema" class="logo-grande">
+                <h1 class="titulo-portada">ID-MIL</h1>
+                <p class="subtitulo">SISTEMA DE IDENTIFICACIÓN VISUAL</p>
+                <button class="btn-go" onclick="entrarAlSistema()">ENTRAR AL SISTEMA</button>
+                <p class="autor-portada">TTE. JOSE REVERT TORMO</p>
+            </div>
+        </section>
+
+        <section id="pantalla-menu" class="modulo">
+            <h1 class="logo-mini">ID-MIL</h1>
             
-            <p class="label">ARSENAL</p>
-            <div class="grid-seleccion">
-                <button class="btn-sel cat" onclick="elegirCat('blindado', this)">BLINDADOS</button>
-                <button class="btn-sel cat" onclick="elegirCat('artilleria', this)">ARTILLERÍA</button>
-                <button class="btn-sel cat" onclick="elegirCat('aereo', this)">AÉREO</button>
-                <button class="btn-sel cat" onclick="elegirCat('drone', this)">DRONES</button>
-                <button class="btn-sel cat full" onclick="elegirCat('todos', this)">TODO EL ARSENAL</button>
+            <p class="tag">ARSENAL</p>
+            <div class="grid-sel">
+                <button class="btn-s cat" onclick="seleccionarCat('blindado', this)">BLINDADOS</button>
+                <button class="btn-s cat" onclick="seleccionarCat('artilleria', this)">ARTILLERÍA</button>
+                <button class="btn-s cat" onclick="seleccionarCat('aereo', this)">AÉREO</button>
+                <button class="btn-s cat" onclick="seleccionarCat('drone', this)">DRONES</button>
+                <button class="btn-s cat full" onclick="seleccionarCat('todos', this)">TODO EL ARSENAL</button>
             </div>
 
-            <p class="label">MODO DE MISIÓN</p>
-            <div class="stack-seleccion">
-                <button class="btn-sel modo" onclick="elegirModo('entrenamiento', this)">ENTRENAMIENTO</button>
-                <button class="btn-sel modo" onclick="elegirModo('examen', this)">EXAMEN</button>
-                <button class="btn-sel modo" onclick="elegirModo('desafio', this)">DESAFÍO</button>
+            <p class="tag">MODO DE MISIÓN</p>
+            <div class="stack-sel">
+                <button class="btn-s modo" onclick="seleccionarModo('entrenamiento', this)">ENTRENAMIENTO</button>
+                <button class="btn-s modo" onclick="seleccionarModo('examen', this)">EXAMEN</button>
+                <button class="btn-s modo" onclick="seleccionarModo('desafio', this)">DESAFÍO</button>
             </div>
 
-            <button id="btn-start" class="btn-primario inactivo" onclick="comenzar()">INICIAR OPERACIÓN</button>
-            <p class="firma">TTE. JOSE REVERT TORMO</p>
+            <button id="btn-run" class="btn-go inactivo" onclick="iniciar()">INICIAR OPERACIÓN</button>
+            
+            <p class="firma-mini">Responsable: Tte. Jose Revert Tormo</p>
         </section>
 
         <section id="pantalla-juego" class="modulo">
             <div class="hud">
-                <span id="info-obj">0/0</span>
-                <span id="info-modo">--</span>
-                <span id="info-pts">PTS: 0</span>
+                <span id="progreso">0/0</span>
+                <span id="puntos">ACIERTOS: 0</span>
             </div>
-            <div class="marco">
-                <img id="img-target" src="" alt="Objetivo">
+            <div class="marco" onclick="abrirZoom()">
+                <img id="img-obj" src="" alt="Objetivo">
+                <div class="lupa-icon">🔍</div>
             </div>
-            <div id="pista-txt" class="pista"></div>
-            <div id="opciones-box" class="grid-respuestas"></div>
-            <div id="feedback" class="feedback"></div>
-            <button id="btn-next" class="btn-primario oculto" onclick="siguiente()">SIGUIENTE</button>
+            <div id="pista-zona" class="pista"></div>
+            <div id="opciones-zona" class="respuestas"></div>
+            <div id="msg" class="mensaje"></div>
+            <button id="btn-next" class="btn-go oculto" onclick="siguiente()">CONTINUAR</button>
         </section>
+
+        <div id="modal-zoom" class="modal" onclick="cerrarZoom()">
+            <img id="img-zoom" src="" alt="Zoom">
+            <p class="aviso-zoom">TOCA PARA VOLVER</p>
+        </div>
     </div>
     <script src="js/main.js"></script>
 </body>
