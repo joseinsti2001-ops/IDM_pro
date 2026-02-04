@@ -73,7 +73,7 @@ function dibujar() {
     document.getElementById('img-obj').onerror = function() { this.src = 'assets/placeholder.png'; };
     document.getElementById('pista-zona').innerText = sModo === 'entrenamiento' ? v.descripcion : "INFORMACIÓN CLASIFICADA";
     document.getElementById('msg').innerText = "";
-    document.getElementById('btn-next').classList.add('oculto');
+    document.getElementById('btn-next').classList.add('oculto'); // Ocultar botón continuar por defecto
 
     const zona = document.getElementById('opciones-zona');
     zona.innerHTML = '';
@@ -109,24 +109,44 @@ function validar(elegido, boton, nombreCorrecto) {
     if(elegido === correcto) {
         pts++;
         aciertosContador++; // Incrementar contador de aciertos
+        boton.classList.add('ok');
     } else {
         fallosContador++; // Incrementar contador de fallos
+        boton.classList.add('ko');
     }
 
     // Actualizar la UI del HUD con los contadores
     actualizarHUD();
 
     if(elegido === correcto) {
-        boton.classList.add('ok');
         // En examen y desafío, se marca el botón pero no el texto adicional
         if(sModo !== 'entrenamiento'){
             // El estilo 'ok' ya se añadió arriba
+            // En examen, mostrar el botón de continuar DESPUÉS de un delay
+            if(sModo === 'examen') {
+                 document.getElementById('msg').innerText = "REGISTRADO";
+                 setTimeout(() => {
+                     document.getElementById('btn-next').classList.remove('oculto');
+                 }, 500); // 500ms de delay
+                 return; // Salimos para no ejecutar el resto del bloque else
+            }
+            // En desafío, si acierta, no pasa nada más, continúa
+            if(sModo === 'desafio') {
+                 // Continuar sin hacer nada más aquí, el botón next no se muestra
+                 // La ronda termina si falla o si completa todas
+                 return;
+            }
+        }
+        // En entrenamiento, si acierta, mostrar mensaje y botón continuar
+        if(sModo === 'entrenamiento') {
+             document.getElementById('msg').innerText = "¡Correcto!";
+             document.getElementById('btn-next').classList.remove('oculto');
         }
     } else {
-        boton.classList.add('ko');
         // Mostrar el nombre correcto en entrenamiento
         if(sModo === 'entrenamiento') {
             document.getElementById('msg').innerText = `IDENTIFICADO COMO: ${correcto}`;
+            document.getElementById('btn-next').classList.remove('oculto'); // Mostrar botón para continuar
         }
         // --- CORRECCIÓN CRÍTICA: Modo Desafío ---
         if(sModo === 'desafio') {
@@ -134,21 +154,25 @@ function validar(elegido, boton, nombreCorrecto) {
              // Mostrar botón de continuar (opcional, puede quitarse si se va directo)
              document.getElementById('btn-next').classList.remove('oculto');
              // *** TERMINAR LA RONDA INMEDIATAMENTE ***
-             idx = test.length; // Forzamos el fin de la ronda
-             siguiente(); // Llama a siguiente que ahora detectará el fin
+             // No incrementamos idx aquí, dejamos que siguiente() lo haga y termine
+             // Al llamar a siguiente() inmediatamente, se termina la ronda
+             // Opcional: Puedes usar un timeout para dar un breve feedback visual
+             setTimeout(() => {
+                 siguiente();
+             }, 1000); // Esperar 1 segundo antes de ir a estadísticas
              return; // Salir de validar para evitar más ejecución
         }
     }
 
-    if(sModo === 'examen') {
-        document.getElementById('msg').innerText = "REGISTRADO";
-        setTimeout(siguiente, 500);
-    } else {
-        // En entrenamiento, mostrar el botón de siguiente
-        if(sModo !== 'desafio'){ // No mostrar si ya estamos en el paso de desafío
-            document.getElementById('btn-next').classList.remove('oculto');
-        }
-    }
+    // Este bloque else no se ejecutará si se entra en alguna condición anterior con return
+    // if(sModo === 'examen') {
+    //     document.getElementById('msg').innerText = "REGISTRADO";
+    //     setTimeout(siguiente, 500);
+    // } else {
+    //     if(sModo !== 'desafio'){
+    //         document.getElementById('btn-next').classList.remove('oculto');
+    //     }
+    // }
 }
 
 // Nueva función para actualizar el HUD con contadores resumidos
