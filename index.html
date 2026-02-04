@@ -41,8 +41,11 @@
             <h2>INFORME DE MISIÓN</h2>
             <div id="final-score" class="score-display">0 / 0</div>
             <button onclick="location.reload()" class="action-btn">REINTENTAR</button>
-        </section>
-    </div>
-    <script src="js/main.js"></script>
+        </section> <div id="zoom-modal" class="hidden" onclick="this.classList.add('hidden')">
+            <span class="close-zoom">&times;</span>
+            <img id="img-zoomed" src="" alt="Zoom">
+        </div>
+
+    </div> <script src="js/main.js"></script>
 </body>
 </html>
