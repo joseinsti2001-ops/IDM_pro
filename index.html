@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROIDENTIFICA | Instrucción Militar</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="app">
+        <section id="menu-screen" class="screen">
+            <header class="main-header">
+                <h1>SISTEMA DE IDENTIFICACIÓN</h1>
+                <p class="subtitle">CONFIGURE PARÁMETROS DE MISIÓN</p>
+            </header>
+
+            <div class="config-block">
+                <h3>1. SELECCIÓN DE OBJETIVOS</h3>
+                <div class="grid-3">
+                    <button class="cat-btn" data-cat="blindado">🛡️ BLINDADOS</button>
+                    <button class="cat-btn" data-cat="drone">🛸 DRONES</button>
+                    <button class="cat-btn" data-cat="artilleria">💥 ARTILLERÍA</button>
+                    <button class="cat-btn" data-cat="aereo">✈️ AÉREOS</button>
+                </div>
+            </div>
+
+            <div class="config-block">
+                <h3>2. MODO DE OPERACIÓN</h3>
+                <div class="grid-3">
+                    <button class="mode-btn" data-mode="entrenamiento">ENTRENAMIENTO</button>
+                    <button class="mode-btn" data-mode="examen">EXAMEN</button>
+                    <button class="mode-btn" data-mode="supervivencia">SUPERVIVENCIA</button>
+                </div>
+            </div>
+
+            <button id="start-btn" class="action-btn">INICIAR OPERACIÓN</button>
+        </section>
+
+        <section id="game-screen" class="screen hidden">
+            <div id="quiz-container">
+                </div>
+        </section>
+
+        <section id="result-screen" class="screen hidden">
+            <h2>INFORME DE MISIÓN</h2>
+            <div id="final-score" class="score-display">0 / 0</div>
+            <button onclick="location.reload()" class="action-btn">NUEVA MISIÓN</button>
+        </section>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
