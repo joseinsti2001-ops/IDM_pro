@@ -5,6 +5,7 @@ let startTime = null; // Variable para almacenar el tiempo de inicio de la ronda
 let aciertosContador = 0; // Contador para aciertos
 let fallosContador = 0; // Contador para fallos
 
+
 // --- Manejo de la portada ---
 // REMOVIDO: const PORTADA_VISTA_KEY = 'idmil_portada_vista';
 // REMOVIDO: function yaVioPortada()
@@ -111,61 +112,38 @@ function validar(elegido, boton, nombreCorrecto) {
     // Actualizar la UI del HUD con los contadores
     actualizarHUD();
 
-    if(elegido === correcto) {
-        // En examen y desafío, se marca el botón pero no el texto adicional
-        if(sModo !== 'entrenamiento'){
-            // El estilo 'ok' ya se añadió arriba
-            // En examen, mostrar el botón de continuar DESPUÉS de un delay
-            if(sModo === 'examen') {
-                 document.getElementById('msg').innerText = "REGISTRADO";
-                 setTimeout(() => {
-                     document.getElementById('btn-next').classList.remove('oculto');
-                 }, 500); // 500ms de delay
-                 return; // Salimos para no ejecutar el resto del bloque else
-            }
-            // En desafío, si acierta, no pasa nada más, continúa
-            if(sModo === 'desafio') {
-                 // Continuar sin hacer nada más aquí, el botón next no se muestra
-                 // La ronda termina si falla o si completa todas
-                 return; // <-- ESTE RETURN es crucial para que continue
-            }
-        }
-        // En entrenamiento, si acierta, mostrar mensaje y botón continuar
-        if(sModo === 'entrenamiento') {
+    // Lógica de transición automática y modos
+    if(sModo === 'entrenamiento') {
+        // En entrenamiento, mostrar mensaje y botón continuar
+        if(elegido === correcto) {
              document.getElementById('msg').innerText = "¡Correcto!";
-             document.getElementById('btn-next').classList.remove('oculto');
-        }
-    } else {
-        // Mostrar el nombre correcto en entrenamiento
-        if(sModo === 'entrenamiento') {
+        } else {
             document.getElementById('msg').innerText = `IDENTIFICADO COMO: ${correcto}`;
-            document.getElementById('btn-next').classList.remove('oculto'); // Mostrar botón para continuar
         }
-        // --- CORRECCIÓN CRÍTICA: Modo Desafío ---
-        if(sModo === 'desafio') {
-             document.getElementById('msg').innerText = "FALLO CRÍTICO.";
-             // Mostrar botón de continuar (opcional, puede quitarse si se va directo)
-             document.getElementById('btn-next').classList.remove('oculto');
-             // *** TERMINAR LA RONDA INMEDIATAMENTE ***
-             // No incrementamos idx aquí, dejamos que siguiente() lo haga y termine
-             // Al llamar a siguiente() inmediatamente, se termina la ronda
-             // Opcional: Puedes usar un timeout para dar un breve feedback visual
-             setTimeout(() => {
-                 siguiente();
-             }, 1000); // Esperar 1 segundo antes de ir a estadísticas
-             return; // Salir de validar para evitar más ejecución
-        }
+        document.getElementById('btn-next').classList.remove('oculto'); // Mostrar botón para continuar en entrenamiento
+    } else { // Modo Examen o Desafío
+        // Ocultar cualquier mensaje previo
+        document.getElementById('msg').innerText = "";
+        // Esperar un breve momento para que el usuario vea la respuesta marcada
+        setTimeout(() => {
+            if(sModo === 'examen') {
+                // En examen, pasar siempre a la siguiente pregunta
+                siguiente();
+            } else if(sModo === 'desafio') {
+                // En desafío, si falla, terminar la ronda
+                if(elegido !== correcto) {
+                    document.getElementById('msg').innerText = "FALLO CRÍTICO.";
+                    // Esperar un poco más para ver el mensaje y luego terminar
+                    setTimeout(() => {
+                        siguiente(); // Esto terminará la ronda si es el fallo o si llega al final
+                    }, 1000); // 1 segundo de pausa antes de ir a estadísticas si falla
+                } else {
+                    // Si acertó en desafío, pasar a la siguiente pregunta
+                    siguiente();
+                }
+            }
+        }, 500); // 500ms de pausa para ver la respuesta
     }
-
-    // Este bloque else no se ejecutará si se entra en alguna condición anterior con return
-    // if(sModo === 'examen') {
-    //     document.getElementById('msg').innerText = "REGISTRADO";
-    //     setTimeout(siguiente, 500);
-    // } else {
-    //     if(sModo !== 'desafio'){
-    //         document.getElementById('btn-next').classList.remove('oculto');
-    //     }
-    // }
 }
 
 // Nueva función para actualizar el HUD con contadores resumidos
@@ -180,7 +158,7 @@ function siguiente() {
     if(idx < test.length) {
         dibujar(); // Cargar siguiente pregunta si no hemos terminado
     } else {
-        // El juego ha terminado, ya sea por éxito o fallo en desafío
+        // El juego ha terminado, ya sea por completar la ronda o por fallo en desafío
         mostrarResultados();
     }
 }
