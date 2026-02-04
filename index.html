@@ -2,8 +2,8 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ID-MIL | Centro de Mando</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>ID-MIL | Ops</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -11,65 +11,64 @@
         <section id="pantalla-inicio" class="modulo activo">
             <div class="portada">
                 <img src="assets/emblema_legion.png" alt="Emblema" class="logo-portada">
-                <h1 class="titulo-principal">ID-MIL</h1>
-                <p class="subtitulo-principal">SISTEMA DE IDENTIFICACIÓN VISUAL</p>
-                <div class="bloque-autor">
-                    <span class="etiqueta">RESPONSABLE:</span>
-                    <span class="nombre-autor">TTE. JOSE REVERT TORMO</span>
+                <h1 class="titulo-v">ID-MIL</h1>
+                <p class="tagline">RECONOCIMIENTO TÁCTICO</p>
+                <div class="autor-box">
+                    <span class="label">RESPONSABLE:</span>
+                    <span class="nombre">TTE. JOSE REVERT TORMO</span>
                 </div>
-                <button onclick="navegar('pantalla-inicio', 'pantalla-config')" class="boton-militar">ACCEDER AL PANEL</button>
+                <button onclick="navegar('pantalla-inicio', 'pantalla-config')" class="btn-militar">ENTRAR</button>
             </div>
         </section>
 
         <section id="pantalla-config" class="modulo">
-            <h2 class="cabecera">CONFIGURACIÓN DE MISIÓN</h2>
+            <h2 class="header-tit">CENTRO DE MANDO</h2>
             
-            <div class="seccion-config">
-                <p class="label-seccion">1. SELECCIONAR ARSENAL</p>
-                <div class="grid-opciones">
-                    <button class="btn-sel cat" onclick="setCat('blindado', this)">BLINDADOS</button>
-                    <button class="btn-sel cat" onclick="setCat('artilleria', this)">ARTILLERÍA</button>
-                    <button class="btn-sel cat" onclick="setCat('aereo', this)">AÉREO</button>
-                    <button class="btn-sel cat" onclick="setCat('drone', this)">DRONES</button>
-                    <button class="btn-sel cat resaltado" onclick="setCat('todos', this)">TODO EL ARSENAL</button>
+            <div class="grupo-config">
+                <p class="seccion-tit">1. ARSENAL</p>
+                <div class="grid-config">
+                    <button class="btn-sel cat" onclick="selectCat('blindado', this)">BLINDADOS</button>
+                    <button class="btn-sel cat" onclick="selectCat('artilleria', this)">ARTILLERÍA</button>
+                    <button class="btn-sel cat" onclick="selectCat('aereo', this)">AÉREO</button>
+                    <button class="btn-sel cat" onclick="selectCat('drone', this)">DRONES</button>
+                    <button class="btn-sel cat full" onclick="selectCat('todos', this)">TODO EL ARSENAL</button>
                 </div>
             </div>
 
-            <div class="seccion-config">
-                <p class="label-seccion">2. MODO DE OPERACIÓN</p>
-                <div class="lista-modos">
-                    <button class="btn-sel modo" onclick="setModo('entrenamiento', this)">
+            <div class="grupo-config">
+                <p class="seccion-tit">2. MODO DE MISIÓN</p>
+                <div class="stack-config">
+                    <button class="btn-sel modo" onclick="selectModo('entrenamiento', this)">
                         <strong>ENTRENAMIENTO</strong>
                         <span>Pistas y corrección activa</span>
                     </button>
-                    <button class="btn-sel modo" onclick="setModo('examen', this)">
+                    <button class="btn-sel modo" onclick="selectModo('examen', this)">
                         <strong>EXAMEN</strong>
-                        <span>Evaluación ciega sin pistas</span>
+                        <span>Sin pistas | Evaluación final</span>
                     </button>
-                    <button class="btn-sel modo" onclick="setModo('desafio', this)">
+                    <button class="btn-sel modo" onclick="selectModo('desafio', this)">
                         <strong>DESAFÍO</strong>
-                        <span>Muerte súbita (1 fallo = fin)</span>
+                        <span>Muerte súbita</span>
                     </button>
                 </div>
             </div>
 
-            <button id="btn-ready" class="boton-militar inactivo" onclick="comenzarMision()">INICIAR OPERACIÓN</button>
-            <button class="boton-abortar" onclick="location.reload()">VOLVER</button>
+            <button id="btn-ready" class="btn-militar inactivo" onclick="iniciarMision()">INICIAR OPERACIÓN</button>
         </section>
 
         <section id="pantalla-juego" class="modulo">
-            <div class="barra-estado">
-                <span id="label-progreso">OBJ: 0/0</span>
-                <span id="label-modo-display" class="badge-modo">--</span>
-                <span id="label-puntos">PUNTOS: 0</span>
+            <div class="hud">
+                <span id="txt-progreso">OBJ: 0/0</span>
+                <span id="txt-modo" class="badge">--</span>
+                <span id="txt-puntos">PTS: 0</span>
             </div>
-            <div class="contenedor-foto">
+            <div class="visor">
                 <img id="img-obj" src="" alt="Objetivo">
             </div>
-            <div id="pista-zona" class="descripcion-pista"></div>
+            <div id="pista-zona" class="pista"></div>
             <div id="opciones-grid" class="grid-respuestas"></div>
-            <div id="feedback-zona" class="zona-feedback"></div>
-            <button id="btn-next" class="boton-militar oculto" onclick="siguiente()">CONTINUAR</button>
+            <div id="feedback-zona" class="feedback"></div>
+            <button id="btn-next" class="btn-militar oculto" onclick="siguiente()">CONTINUAR</button>
         </section>
     </div>
     <script src="js/main.js"></script>
