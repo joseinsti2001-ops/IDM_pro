@@ -1,4 +1,4 @@
-:root { --blue: #3b82f6; --bg: #0f172a; --panel: #1e293b; --white: #f8fafc; --success: #16a34a; --error: #dc2626; --gray: #6b7280; }
+:root { --blue: #3b82f6; --bg: #0f172a; --panel: #1e293b; --white: #f8fafc; --success: #16a34a; --error: #dc2626; --gray: #6b7280; --light-gray: #94a3b8; /* Añadimos una variable para el gris claro */ }
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
 
 body { background: var(--bg); color: var(--white); font-family: system-ui, sans-serif; height: 100vh; overflow: hidden; display: flex; justify-content: center; }
@@ -27,7 +27,7 @@ body { background: var(--bg); color: var(--white); font-family: system-ui, sans-
 .btn-go.inactivo { background: #334155; opacity: 0.4; pointer-events: none; }
 
 /* Firma Pequeña */
-.firma-mini { text-align: center; font-size: 0.7rem; margin-top: 25px; opacity: 0.4; font-style: italic; }
+.firma-mini { text-align: center; font-size: 0.7rem; margin-top: 25px; opacity: 0.4; font-style: italic; color: var(--light-gray); /* Aplicamos el gris claro */ }
 
 /* Juego */
 .hud { display: flex; justify-content: space-between; font-weight: bold; color: var(--blue); margin-bottom: 10px; font-size: 0.8rem; }
@@ -43,7 +43,7 @@ body { background: var(--bg); color: var(--white); font-family: system-ui, sans-
 .mensaje { text-align: center; font-weight: bold; margin: 10px 0; min-height: 20px; color: var(--blue); }
 
 /* Contenedor de botones de juego */
-.botones-juego { display: flex; gap: 10px; flex-direction: column; margin-top: 10px; /* Eleva ligeramente el contenedor */ }
+.botones-juego { display: flex; gap: 10px; flex-direction: column; margin-top: 20px; padding-bottom: 20px; }
 .btn-interrumpir { background: var(--gray); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 0.9rem; }
 #btn-next { margin-top: 0; }
 
@@ -130,7 +130,8 @@ body { background: var(--bg); color: var(--white); font-family: system-ui, sans-
 }
 
 #btn-volver-menu {
-    margin-top: auto;
+    margin-top: auto; /* Empuja el botón hacia abajo */
+    margin-bottom: 20px; /* Añadimos margen inferior para elevarlo del borde */
 }
 
 /* Modal Zoom */
