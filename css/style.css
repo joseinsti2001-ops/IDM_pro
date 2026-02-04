@@ -1,36 +1,46 @@
 :root { --azul: #3b82f6; --fondo: #020617; --panel: #1e293b; --texto: #f8fafc; }
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-body { margin: 0; background: var(--fondo); color: var(--texto); font-family: sans-serif; display: flex; justify-content: center; }
-#app-container { width: 100%; max-width: 500px; padding: 20px; background: #0f172a; min-height: 100vh; }
+body { margin: 0; background: var(--fondo); color: var(--texto); font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; }
+#app-container { width: 100%; max-width: 500px; padding: 20px; background: #0f172a; min-height: 100vh; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
 .modulo { display: none; flex-direction: column; }
 .modulo.activo { display: flex; }
 .oculto { display: none !important; }
 
 /* Portada */
 .portada { text-align: center; padding: 20px 0; }
-.logo-portada { width: 150px; margin-bottom: 15px; }
-.titulo-principal { font-size: 3.5rem; margin: 0; color: var(--azul); letter-spacing: 2px; }
-.bloque-autor { border: 1px solid #334155; padding: 15px; margin: 30px 0; border-radius: 8px; }
-.etiqueta { display: block; font-size: 0.7rem; color: var(--azul); }
+.logo-portada { width: 140px; margin-bottom: 15px; filter: drop-shadow(0 0 10px var(--azul)); }
+.titulo-principal { font-size: 3rem; margin: 0; color: var(--azul); letter-spacing: 2px; }
+.bloque-autor { border: 1px solid #334155; padding: 15px; margin: 25px 0; border-radius: 8px; background: rgba(255,255,255,0.02); }
+.etiqueta { display: block; font-size: 0.7rem; color: var(--azul); font-weight: bold; }
 .nombre-autor { font-weight: bold; font-size: 1.1rem; }
 
-/* Botones */
-.boton-militar { width: 100%; padding: 20px; background: var(--azul); color: white; border: none; border-radius: 8px; font-weight: bold; font-size: 1.1rem; cursor: pointer; }
-.grid-opciones, .grid-modos { display: grid; gap: 12px; margin-bottom: 20px; }
-.grid-opciones { grid-template-columns: 1fr 1fr; }
-.btn-cat, .btn-modo { background: var(--panel); border: 2px solid #334155; color: white; border-radius: 8px; cursor: pointer; padding: 20px 10px; font-weight: bold; }
-.btn-modo { display: flex; flex-direction: column; text-align: left; padding: 15px; }
-.btn-modo span { font-size: 0.8rem; opacity: 0.6; font-weight: normal; margin-top: 4px; }
+/* Pantalla Config */
+.seccion-config { margin-bottom: 20px; }
+.label-seccion { color: var(--azul); font-size: 0.8rem; font-weight: bold; margin-bottom: 10px; border-bottom: 1px solid #334155; padding-bottom: 5px; }
+.btn-sel { background: var(--panel); border: 2px solid #334155; color: white; border-radius: 8px; cursor: pointer; transition: 0.2s; }
+.btn-sel.active { border-color: var(--azul); background: #2d3e5a; box-shadow: 0 0 10px rgba(59,130,246,0.3); }
+
+.grid-opciones { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.btn-sel.cat { padding: 15px 5px; font-weight: bold; font-size: 0.85rem; }
 .resaltado { grid-column: span 2; }
 
+.lista-modos { display: flex; flex-direction: column; gap: 8px; }
+.btn-sel.modo { display: flex; flex-direction: column; padding: 12px; text-align: left; }
+.btn-sel.modo strong { font-size: 1rem; }
+.btn-sel.modo span { font-size: 0.75rem; opacity: 0.6; font-weight: normal; }
+
+.boton-militar { width: 100%; padding: 18px; background: var(--azul); color: white; border: none; border-radius: 8px; font-weight: bold; font-size: 1.1rem; cursor: pointer; }
+.boton-militar.inactivo { background: #334155; color: #64748b; cursor: not-allowed; pointer-events: none; }
+
 /* Juego */
-.barra-estado { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--azul); font-weight: bold; margin-bottom: 10px; }
-.contenedor-foto { background: #000; border: 1px solid #334155; border-radius: 8px; height: 280px; display: flex; align-items: center; overflow: hidden; }
+.barra-estado { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--azul); font-weight: bold; margin-bottom: 10px; align-items: center; }
+.badge-modo { background: var(--azul); color: white; padding: 2px 6px; border-radius: 4px; }
+.contenedor-foto { background: #000; border: 1px solid #334155; border-radius: 8px; height: 260px; display: flex; overflow: hidden; }
 #img-obj { width: 100%; height: 100%; object-fit: contain; }
-.descripcion-pista { padding: 15px 0; font-size: 0.9rem; color: #94a3b8; text-align: center; font-style: italic; min-height: 60px; }
-.grid-respuestas { display: grid; gap: 10px; }
-.btn-res { padding: 16px; background: var(--panel); border: 1px solid #334155; color: white; border-radius: 8px; text-align: left; cursor: pointer; }
-.bien { background: #16a34a !important; }
-.mal { background: #dc2626 !important; }
-.zona-feedback { text-align: center; font-weight: bold; margin: 15px 0; min-height: 24px; }
-.boton-abortar { background: none; border: none; color: #475569; width: 100%; margin-top: 20px; cursor: pointer; text-decoration: underline; }
+.descripcion-pista { padding: 12px 0; font-size: 0.85rem; color: #94a3b8; text-align: center; font-style: italic; min-height: 50px; }
+.grid-respuestas { display: grid; gap: 8px; }
+.btn-res { padding: 15px; background: var(--panel); border: 1px solid #334155; color: white; border-radius: 8px; text-align: left; cursor: pointer; font-size: 0.95rem; }
+.bien { background: #16a34a !important; border-color: #4ade80 !important; }
+.mal { background: #dc2626 !important; border-color: #f87171 !important; }
+.zona-feedback { text-align: center; font-weight: bold; margin: 10px 0; min-height: 20px; }
+.boton-abortar { background: none; border: none; color: #475569; width: 100%; margin-top: 15px; cursor: pointer; text-decoration: underline; font-size: 0.8rem; }
