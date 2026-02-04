@@ -1,4 +1,4 @@
-:root { --blue: #3b82f6; --bg: #0f172a; --panel: #1e293b; --white: #f8fafc; }
+:root { --blue: #3b82f6; --bg: #0f172a; --panel: #1e293b; --white: #f8fafc; --success: #16a34a; --error: #dc2626; }
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
 
 body { background: var(--bg); color: var(--white); font-family: system-ui, sans-serif; height: 100vh; overflow: hidden; display: flex; justify-content: center; }
@@ -35,11 +35,17 @@ body { background: var(--bg); color: var(--white); font-family: system-ui, sans-
 #img-obj { width: 100%; height: 100%; object-fit: contain; }
 .lupa-icon { position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.5); padding: 5px; border-radius: 5px; font-size: 0.8rem; }
 .pista { padding: 10px; font-size: 0.85rem; text-align: center; font-style: italic; min-height: 55px; color: #94a3b8; }
-.respuestas { display: grid; gap: 8px; }
-.btn-r { background: var(--panel); border: 1px solid #334155; color: white; padding: 16px; border-radius: 8px; text-align: left; cursor: pointer; }
-.ok { background: #16a34a !important; }
-.ko { background: #dc2626 !important; }
+.respuestas { display: grid; gap: 8px; margin-bottom: 10px; } /* Espacio debajo de las respuestas */
+.btn-r { background: var(--panel); border: 1px solid #334155; color: white; padding: 16px; border-radius: 8px; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; } /* Flex para alinear icono */
+.ok { background: var(--success) !important; }
+.ko { background: var(--error) !important; }
+.icono-respuesta { margin-left: auto; font-size: 1.2rem; } /* Icono alineado a la derecha dentro del botón */
 .mensaje { text-align: center; font-weight: bold; margin: 10px 0; min-height: 20px; color: var(--blue); }
+
+/* Contenedor de botones de juego */
+.botones-juego { display: flex; gap: 10px; flex-direction: column; } /* Columna para apilar botones */
+.btn-interrumpir { background: #4b5563; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 0.9rem; }
+#btn-next { margin-top: 0; } /* Quitar margen superior predeterminado */
 
 /* Nuevo: Estilo para la pantalla de estadísticas */
 .stats-container {
