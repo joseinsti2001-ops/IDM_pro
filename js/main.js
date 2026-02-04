@@ -1,5 +1,5 @@
 let db = [], pool = [], idx = 0, pts = 0;
-let categoria = '', modo = '';
+let selCat = '', selModo = '';
 
 (async function() {
     try {
@@ -14,30 +14,44 @@ function navegar(sale, entra) {
     window.scrollTo(0,0);
 }
 
-function setCat(c) {
-    categoria = c;
-    navegar('menu-categorias', 'menu-modos');
+function setCat(c, btn) {
+    selCat = c;
+    document.querySelectorAll('.btn-sel.cat').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    checkReady();
 }
 
-function setModo(m) {
-    modo = m;
-    pool = categoria === 'todos' ? [...db] : db.filter(v => v.tipo === categoria);
+function setModo(m, btn) {
+    selModo = m;
+    document.querySelectorAll('.btn-sel.modo').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    checkReady();
+}
+
+function checkReady() {
+    if(selCat !== '' && selModo !== '') {
+        document.getElementById('btn-ready').classList.remove('inactivo');
+    }
+}
+
+function comenzarMision() {
+    pool = (selCat === 'todos') ? [...db] : db.filter(v => v.tipo === selCat);
     pool.sort(() => Math.random() - 0.5);
     idx = 0; pts = 0;
-    document.getElementById('label-modo').innerText = `MODO: ${m.toUpperCase()}`;
-    navegar('menu-modos', 'pantalla-juego');
+    
+    document.getElementById('label-modo-display').innerText = selModo.toUpperCase();
+    navegar('pantalla-config', 'pantalla-juego');
     render();
 }
 
 function render() {
     const v = pool[idx];
     document.getElementById('label-progreso').innerText = `OBJ: ${idx + 1}/${pool.length}`;
-    document.getElementById('label-puntos').innerText = `EFIC: ${Math.round((pts/(idx||1))*100)}%`;
+    document.getElementById('label-puntos').innerText = `PUNTOS: ${pts}`;
     document.getElementById('img-obj').src = v.imagen;
     
-    // Lógica de Pistas según modo
-    const zonaPista = document.getElementById('pista-zona');
-    zonaPista.innerText = (modo === 'entrenamiento') ? (v.descripcion || "Sin pistas.") : "INTELIGENCIA RESERVADA (Modo Examen/Desafío)";
+    const pBox = document.getElementById('pista-zona');
+    pBox.innerText = (selModo === 'entrenamiento') ? (v.descripcion || "Sin pistas.") : "INTELIGENCIA RESERVADA";
     
     document.getElementById('feedback-zona').innerText = "";
     document.getElementById('btn-next').classList.add('oculto');
@@ -59,23 +73,23 @@ function validar(esc, btn) {
     btns.forEach(b => b.disabled = true);
 
     if (esc === correcta) {
-        if (modo !== 'examen') btn.classList.add('bien');
         pts++;
-        if (modo === 'entrenamiento') document.getElementById('feedback-zona').innerText = "IDENTIFICADO";
+        if (selModo !== 'examen') btn.classList.add('bien');
+        if (selModo === 'entrenamiento') document.getElementById('feedback-zona').innerText = "IDENTIFICADO";
     } else {
-        if (modo !== 'examen') btn.classList.add('mal');
-        if (modo === 'entrenamiento') {
-            document.getElementById('feedback-zona').innerText = `FALLO: ${correcta}`;
+        if (selModo !== 'examen') btn.classList.add('mal');
+        if (selModo === 'entrenamiento') {
+            document.getElementById('feedback-zona').innerText = `FALLO: ES UN ${correcta}`;
             btns.forEach(b => { if(b.innerText === correcta) b.classList.add('bien'); });
         }
-        if (modo === 'desafio') {
-            alert(`DESAFÍO FALLIDO. Identificación incorrecta.\nPuntuación: ${pts}`);
+        if (selModo === 'desafio') {
+            alert(`MUERTE SÚBITA\nFallo en identificación.\nPuntuación: ${pts}`);
             location.reload(); return;
         }
     }
 
-    if (modo === 'examen') {
-        document.getElementById('feedback-zona').innerText = "RESPUESTA REGISTRADA";
+    if (selModo === 'examen') {
+        document.getElementById('feedback-zona').innerText = "REGISTRADO";
         setTimeout(siguiente, 600);
     } else {
         document.getElementById('btn-next').classList.remove('oculto');
@@ -86,7 +100,7 @@ function siguiente() {
     idx++;
     if (idx < pool.length) render();
     else {
-        alert(`FIN DE MISIÓN\nModo: ${modo.toUpperCase()}\nEfectividad: ${Math.round((pts/pool.length)*100)}%`);
+        alert(`FIN DE MISIÓN\nModo: ${selModo.toUpperCase()}\nEfectividad: ${Math.round((pts/pool.length)*100)}%\nAciertos: ${pts}/${pool.length}`);
         location.reload();
     }
 }
