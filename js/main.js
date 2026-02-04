@@ -4,7 +4,8 @@ let stats = {}; // Objeto para almacenar las estadísticas de la sesión actual
 let startTime = null; // Variable para almacenar el tiempo de inicio de la ronda
 let aciertosContador = 0; // Contador para aciertos
 let fallosContador = 0; // Contador para fallos
-//
+
+
 // --- Manejo de la portada ---
 // REMOVIDO: const PORTADA_VISTA_KEY = 'idmil_portada_vista';
 // REMOVIDO: function yaVioPortada()
@@ -127,7 +128,7 @@ function validar(elegido, boton, nombreCorrecto) {
             if(sModo === 'desafio') {
                  // Continuar sin hacer nada más aquí, el botón next no se muestra
                  // La ronda termina si falla o si completa todas
-                 return;
+                 return; // <-- ESTE RETURN es crucial para que continue
             }
         }
         // En entrenamiento, si acierta, mostrar mensaje y botón continuar
@@ -198,8 +199,9 @@ function mostrarResultados() {
     const modoActual = sModo;
     const categoriaActual = sCat;
     const total = test.length;
-    const aciertos = pts; // Usamos 'pts' que también se incrementa
-    const fallos = total - aciertos;
+    // CORREGIDO: Usamos los contadores locales para estadísticas
+    const aciertos = aciertosContador;
+    const fallos = fallosContador;
     const fecha = new Date().toLocaleString();
 
     if (!stats[modoActual]) {
@@ -228,7 +230,7 @@ function mostrarResultados() {
     resumenDiv.className = 'resumen-partada';
 
     const tituloPartida = document.createElement('h3');
-    tituloPartada.textContent = `Partida Finalizada`;
+    tituloPartida.textContent = `Partida Finalizada`;
     resumenDiv.appendChild(tituloPartida);
 
     const detalleCategoria = document.createElement('p');
