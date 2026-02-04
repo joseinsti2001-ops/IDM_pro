@@ -8,7 +8,7 @@
 </head>
 <body>
     <div id="app">
-        <section id="pantalla-portada" class="modulo activo">
+        <section id="pantalla-portada" class="modulo activo"> <!-- Debe tener 'activo' por defecto -->
             <div class="portada-content">
                 <img src="assets/emblema_legion.png" alt="Emblema" class="logo-grande">
                 <h1 class="titulo-portada">ID-MIL</h1>
@@ -18,7 +18,7 @@
             </div>
         </section>
 
-        <section id="pantalla-menu" class="modulo">
+        <section id="pantalla-menu" class="modulo"> <!-- No debe tener 'activo' -->
             <h1 class="logo-mini">ID-MIL</h1>
 
             <p class="tag">ARSENAL</p>
@@ -42,11 +42,10 @@
             <p class="firma-mini">Responsable: Tte. Jose Revert Tormo</p>
         </section>
 
-        <section id="pantalla-juego" class="modulo">
+        <section id="pantalla-juego" class="modulo"> <!-- No debe tener 'activo' -->
             <div class="hud">
                 <span id="progreso">0/0</span>
-                <!-- Cambiado el texto de 'ACIERTOS:' a 'RESPUESTAS:' -->
-                <span id="puntos">RESPUESTAS:</span>
+                <span id="puntos">RESPUESTAS: </span>
             </div>
             <div class="marco" onclick="abrirZoom()">
                 <img id="img-obj" src="" alt="Objetivo">
@@ -62,7 +61,7 @@
         </section>
 
         <!-- NUEVA SECCIÓN: Pantalla de Estadísticas -->
-        <section id="pantalla-stats" class="modulo">
+        <section id="pantalla-stats" class="modulo"> <!-- No debe tener 'activo' -->
             <h1 class="logo-mini">ESTADÍSTICAS</h1>
             <div id="stats-content" class="stats-container">
                 <!-- El contenido se generará dinámicamente -->
