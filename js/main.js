@@ -66,6 +66,8 @@ function dibujar() {
     document.getElementById('progreso').innerText = `OBJETIVO: ${idx + 1}/${test.length}`;
     // Inicializamos el HUD de puntos como vacío, se llenará con iconos
     document.getElementById('puntos').innerHTML = 'RESPUESTAS: ';
+    // Actualizar HUD con iconos ya existentes (antes de dibujar pregunta actual)
+    actualizarHUD();
     document.getElementById('img-obj').src = v.imagen;
     document.getElementById('img-obj').onerror = function() { this.src = 'assets/placeholder.png'; };
     document.getElementById('pista-zona').innerText = sModo === 'entrenamiento' ? v.descripcion : "INFORMACIÓN CLASIFICADA";
@@ -100,12 +102,12 @@ function cerrarZoom() {
 function validar(elegido, boton, nombreCorrecto) {
     const correcto = nombreCorrecto;
     const botones = document.querySelectorAll('.btn-r');
-    botones.forEach(b => b.disabled = true);
+    botones.forEach(b => b.disabled = true); // Deshabilitar botones inmediatamente
 
     // Determinar si fue acierto o fallo
     let resultadoIcono = '';
     if(elegido === correcto) {
-        pts++; // Mantenemos la lógica de puntos si se necesita para estadísticas
+        pts++;
         boton.classList.add('ok');
         resultadoIcono = '✅'; // Acierto
     } else {
@@ -119,17 +121,27 @@ function validar(elegido, boton, nombreCorrecto) {
     actualizarHUD();
 
     if(elegido === correcto) {
+        // En examen y desafío, se marca el botón pero no el texto adicional
         if(sModo !== 'entrenamiento'){
-            // El estilo 'ok' ya se añadió
+            // El estilo 'ok' ya se añadió arriba
         }
     } else {
+        // Mostrar el nombre correcto en entrenamiento
         if(sModo === 'entrenamiento') {
             document.getElementById('msg').innerText = `IDENTIFICADO COMO: ${correcto}`;
         }
+        // --- CORRECCIÓN CRÍTICA: Modo Desafío ---
         if(sModo === 'desafio') {
              document.getElementById('msg').innerText = "FALLO CRÍTICO.";
+             // Mostrar botón de continuar (opcional, puede quitarse si se va directo)
              document.getElementById('btn-next').classList.remove('oculto');
-             return;
+             // *** TERMINAR LA RONDA INMEDIATAMENTE ***
+             // Llamamos a mostrarResultados directamente o simulamos que es la última pregunta
+             // Para evitar duplicar lógica, simplemente incrementamos idx para que idx >= test.length
+             // Y luego llamamos a siguiente(), que se encargará de mostrarResultados
+             idx = test.length; // Forzamos el fin de la ronda
+             siguiente(); // Llama a siguiente que ahora detectará el fin
+             return; // Salir de validar para evitar más ejecución
         }
     }
 
@@ -137,7 +149,8 @@ function validar(elegido, boton, nombreCorrecto) {
         document.getElementById('msg').innerText = "REGISTRADO";
         setTimeout(siguiente, 500);
     } else {
-        if(sModo !== 'desafio'){
+        // En entrenamiento, mostrar el botón de siguiente
+        if(sModo !== 'desafio'){ // No mostrar si ya estamos en el paso de desafío
             document.getElementById('btn-next').classList.remove('oculto');
         }
     }
@@ -161,13 +174,15 @@ function actualizarHUD() {
 function siguiente() {
     idx++;
     if(idx < test.length) {
-        dibujar();
+        dibujar(); // Cargar siguiente pregunta si no hemos terminado
     } else {
+        // El juego ha terminado, ya sea por éxito o fallo en desafío
         mostrarResultados();
     }
 }
 
 function mostrarResultados() {
+    // Calcular tiempo transcurrido
     const endTime = new Date().getTime();
     const elapsedTimeMs = endTime - startTime;
     const elapsedTimeSec = (elapsedTimeMs / 1000).toFixed(2);
@@ -175,6 +190,7 @@ function mostrarResultados() {
     document.getElementById('pantalla-juego').classList.remove('activo');
     document.getElementById('pantalla-stats').classList.add('activo');
 
+    // Guardar estadísticas del juego actual en la sesión
     const modoActual = sModo;
     const categoriaActual = sCat;
     const total = test.length;
@@ -196,6 +212,7 @@ function mostrarResultados() {
         fecha: fecha
     });
 
+    // Mostrar estadísticas en pantalla
     const statsContent = document.getElementById('stats-content');
     statsContent.innerHTML = '';
 
@@ -245,56 +262,4 @@ function mostrarResultados() {
 
     const porcentajeSpan = document.createElement('p');
     porcentajeSpan.className = 'porcentaje';
-    const porcentaje = total > 0 ? ((aciertos / total) * 100).toFixed(2) : 0;
-    porcentajeSpan.textContent = `Rendimiento: ${porcentaje}%`;
-    resumenDiv.appendChild(porcentajeSpan);
-
-    statsContent.appendChild(resumenDiv);
-
-    const historialTitulo = document.createElement('h3');
-    historialTitulo.textContent = 'Historial (Esta Sesión):';
-    statsContent.appendChild(historialTitulo);
-
-    const historialLista = document.createElement('ul');
-    stats[modoActual][categoriaActual].forEach((partida, index) => {
-        const item = document.createElement('li');
-        item.className = 'historial-item';
-        const porcentajeHistorial = ((partida.aciertos / partida.total) * 100).toFixed(2);
-        item.textContent = `${partida.fecha}: ${partida.aciertos}/${partida.total} (${porcentajeHistorial}%), F: ${partida.fallos}, T: ${partida.tiempo}s`;
-        historialLista.appendChild(item);
-    });
-    statsContent.appendChild(historialLista);
-}
-
-
-function interrumpirPrueba() {
-    if (confirm("¿Estás seguro de que deseas interrumpir la prueba actual?")) {
-        mostrarResultados();
-    }
-}
-
-function volverAlMenu() {
-    document.getElementById('pantalla-stats').classList.remove('activo');
-    document.getElementById('pantalla-menu').classList.add('activo');
-    // No reiniciamos estado aquí si se vuelve al menú
-}
-
-// --- INICIALIZACIÓN ---
-(async function() {
-    try {
-        const r = await fetch(`data/vehiculos.json?v=${Date.now()}`);
-        arsenal = await r.json();
-        const savedStats = localStorage.getItem('idmil_stats');
-        if (savedStats) {
-            stats = JSON.parse(savedStats);
-        }
-    } catch (e) {
-        console.error("Error al cargar la base de datos de vehículos:", e);
-         alert("Error al cargar los datos del juego. Por favor, recarga la página.");
-    }
-
-    if (yaVioPortada()) {
-        document.getElementById('pantalla-portada').classList.remove('activo');
-        document.getElementById('pantalla-menu').classList.add('activo');
-    }
-})();
+    const porcentaje = total > 0 ? ((aciertos / total) * 10
