@@ -1,46 +1,51 @@
-:root { --azul: #3b82f6; --fondo: #020617; --panel: #1e293b; --texto: #f8fafc; }
-* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-body { margin: 0; background: var(--fondo); color: var(--texto); font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; }
-#app-container { width: 100%; max-width: 500px; padding: 20px; background: #0f172a; min-height: 100vh; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
-.modulo { display: none; flex-direction: column; }
+:root { --blue: #3b82f6; --bg: #020617; --card: #1e293b; --white: #f8fafc; }
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
+
+body { 
+    background: var(--bg); color: var(--white); font-family: system-ui, -apple-system, sans-serif;
+    overflow: hidden; height: 100vh; display: flex; justify-content: center;
+}
+
+#app-container { width: 100%; max-width: 480px; height: 100vh; position: relative; padding: env(safe-area-inset-top) 15px 15px; }
+
+.modulo { display: none; height: 100%; flex-direction: column; overflow-y: auto; padding-bottom: 20px; }
 .modulo.activo { display: flex; }
 .oculto { display: none !important; }
 
 /* Portada */
-.portada { text-align: center; padding: 20px 0; }
-.logo-portada { width: 140px; margin-bottom: 15px; filter: drop-shadow(0 0 10px var(--azul)); }
-.titulo-principal { font-size: 3rem; margin: 0; color: var(--azul); letter-spacing: 2px; }
-.bloque-autor { border: 1px solid #334155; padding: 15px; margin: 25px 0; border-radius: 8px; background: rgba(255,255,255,0.02); }
-.etiqueta { display: block; font-size: 0.7rem; color: var(--azul); font-weight: bold; }
-.nombre-autor { font-weight: bold; font-size: 1.1rem; }
+.portada { text-align: center; padding-top: 20px; }
+.logo-portada { width: 120px; margin-bottom: 10px; filter: drop-shadow(0 0 8px var(--blue)); }
+.titulo-v { font-size: 3rem; color: var(--blue); letter-spacing: 3px; }
+.tagline { font-size: 0.8rem; opacity: 0.6; margin-bottom: 20px; }
+.autor-box { border: 1px solid #334155; padding: 15px; margin-bottom: 30px; border-radius: 8px; }
+.autor-box .label { display: block; font-size: 0.6rem; color: var(--blue); font-weight: bold; }
+.autor-box .nombre { font-weight: bold; font-size: 1rem; }
 
-/* Pantalla Config */
-.seccion-config { margin-bottom: 20px; }
-.label-seccion { color: var(--azul); font-size: 0.8rem; font-weight: bold; margin-bottom: 10px; border-bottom: 1px solid #334155; padding-bottom: 5px; }
-.btn-sel { background: var(--panel); border: 2px solid #334155; color: white; border-radius: 8px; cursor: pointer; transition: 0.2s; }
-.btn-sel.active { border-color: var(--azul); background: #2d3e5a; box-shadow: 0 0 10px rgba(59,130,246,0.3); }
+/* Botones */
+.btn-militar { background: var(--blue); color: white; border: none; padding: 18px; border-radius: 10px; font-weight: bold; font-size: 1.1rem; width: 100%; cursor: pointer; }
+.btn-militar.inactivo { background: #334155; color: #64748b; pointer-events: none; }
 
-.grid-opciones { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.btn-sel.cat { padding: 15px 5px; font-weight: bold; font-size: 0.85rem; }
-.resaltado { grid-column: span 2; }
+.header-tit { text-align: center; margin: 15px 0; font-size: 1.2rem; border-bottom: 1px solid var(--blue); padding-bottom: 10px; }
+.seccion-tit { font-size: 0.75rem; color: var(--blue); margin-bottom: 8px; font-weight: bold; }
+.grupo-config { margin-bottom: 15px; }
 
-.lista-modos { display: flex; flex-direction: column; gap: 8px; }
-.btn-sel.modo { display: flex; flex-direction: column; padding: 12px; text-align: left; }
-.btn-sel.modo strong { font-size: 1rem; }
-.btn-sel.modo span { font-size: 0.75rem; opacity: 0.6; font-weight: normal; }
+.grid-config { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.btn-sel { background: var(--card); border: 1px solid #334155; color: white; padding: 12px; border-radius: 8px; cursor: pointer; font-size: 0.85rem; }
+.btn-sel.active { border-color: var(--blue); background: #2d3e5a; }
+.full { grid-column: span 2; }
 
-.boton-militar { width: 100%; padding: 18px; background: var(--azul); color: white; border: none; border-radius: 8px; font-weight: bold; font-size: 1.1rem; cursor: pointer; }
-.boton-militar.inactivo { background: #334155; color: #64748b; cursor: not-allowed; pointer-events: none; }
+.stack-config { display: flex; flex-direction: column; gap: 8px; }
+.btn-sel.modo { text-align: left; display: flex; flex-direction: column; }
+.btn-sel.modo span { font-size: 0.7rem; opacity: 0.6; }
 
 /* Juego */
-.barra-estado { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--azul); font-weight: bold; margin-bottom: 10px; align-items: center; }
-.badge-modo { background: var(--azul); color: white; padding: 2px 6px; border-radius: 4px; }
-.contenedor-foto { background: #000; border: 1px solid #334155; border-radius: 8px; height: 260px; display: flex; overflow: hidden; }
+.hud { display: flex; justify-content: space-between; font-size: 0.7rem; font-weight: bold; color: var(--blue); margin-bottom: 8px; align-items: center; }
+.badge { background: var(--blue); color: white; padding: 2px 6px; border-radius: 4px; }
+.visor { background: #000; border: 1px solid #334155; border-radius: 8px; height: 220px; display: flex; }
 #img-obj { width: 100%; height: 100%; object-fit: contain; }
-.descripcion-pista { padding: 12px 0; font-size: 0.85rem; color: #94a3b8; text-align: center; font-style: italic; min-height: 50px; }
+.pista { padding: 8px 0; font-size: 0.8rem; color: #94a3b8; text-align: center; font-style: italic; min-height: 40px; }
 .grid-respuestas { display: grid; gap: 8px; }
-.btn-res { padding: 15px; background: var(--panel); border: 1px solid #334155; color: white; border-radius: 8px; text-align: left; cursor: pointer; font-size: 0.95rem; }
-.bien { background: #16a34a !important; border-color: #4ade80 !important; }
-.mal { background: #dc2626 !important; border-color: #f87171 !important; }
-.zona-feedback { text-align: center; font-weight: bold; margin: 10px 0; min-height: 20px; }
-.boton-abortar { background: none; border: none; color: #475569; width: 100%; margin-top: 15px; cursor: pointer; text-decoration: underline; font-size: 0.8rem; }
+.btn-res { background: var(--card); border: 1px solid #334155; color: white; padding: 14px; border-radius: 8px; text-align: left; font-size: 0.9rem; }
+.bien { background: #16a34a !important; }
+.mal { background: #dc2626 !important; }
+.feedback { text-align: center; font-weight: bold; margin: 8px 0; min-height: 18px; font-size: 0.9rem; }
