@@ -3,6 +3,7 @@ let sessionPool = [];  // Preguntas filtradas para la partida actual
 let currentIndex = 0;  // Pregunta actual
 let score = 0;         // Puntuación
 let config = { categorias: [], modo: null };
+let fallos = 0;
 
 // 1. CARGAR BASE DE DATOS AL INICIAR
 fetch('data/vehiculos.json')
@@ -103,26 +104,37 @@ function renderQuestion() {
 
 // Función global para verificar respuesta
 window.checkAnswer = (selected, btnElement) => {
-    const correct = sessionPool[currentIndex].nombre; // Asegúrate que en JSON es "nombre" o "respuesta"
+    const correct = sessionPool[currentIndex].nombre;
     const allButtons = document.querySelectorAll('.opt-btn');
-
-    // Deshabilitar todos los botones para que no pulsen dos veces
     allButtons.forEach(btn => btn.disabled = true);
-
-    let isCorrect = false;
 
     if (selected === correct) {
         btnElement.classList.add('correct');
-        score++;
-        isCorrect = true;
+        score++; // Aciertos
+        document.getElementById('puntos-si').innerText = score;
     } else {
         btnElement.classList.add('incorrect');
-        // Mostrar cuál era la correcta
+        fallos++; // Fallos
+        document.getElementById('puntos-no').innerText = fallos;
+        
+        // Marcamos la correcta para que aprendas cuál era
         allButtons.forEach(btn => {
             if (btn.innerText === correct) btn.classList.add('correct');
         });
     }
 
+    // Esperar un poco y pasar a la siguiente
+    setTimeout(() => {
+        currentIndex++;
+        if (currentIndex < sessionPool.length) {
+            renderQuestion();
+        } else {
+            // Al final mostramos el total
+            alert(`FIN DE MISIÓN\nAciertos: ${score}\nFallos: ${fallos}`);
+            location.reload();
+        }
+    }, 1200);
+};
     // Lógica de Modos especiales
     if (config.modo === 'supervivencia' && !isCorrect) {
         setTimeout(() => endGame(false), 1500);
