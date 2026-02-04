@@ -4,7 +4,7 @@ let stats = {}; // Objeto para almacenar las estadísticas de la sesión actual
 let startTime = null; // Variable para almacenar el tiempo de inicio de la ronda
 let aciertosContador = 0; // Contador para aciertos
 let fallosContador = 0; // Contador para fallos
-
+//
 // --- Manejo de la portada ---
 // REMOVIDO: const PORTADA_VISTA_KEY = 'idmil_portada_vista';
 // REMOVIDO: function yaVioPortada()
