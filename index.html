@@ -2,51 +2,50 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ID-MIL</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div id="app">
-        <section id="pantalla-inicio" class="full-screen">
-            <div class="portada-content">
+        <section id="pantalla-inicio" class="panel active">
+            <div class="content">
                 <img src="assets/emblema_legion.png" alt="Emblema" class="emblema">
-                <h1 class="titulo-app">ID-MIL</h1>
-                <p class="subtitulo">RECONOCIMIENTO TÁCTICO</p>
-                <div class="autor-box">
-                    <span>AUTOR:</span>
-                    <strong>TTE. JOSE REVERT TORMO</strong>
+                <h1>ID-MIL</h1>
+                <p class="sub">RECONOCIMIENTO TÁCTICO</p>
+                <div class="divisor"></div>
+                <p class="autor">TTE. JOSE REVERT TORMO</p>
+                <button onclick="navegar('pantalla-inicio', 'menu-seleccion')" class="btn-main">ENTRAR</button>
+            </div>
+        </section>
+
+        <section id="menu-seleccion" class="panel">
+            <div class="content">
+                <h2>CATEGORÍA</h2>
+                <div class="grid-sel">
+                    <button class="btn-opt" onclick="seleccionar('blindado')">BLINDADOS</button>
+                    <button class="btn-opt" onclick="seleccionar('artilleria')">ARTILLERÍA</button>
+                    <button class="btn-opt" onclick="seleccionar('aereo')">AÉREO</button>
+                    <button class="btn-opt" onclick="seleccionar('drone')">DRONES</button>
+                    <button class="btn-opt full" onclick="seleccionar('todos')">TODO EL ARSENAL</button>
                 </div>
-                <button onclick="irASeleccion()" class="btn-flash">ENTRAR</button>
+                <p id="status-msg">Seleccione una opción</p>
+                <button id="btn-confirmar" class="btn-main hidden" onclick="iniciarMision()">INICIAR</button>
             </div>
         </section>
 
-        <section id="menu-seleccion" class="full-screen hidden">
-            <h2 class="header-tit">IDENTIFICACIÓN</h2>
-            <div class="selector-grid">
-                <button class="btn-sel" onclick="seleccionar('blindado')">BLINDADOS</button>
-                <button class="btn-sel" onclick="seleccionar('artilleria')">ARTILLERÍA</button>
-                <button class="btn-sel" onclick="seleccionar('aereo')">AÉREO</button>
-                <button class="btn-sel" onclick="seleccionar('drone')">DRONES</button>
-                <button class="btn-sel total" onclick="seleccionar('todos')">TODO EL ARSENAL</button>
+        <section id="pantalla-juego" class="panel">
+            <div class="hud">
+                <span id="txt-progreso">0/0</span>
+                <span id="txt-puntos">0%</span>
             </div>
-            <p id="status-msg" class="status-msg">SELECCIONE CATEGORÍA</p>
-            <button id="btn-confirmar" class="btn-flash hidden" onclick="iniciarMision()">INICIAR</button>
-        </section>
-
-        <section id="pantalla-juego" class="full-screen hidden">
-            <div class="hud-top">
-                <div id="txt-progreso">OBJ: 0/0</div>
-                <div id="txt-puntos">EFIC: 0%</div>
-            </div>
-            <div class="visor-tactico">
+            <div class="visor">
                 <img id="img-objetivo" src="" alt="Objetivo">
-                <div class="reticula"></div>
             </div>
-            <div id="pista-text" class="pista-movil"></div>
-            <div id="grid-opciones" class="opciones-movil"></div>
+            <div id="pista-text" class="pista"></div>
+            <div id="grid-opciones" class="grid-ans"></div>
             <div id="feedback-txt" class="feedback"></div>
-            <button id="btn-next" class="btn-flash hidden" onclick="proximoObjetivo()">CONTINUAR</button>
+            <button id="btn-next" class="btn-main hidden" onclick="proximoObjetivo()">CONTINUAR</button>
         </section>
     </div>
     <script src="js/main.js"></script>
