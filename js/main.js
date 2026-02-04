@@ -1,6 +1,7 @@
 let arsenal = [], test = [], idx = 0, pts = 0;
 let sCat = '', sModo = '';
 let stats = {}; // Objeto para almacenar las estadísticas de la sesión actual
+let startTime = null; // Variable para almacenar el tiempo de inicio de la ronda
 
 // --- Manejo de la portada ---
 const PORTADA_VISTA_KEY = 'idmil_portada_vista';
@@ -42,6 +43,8 @@ function iniciar() {
     test.sort(() => Math.random() - 0.5);
     idx = 0;
     pts = 0;
+    // Reiniciar tiempo al iniciar una nueva ronda
+    startTime = new Date().getTime();
     document.getElementById('pantalla-menu').classList.remove('activo');
     document.getElementById('pantalla-juego').classList.add('activo');
     dibujar();
@@ -63,7 +66,7 @@ function dibujar() {
     v.opciones.forEach(o => {
         const b = document.createElement('button');
         b.className = 'btn-r';
-        b.innerText = o;
+        b.innerHTML = `<span class="opcion-text">${o}</span>`; // Contenedor para el texto
         b.onclick = () => validar(o, b);
         zona.appendChild(b);
     });
@@ -84,19 +87,32 @@ function cerrarZoom() {
 function validar(elegido, boton) {
     const correcto = test[idx].nombre;
     const botones = document.querySelectorAll('.btn-r');
-    botones.forEach(b => b.disabled = true);
+    botones.forEach(b => b.disabled = true); // Deshabilitar todos los botones
 
+    // Añadir icono de acierto o fallo
     if(elegido === correcto) {
         pts++;
-        if(sModo !== 'examen') boton.classList.add('ok');
+        boton.classList.add('ok');
+        boton.innerHTML += ' <span class="icono-respuesta">✅</span>'; // Añadir tick
     } else {
-        if(sModo !== 'examen') boton.classList.add('ko');
-        // --- CAMBIO CLAVE: No recargamos la página en desafío ---
+        boton.classList.add('ko');
+        boton.innerHTML += ' <span class="icono-respuesta">❌</span>'; // Añadir cruz
+    }
+
+    if(elegido === correcto) {
+        // En examen y desafío, se muestra el tick pero no el texto
+        if(sModo !== 'entrenamiento'){
+            // El tick ya se añadió arriba
+        }
+    } else {
+        // Mostrar el nombre correcto en entrenamiento
+        if(sModo === 'entrenamiento') {
+            document.getElementById('msg').innerText = `IDENTIFICADO COMO: ${correcto}`;
+        }
+        // En desafío, preparar para terminar
         if(sModo === 'desafio') {
              document.getElementById('msg').innerText = "FALLO CRÍTICO.";
-             // Mostramos el botón para ver resultados y terminar la ronda
              document.getElementById('btn-next').classList.remove('oculto');
-             // No llamamos a siguiente() aquí, esperamos el click en CONTINUAR
              return; // Salimos para no ejecutar el resto del bloque else
         }
     }
@@ -105,8 +121,10 @@ function validar(elegido, boton) {
         document.getElementById('msg').innerText = "REGISTRADO";
         setTimeout(siguiente, 500);
     } else {
-        if(elegido !== correcto) document.getElementById('msg').innerText = `IDENTIFICADO COMO: ${correcto}`;
-        document.getElementById('btn-next').classList.remove('oculto');
+        // En entrenamiento, mostrar el botón de siguiente
+        if(sModo !== 'desafio'){ // No mostrar si ya estamos en el paso de desafío
+            document.getElementById('btn-next').classList.remove('oculto');
+        }
     }
 }
 
@@ -121,6 +139,11 @@ function siguiente() {
 }
 
 function mostrarResultados() {
+    // Calcular tiempo transcurrido
+    const endTime = new Date().getTime();
+    const elapsedTimeMs = endTime - startTime;
+    const elapsedTimeSec = (elapsedTimeMs / 1000).toFixed(2);
+
     document.getElementById('pantalla-juego').classList.remove('activo');
     document.getElementById('pantalla-stats').classList.add('activo');
 
@@ -129,6 +152,7 @@ function mostrarResultados() {
     const categoriaActual = sCat;
     const total = test.length;
     const aciertos = pts;
+    const fallos = total - aciertos;
     const fecha = new Date().toLocaleString();
 
     if (!stats[modoActual]) {
@@ -140,6 +164,8 @@ function mostrarResultados() {
     stats[modoActual][categoriaActual].push({
         total: total,
         aciertos: aciertos,
+        fallos: fallos,
+        tiempo: elapsedTimeSec,
         fecha: fecha
     });
 
@@ -155,9 +181,10 @@ function mostrarResultados() {
     resultadoActual.textContent = `Categoría: ${categoriaActual.toUpperCase()}, Modo: ${modoActual.toUpperCase()}`;
     statsContent.appendChild(resultadoActual);
 
-    const resultadoDetalle = document.createElement('p');
-    resultadoDetalle.textContent = `Aciertos: ${aciertos} / ${total} (${total > 0 ? ((aciertos / total) * 100).toFixed(2) : 0}%)`;
-    statsContent.appendChild(resultadoDetalle);
+    const detalle = document.createElement('p');
+    detalle.textContent = `Aciertos: ${aciertos} / ${total} (${total > 0 ? ((aciertos / total) * 100).toFixed(2) : 0}%), ` +
+                          `Fallos: ${fallos}, Tiempo: ${elapsedTimeSec}s`;
+    statsContent.appendChild(detalle);
 
     // Mostrar historial de estadísticas anteriores para esta combinación (de la sesión actual)
     const historialTitulo = document.createElement('h3');
@@ -167,17 +194,24 @@ function mostrarResultados() {
     const historialLista = document.createElement('ul');
     stats[modoActual][categoriaActual].forEach((partida, index) => {
         const item = document.createElement('li');
-        item.textContent = `${partida.fecha}: ${partida.aciertos}/${partida.total} (${((partida.aciertos / partida.total) * 100).toFixed(2)}%)`;
+        item.textContent = `${partida.fecha}: ${partida.aciertos}/${partida.total} (${((partida.aciertos / partida.total) * 100).toFixed(2)}%), ` +
+                           `F: ${partida.fallos}, T: ${partida.tiempo}s`;
         historialLista.appendChild(item);
     });
     statsContent.appendChild(historialLista);
+}
+
+function interrumpirPrueba() {
+    if (confirm("¿Estás seguro de que deseas interrumpir la prueba actual?")) {
+        mostrarResultados(); // Ir directamente a estadísticas
+    }
 }
 
 function volverAlMenu() {
     document.getElementById('pantalla-stats').classList.remove('activo');
     document.getElementById('pantalla-menu').classList.add('activo');
     // Opcional: Reiniciar estado del juego si se vuelve al menú
-    // idx = 0; pts = 0; test = [];
+    // idx = 0; pts = 0; test = []; startTime = null;
 }
 
 // --- INICIALIZACIÓN ---
