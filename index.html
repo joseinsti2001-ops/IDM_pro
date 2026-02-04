@@ -20,7 +20,7 @@
 
         <section id="pantalla-menu" class="modulo">
             <h1 class="logo-mini">ID-MIL</h1>
-            
+
             <p class="tag">ARSENAL</p>
             <div class="grid-sel">
                 <button class="btn-s cat" onclick="seleccionarCat('blindado', this)">BLINDADOS</button>
@@ -38,7 +38,7 @@
             </div>
 
             <button id="btn-run" class="btn-go inactivo" onclick="iniciar()">INICIAR OPERACIÓN</button>
-            
+
             <p class="firma-mini">Responsable: Tte. Jose Revert Tormo</p>
         </section>
 
@@ -55,6 +55,15 @@
             <div id="opciones-zona" class="respuestas"></div>
             <div id="msg" class="mensaje"></div>
             <button id="btn-next" class="btn-go oculto" onclick="siguiente()">CONTINUAR</button>
+        </section>
+
+        <!-- NUEVA SECCIÓN: Pantalla de Estadísticas -->
+        <section id="pantalla-stats" class="modulo">
+            <h1 class="logo-mini">ESTADÍSTICAS</h1>
+            <div id="stats-content" class="stats-container">
+                <!-- El contenido se generará dinámicamente -->
+            </div>
+            <button id="btn-volver-menu" class="btn-go" onclick="volverAlMenu()">VOLVER AL MENÚ</button>
         </section>
 
         <div id="modal-zoom" class="modal" onclick="cerrarZoom()">
