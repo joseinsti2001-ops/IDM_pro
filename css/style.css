@@ -1,82 +1,84 @@
 :root {
-    --blue: #3b82f6;
-    --green: #22c55e;
-    --red: #ef4444;
-    --bg: #0f172a;
+    --primary: #3b82f6;
+    --success: #22c55e;
+    --danger: #ef4444;
+    --dark: #0f172a;
     --panel: #1e293b;
-    --text: #f8fafc;
+}
+
+* { 
+    box-sizing: border-box; 
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
 }
 
 body {
     margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: var(--bg);
-    color: var(--text);
-    display: flex;
-    justify-content: center;
-    padding: 20px;
+    padding: 0;
+    background: var(--dark);
+    color: white;
+    font-family: 'Courier New', monospace;
+    height: 100vh;
+    overflow: hidden; /* Evita el scroll en el móvil */
 }
 
-#app { width: 100%; max-width: 800px; }
+.full-screen {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    justify-content: center;
+}
 
 .hidden { display: none !important; }
 
-/* ESTILOS PORTADA */
-.panel-inicio {
-    text-align: center;
-    padding: 60px 20px;
-    background: var(--panel);
-    border: 2px solid var(--blue);
-    border-radius: 15px;
-    margin-top: 40px;
-    box-shadow: 0 0 30px rgba(0,0,0,0.5);
-}
+/* Portada */
+.emblema { width: 40vw; max-width: 150px; margin: 0 auto 20px; }
+.titulo-app { font-size: 3rem; margin: 0; text-align: center; color: var(--primary); letter-spacing: 5px; }
+.subtitulo { text-align: center; font-size: 0.8rem; opacity: 0.7; margin-bottom: 30px; }
+.autor-box { text-align: center; margin-bottom: 40px; border: 1px solid #334155; padding: 10px; }
+.autor-box span { display: block; font-size: 0.6rem; color: var(--primary); }
 
-.emblema-portada { width: 180px; margin-bottom: 20px; filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.4)); }
-
-.panel-inicio h1 { font-size: 3.5rem; margin: 0; color: var(--blue); letter-spacing: 8px; }
-
-.divisor { height: 2px; background: linear-gradient(90deg, transparent, var(--blue), transparent); width: 80%; margin: 30px auto; }
-
-.autor { font-family: 'Courier New', monospace; font-size: 1.2rem; font-weight: bold; margin-bottom: 40px; }
-
-/* ESTILOS SELECCIÓN */
-.grid-categorias { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 20px 0; }
-
-.cat-btn {
-    padding: 20px;
-    background: #334155;
-    border: 1px solid var(--blue);
+/* Botones Móvil */
+.btn-flash {
+    background: var(--primary);
     color: white;
+    border: none;
+    padding: 20px;
+    font-size: 1.2rem;
     font-weight: bold;
-    cursor: pointer;
     border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
 }
 
-.cat-btn.selected { background: var(--blue); box-shadow: 0 0 15px var(--blue); }
+.selector-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.btn-sel { 
+    padding: 25px 10px; background: var(--panel); border: 1px solid #334155; 
+    color: white; border-radius: 8px; font-weight: bold;
+}
+.btn-sel.selected { border-color: var(--primary); background: #2d3e5a; }
+.total { grid-column: span 2; background: #2d3e5a; }
 
-/* ESTILOS JUEGO */
-.header-juego { display: flex; justify-content: space-between; margin-bottom: 20px; font-weight: bold; }
-
-.contenedor-imagen { width: 100%; background: #000; border-radius: 10px; overflow: hidden; margin-bottom: 20px; border: 1px solid #334155; }
-
-#imagen-vehiculo { width: 100%; height: 400px; object-fit: contain; display: block; }
-
-.descripcion-pista { background: #334155; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-style: italic; border-left: 4px solid var(--blue); }
-
-.grid-opciones { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-
-.opcion-btn { padding: 15px; background: var(--panel); border: 1px solid #475569; color: white; cursor: pointer; border-radius: 5px; }
-
-.opcion-btn:hover { background: #334155; }
-
-.correcto { background: var(--green) !important; border-color: #fff; }
-
-.incorrecto { background: var(--red) !important; }
-
-.action-btn {
-    width: 100%; background: var(--blue); color: white; border: none; padding: 15px; 
-    font-size: 1.1rem; font-weight: bold; cursor: pointer; border-radius: 5px; margin-top: 20px;
+/* Visor de Juego */
+.hud-top { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--primary); margin-bottom: 10px; }
+.visor-tactico { 
+    height: 35vh; background: #000; position: relative; 
+    border-radius: 8px; border: 1px solid #334155; overflow: hidden;
+}
+#img-objetivo { width: 100%; height: 100%; object-fit: contain; }
+.reticula { 
+    position: absolute; top:0; left:0; width: 100%; height: 100%; 
+    background: radial-gradient(circle, transparent 30%, rgba(0,0,0,0.4) 100%);
+    pointer-events: none;
 }
 
-.btn-salir { background: transparent; color: #94a3b8; border: none; cursor: pointer; margin-top: 20px; width: 100%; }
+.pista-movil { font-size: 0.8rem; margin: 15px 0; padding: 10px; background: rgba(255,255,255,0.05); border-left: 3px solid var(--primary); }
+.opciones-movil { display: grid; gap: 8px; }
+.opcion-btn { 
+    padding: 15px; background: var(--panel); border: 1px solid #334155; 
+    color: white; border-radius: 5px; text-align: left;
+}
+.correcto { background: var(--success) !important; border-color: white; }
+.incorrecto { background: var(--danger) !important; }
+
+.feedback { text-align: center; font-weight: bold; margin-top: 10px; min-height: 1.2em; }
