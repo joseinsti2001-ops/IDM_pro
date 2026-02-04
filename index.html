@@ -9,13 +9,9 @@
 <body>
     <div id="app">
         <section id="menu-screen" class="screen">
-            <header class="main-header">
-                <h1>SISTEMA DE IDENTIFICACIÓN</h1>
-                <p class="subtitle">CONFIGURE PARÁMETROS DE MISIÓN</p>
-            </header>
-
+            <h1>SISTEMA DE IDENTIFICACIÓN</h1>
             <div class="config-block">
-                <h3>1. SELECCIÓN DE OBJETIVOS</h3>
+                <h3>1. OBJETIVOS</h3>
                 <div class="grid-3">
                     <button class="cat-btn" data-cat="blindado">🛡️ BLINDADOS</button>
                     <button class="cat-btn" data-cat="drone">🛸 DRONES</button>
@@ -23,34 +19,30 @@
                     <button class="cat-btn" data-cat="aereo">✈️ AÉREOS</button>
                 </div>
             </div>
-
             <div class="config-block">
-                <h3>2. MODO DE OPERACIÓN</h3>
+                <h3>2. MODO</h3>
                 <div class="grid-3">
                     <button class="mode-btn" data-mode="entrenamiento">ENTRENAMIENTO</button>
                     <button class="mode-btn" data-mode="examen">EXAMEN</button>
                     <button class="mode-btn" data-mode="supervivencia">SUPERVIVENCIA</button>
                 </div>
             </div>
-
             <button id="start-btn" class="action-btn">INICIAR OPERACIÓN</button>
         </section>
 
         <section id="game-screen" class="screen hidden">
-            <div id="quiz-container">
-                </div>
+            <div id="quiz-container"></div>
             <div class="marcador-basico">
-    Puntos: <span id="puntos-si">0</span> | Fallos: <span id="puntos-no">0</span>
-</div>
+                Aciertos: <span id="puntos-si">0</span> | Fallos: <span id="puntos-no">0</span>
+            </div>
         </section>
 
         <section id="result-screen" class="screen hidden">
             <h2>INFORME DE MISIÓN</h2>
             <div id="final-score" class="score-display">0 / 0</div>
-            <button onclick="location.reload()" class="action-btn">NUEVA MISIÓN</button>
+            <button onclick="location.reload()" class="action-btn">REINTENTAR</button>
         </section>
     </div>
-
     <script src="js/main.js"></script>
 </body>
 </html>
