@@ -100,6 +100,17 @@ button.selected { background: var(--blue); border-color: var(--blue); }
     padding-left: 20px;
 }
 
+.marcador-basico {
+    background: #1e293b;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    border-bottom: 2px solid #3b82f6;
+    margin-bottom: 15px;
+}
+#puntos-si { color: #10b981; } /* Verde */
+#puntos-no { color: #ef4444; } /* Rojo */
+
 .opt-btn:active {
     transform: scale(0.98);
 }
