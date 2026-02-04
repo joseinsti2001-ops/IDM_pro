@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
-<head> 
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ID-MIL | Ops</title>
@@ -8,7 +8,7 @@
 </head>
 <body>
     <div id="app">
-        <section id="pantalla-portada" class="modulo activo"> <!-- Debe tener 'activo' por defecto -->
+        <section id="pantalla-portada" class="modulo activo">
             <div class="portada-content">
                 <img src="assets/emblema_legion.png" alt="Emblema" class="logo-grande">
                 <h1 class="titulo-portada">ID-MIL</h1>
@@ -18,7 +18,7 @@
             </div>
         </section>
 
-        <section id="pantalla-menu" class="modulo"> <!-- No debe tener 'activo' -->
+        <section id="pantalla-menu" class="modulo">
             <h1 class="logo-mini">ID-MIL</h1>
 
             <p class="tag">ARSENAL</p>
@@ -42,7 +42,7 @@
             <p class="firma-mini">Responsable: Tte. Jose Revert Tormo</p>
         </section>
 
-        <section id="pantalla-juego" class="modulo"> <!-- No debe tener 'activo' -->
+        <section id="pantalla-juego" class="modulo">
             <div class="hud">
                 <span id="progreso">0/0</span>
                 <span id="puntos">RESPUESTAS: </span>
@@ -61,7 +61,7 @@
         </section>
 
         <!-- NUEVA SECCIÓN: Pantalla de Estadísticas -->
-        <section id="pantalla-stats" class="modulo"> <!-- No debe tener 'activo' -->
+        <section id="pantalla-stats" class="modulo">
             <h1 class="logo-mini">ESTADÍSTICAS</h1>
             <div id="stats-content" class="stats-container">
                 <!-- El contenido se generará dinámicamente -->
@@ -74,6 +74,8 @@
             <p class="aviso-zoom">TOCA PARA VOLVER</p>
         </div>
     </div>
-    <script src="js/main.js"></script>
+    <!-- CARGA DEL SCRIPT CON NÚMERO DE VERSIÓN PARA FORZAR ACTUALIZACIÓN -->
+    <script src="js/main.js?v=20260205_1200"></script> <!-- Cambia el número por la fecha/hora actual -->
+    <!-- FIN CARGA DEL SCRIPT -->
 </body>
 </html>
